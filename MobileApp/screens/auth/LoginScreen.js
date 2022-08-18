@@ -12,8 +12,15 @@ import { TextInput } from "react-native-paper";
 import { LogBox } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+<<<<<<< HEAD
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import LoginWithGoogle from "../../components/auth/LoginWithGoogle";
+=======
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+>>>>>>> 5d39476 (Sign-In changes)
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
@@ -51,8 +58,18 @@ export default function LoginScreen() {
       />
       <TextInput
         placeholder="Your Password"
+<<<<<<< HEAD
         secureTextEntry={secureTextEntry}
         style={tw`bg-transparent my-3 border-[#444444] border-b-0 h-11`}
+=======
+        secureTextEntry={true}
+        style={[
+          styles.textInput,
+          {
+            marginBottom: 35,
+          },
+        ]}
+>>>>>>> 5d39476 (Sign-In changes)
         autoCapitalize="none"
         left={
           <TextInput.Icon
@@ -85,6 +102,7 @@ export default function LoginScreen() {
       </Text>
 
       <View style={tw`mt-5`}>
+<<<<<<< HEAD
         <TouchableOpacity
           style={[
             tw`flex flex-row justify-center items-center bg-[#0074B7] p-2.6 rounded-md`,
@@ -103,15 +121,68 @@ export default function LoginScreen() {
 
       <View style={tw`flex`}>
         <LoginWithGoogle />
+=======
+        {/* <Button
+          style={[styles.buttonEdit, tw`rounded-3x1 p-2.6`]}
+          title="Continue"
+          borderRadius={10}
+          borderColor="red"
+          borderWidth={3}
+        ></Button> */}
+        <TouchableOpacity
+          style={[
+            tw`flex flex-row justify-center items-center bg-[#ffffff] p-2.6 rounded-3xl`,
+            { elevation: 3, shadowColor: "black" },
+          ]}
+        >
+          <Text style={tw`font-medium`}>CONTINUE</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={tw`mt-5`}>
+        {/* <Button
+          style={styles.container}
+          name="google"
+          disabled={!request}
+          title="Login with Google"
+          onPress={() => {
+            promptAsync();
+          }}
+        /> */}
+        <TouchableOpacity
+          style={[
+            tw`flex flex-row justify-center items-center bg-[#ffffff] p-2.3 rounded-3xl`,
+            { elevation: 3, shadowColor: "black" },
+          ]}
+          onPress={() => {
+            promptAsync();
+          }}
+          disabled={!request}
+        >
+          <Image
+            source={require("../../assets/login/google.png")}
+            style={tw`h-5.5 w-5 mr-3`}
+          />
+          <Text style={tw`font-medium`}>LOGIN WITH GOOGLE</Text>
+        </TouchableOpacity>
+>>>>>>> 5d39476 (Sign-In changes)
       </View>
 
       <View style={tw`mt-5`}>
         <TouchableOpacity
           style={[
+<<<<<<< HEAD
             tw`flex flex-row justify-center items-center bg-[#3b5998] p-2.6 rounded-md`,
             // { elevation: 3, shadowColor: "black" },
           ]}
         >
+=======
+            tw`flex flex-row justify-center items-center bg-[#3b5998] p-2.6 rounded-3xl`,
+            { elevation: 3, shadowColor: "black" },
+          ]}
+        >
+          {/* <FontAwesomeIcon style={tw`flex-1`} icon={fafaceb} /> */}
+>>>>>>> 5d39476 (Sign-In changes)
           <FontAwesome
             style={tw`pr-3`}
             name="facebook"
