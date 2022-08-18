@@ -41,7 +41,12 @@ import {
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { format } from "date-fns";
 
-const stations = ["Colombo Fort", "Hikkaduwa", "Australia", "Ireland"];
+const stations = [
+  { id: 1, name: "Colombo Fort" },
+  { id: 2, name: "Hikkaduwa" },
+  { id: 3, name: "Australia" },
+  { id: 4, name: "Ireland" },
+];
 
 const BookingSearch = () => {
   const [startStation, setStartStation] = useState("");
@@ -87,7 +92,7 @@ const BookingSearch = () => {
       <View style={tw` h-100`}>
         <Image
           style={tw`h-full w-full`}
-          source={require("./../../assets/booking/Choosingticket.png")}
+          source={require("./../../assets/booking/Choosingticket.jpg")}
         />
       </View>
       <View style={[tw`flex flex-grow mx-5 rounded-lg -mt-44 bg-[#f3f3f3]`]}>
@@ -133,17 +138,18 @@ const BookingSearch = () => {
             data={stations}
             onSelect={(selectedItem, index) => {
               console.log(selectedItem);
-              setStartStation(selectedItem);
+              console.log(selectedItem.id);
+              setStartStation(selectedItem.name);
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
               // text represented after item is selected
               // if data array is an array of objects then return selectedItem.property to render after item is selected
-              return selectedItem;
+              return selectedItem.name;
             }}
             rowTextForSelection={(item, index) => {
               // text represented for each item in dropdown
               // if data array is an array of objects then return item.property to represent item in dropdown
-              return item;
+              return item.name;
             }}
             search={true}
             placeholder=" testing"
@@ -155,17 +161,17 @@ const BookingSearch = () => {
             data={stations}
             onSelect={(selectedItem, index) => {
               console.log(selectedItem, index);
-              setEndStation(selectedItem);
+              setEndStation(selectedItem.name);
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
               // text represented after item is selected
               // if data array is an array of objects then return selectedItem.property to render after item is selected
-              return selectedItem;
+              return selectedItem.name;
             }}
             rowTextForSelection={(item, index) => {
               // text represented for each item in dropdown
               // if data array is an array of objects then return item.property to represent item in dropdown
-              return item;
+              return item.name;
             }}
             search={true}
             buttonStyle={{
@@ -306,7 +312,20 @@ const BookingSearch = () => {
           </View>
           <View style={tw`mt-6`}>
             <TouchableOpacity
-              style={tw`bg-sky-500 text-white py-2 rounded-4 flex-row justify-center items-center`}
+              style={[
+                tw` text-white py-2 rounded-4 flex-row justify-center items-center`,
+                passengers == 0 ? tw`bg-neutral-400` : tw`bg-sky-500`,
+              ]}
+              disabled={passengers == 0}
+              onPress={() => {
+                var json = {
+                  startStation: startStation,
+                  endStation: endStation,
+                  date: fdate,
+                  passengers: passengers,
+                };
+                console.log(json);
+              }}
             >
               <FontAwesomeIcon
                 // style={tw`flex-1`}
