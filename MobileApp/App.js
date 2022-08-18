@@ -24,6 +24,11 @@ export default function App() {
       />
       <SafeAreaProvider>
         <Stack.Navigator>
+          {/* <Stack.Screen
+            name="TrainScheduleResult"
+            component={TrainScheduleResultScreen}
+            options={{ headerShown: false }}
+          /> */}
           <Stack.Screen
             name="Login"
             component={LoginScreen}
@@ -62,6 +67,7 @@ export default function App() {
           <Stack.Screen
             name="TrainScheduleResult"
             component={TrainScheduleResultScreen}
+            options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </SafeAreaProvider>

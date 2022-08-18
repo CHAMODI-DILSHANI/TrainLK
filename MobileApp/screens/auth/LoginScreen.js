@@ -14,6 +14,10 @@ import {
 import { LogBox } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
@@ -89,7 +93,7 @@ export default function LoginScreen() {
       </Text>
       <TextInput
         placeholder="Your Password"
-        // secureTextEntry={data.secureTextEntry ? true : false}
+        secureTextEntry={true}
         style={[
           styles.textInput,
           {
@@ -100,11 +104,25 @@ export default function LoginScreen() {
         // onChangeText={(val) => handlePasswordChange(val)}
       />
       <View style={tw`mt-5`}>
-        <Button style={styles.buttonEdit} title="Continue"></Button>
+        {/* <Button
+          style={[styles.buttonEdit, tw`rounded-3x1 p-2.6`]}
+          title="Continue"
+          borderRadius={10}
+          borderColor="red"
+          borderWidth={3}
+        ></Button> */}
+        <TouchableOpacity
+          style={[
+            tw`flex flex-row justify-center items-center bg-[#ffffff] p-2.6 rounded-3xl`,
+            { elevation: 3, shadowColor: "black" },
+          ]}
+        >
+          <Text style={tw`font-medium`}>CONTINUE</Text>
+        </TouchableOpacity>
       </View>
 
-      <View style={tw`mt-5 rounded-20`}>
-        <FontAwesome.Button
+      <View style={tw`mt-5`}>
+        {/* <Button
           style={styles.container}
           name="google"
           disabled={!request}
@@ -112,23 +130,41 @@ export default function LoginScreen() {
           onPress={() => {
             promptAsync();
           }}
+        /> */}
+        <TouchableOpacity
+          style={[
+            tw`flex flex-row justify-center items-center bg-[#ffffff] p-2.3 rounded-3xl`,
+            { elevation: 3, shadowColor: "black" },
+          ]}
+          onPress={() => {
+            promptAsync();
+          }}
+          disabled={!request}
         >
-          LOGIN WITH GOOGLE
-        </FontAwesome.Button>
+          <Image
+            source={require("../../assets/login/google.png")}
+            style={tw`h-5.5 w-5 mr-3`}
+          />
+          <Text style={tw`font-medium`}>LOGIN WITH GOOGLE</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={tw`mt-5`}>
-        <FontAwesome.Button
-          style={tw`justify-center rounded-full`}
-          borderRadius={10}
-          borderColor="#ff0000"
-          borderWidth={2}
-          name="facebook"
-          backgroundColor="#3b5998"
-          // onPress={loginWithFacebook}
+        <TouchableOpacity
+          style={[
+            tw`flex flex-row justify-center items-center bg-[#3b5998] p-2.6 rounded-3xl`,
+            { elevation: 3, shadowColor: "black" },
+          ]}
         >
-          LOGIN WITH FACEBOOK
-        </FontAwesome.Button>
+          {/* <FontAwesomeIcon style={tw`flex-1`} icon={fafaceb} /> */}
+          <FontAwesome
+            style={tw`pr-3`}
+            name="facebook"
+            color="white"
+            size={20}
+          />
+          <Text style={tw`font-medium text-white`}>LOGIN WITH FACEBOOK</Text>
+        </TouchableOpacity>
       </View>
 
       {/* {userInfo ? <Text>{userInfo.email}</Text> : <Text>Nope</Text>} */}
