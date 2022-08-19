@@ -11,11 +11,11 @@ export default class Navigation extends React.Component {
   }
   render() {
     return (
-      <View style={tw`pl-3 flex-row items-center pb-3`}>
+      <View style={tw`pl-3 flex-row items-center pb-3 -z-10`}>
         <TouchableOpacity
           style={tw`px-1`}
           onPress={() => {
-            this.props.navigate.navigate("HomeScreen");
+            this.props.navigate.navigate(this.props.goBack);
           }}
         >
           <FontAwesomeIcon icon={faChevronLeft} />
