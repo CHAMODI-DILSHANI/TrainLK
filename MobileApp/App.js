@@ -11,7 +11,7 @@ import LostItemsScreen from "./screens/lostItems/LostItemsScreen";
 import NewsUpdatesScreen from "./screens/news/NewsUpdatesScreen";
 import LoginScreen from "./screens/auth/LoginScreen";
 import TrainScheduleResultScreen from "./screens/schedules/TrainScheduleResultScreen";
-
+import BookingSearch from "./screens/booking/BookingSearchScreen";
 export default function App() {
   const Stack = createNativeStackNavigator();
 
@@ -24,11 +24,6 @@ export default function App() {
       />
       <SafeAreaProvider>
         <Stack.Navigator>
-          <Stack.Screen
-            name="TrainScheduleResult"
-            component={TrainScheduleResultScreen}
-            options={{ headerShown: false }}
-          />
           <Stack.Screen
             name="Login"
             component={LoginScreen}
@@ -58,6 +53,15 @@ export default function App() {
             name="LostItemsScreen"
             component={LostItemsScreen}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="BookingSearchScreen"
+            component={BookingSearch}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="TrainScheduleResult"
+            component={TrainScheduleResultScreen}
           />
         </Stack.Navigator>
       </SafeAreaProvider>

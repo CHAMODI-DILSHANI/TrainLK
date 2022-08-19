@@ -13,7 +13,8 @@ const HomeScreen = () => {
     {id: 2, title: 'Live Updates', screen: 'TrainLiveUpdatesScreen', img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/map-pin-dynamic-premium.png"},
     {id: 3, title: 'News Updates', screen: 'NewsUpdatesScreen', img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/copy-dynamic-premium.png"},
     {id: 4, title: 'Lost Items', screen: 'LostItemsScreen', img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/travel-dynamic-premium.png"},
-    {id: 5, title: 'Station Info', screen: 'LostItemsScreen', img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/travel-dynamic-premium.png"}
+    {id: 5, title: 'Station Info', screen: 'LostItemsScreen', img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/travel-dynamic-premium.png"},
+    {id: 5, title: 'BookingSearchScreen', screen: 'BookingSearchScreen', img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/travel-dynamic-premium.png"}
   ]
   return (
     <SafeAreaView style={{backgroundColor: "#fff", height:"100%"}}>
