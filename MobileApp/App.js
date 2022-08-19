@@ -25,15 +25,6 @@ export default function App() {
       <SafeAreaProvider>
         <Stack.Navigator>
           <Stack.Screen
-            name="BookingSearchScreen"
-            component={BookingSearch}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="TrainScheduleResult"
-            component={TrainScheduleResultScreen}
-/>
-          <Stack.Screen
             name="Login"
             component={LoginScreen}
             options={{ headerShown: false }}
@@ -62,6 +53,15 @@ export default function App() {
             name="LostItemsScreen"
             component={LostItemsScreen}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="BookingSearchScreen"
+            component={BookingSearch}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="TrainScheduleResult"
+            component={TrainScheduleResultScreen}
           />
         </Stack.Navigator>
       </SafeAreaProvider>
