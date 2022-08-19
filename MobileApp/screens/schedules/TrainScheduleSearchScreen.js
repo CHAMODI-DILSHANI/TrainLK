@@ -42,8 +42,11 @@ const TrainScheduleSearchScreen = () => {
   const [date, setDate] = useState(new Date());
   const [fdate, setfDate] = useState("");
   const [passengers, setPassengers] = useState(0);
-  const [mdate, setmDate] = useState(new Date());
-  const [ndate, setnDate] = useState(new Date("2022-08-16"));
+
+  const ndate = new Date();
+  const mdate = new Date();
+  mdate.setDate(mdate.getDate() + 5);
+  console.log(mdate);
 
   const [timeString, setTimeString] = useState();
 
@@ -115,6 +118,7 @@ const TrainScheduleSearchScreen = () => {
               borderStyle: "solid",
               borderWidth: 2,
             }}
+            rowTextStyle={tw`text-sm`}
             renderCustomizedButtonChild={(selectedItem, index) => {
               return (
                 <View style={tw`flex-row items-center  `}>
@@ -166,6 +170,7 @@ const TrainScheduleSearchScreen = () => {
               console.log(selectedItem, index);
               setEndStation(selectedItem.name);
             }}
+            rowTextStyle={tw`text-sm`}
             buttonTextAfterSelection={(selectedItem, index) => {
               // text represented after item is selected
               // if data array is an array of objects then return selectedItem.property to render after item is selected

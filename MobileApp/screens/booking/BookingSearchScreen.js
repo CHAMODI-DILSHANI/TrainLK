@@ -57,12 +57,20 @@ const BookingSearch = () => {
   const [date, setDate] = useState(new Date());
   const [fdate, setfDate] = useState("");
   const [passengers, setPassengers] = useState(0);
-  const [mdate, setmDate] = useState(new Date());
-  const [ndate, setnDate] = useState(new Date("2022-08-16"));
+
+  // ndate - minimumdate of calendat and mdate is the max date of the calender
+  const ndate = new Date();
+  const mdate = new Date();
+  // here by changing the int value u can set the maximum date range
+  mdate.setDate(mdate.getDate() + 5);
+  console.log(mdate);
+
   const onChange = (event, selectedDate) => {
-    const currentDate = format(selectedDate, "dd-MM-yyyy");
-    setfDate(currentDate);
-    console.log(selectedDate);
+    if (event.type != "dismissed") {
+      const currentDate = format(selectedDate, "dd-MM-yyyy");
+      setfDate(currentDate);
+      console.log(selectedDate);
+    }
     // var formattedDate = format(date, "dd-mm-yyyy");
     // // console.log(formattedDate + "");
     // setfDate(formattedDate);
@@ -115,6 +123,7 @@ const BookingSearch = () => {
               borderStyle: "solid",
               borderWidth: 2,
             }}
+            rowTextStyle={tw`text-sm`}
             renderCustomizedButtonChild={(selectedItem, index) => {
               return (
                 <View style={tw`flex-row items-center  `}>
@@ -176,6 +185,7 @@ const BookingSearch = () => {
               // if data array is an array of objects then return item.property to represent item in dropdown
               return item.name;
             }}
+            rowTextStyle={tw`text-sm`}
             search={true}
             buttonStyle={{
               flexBasis: "93%",
@@ -317,9 +327,19 @@ const BookingSearch = () => {
             <TouchableOpacity
               style={[
                 tw` text-white py-2 rounded-4 flex-row justify-center items-center`,
-                passengers == 0 ? tw`bg-neutral-400` : tw`bg-sky-500`,
+                passengers == 0 ||
+                startStation == "" ||
+                endStation == "" ||
+                fdate == ""
+                  ? tw`bg-neutral-400`
+                  : tw`bg-sky-500`,
               ]}
-              disabled={passengers == 0}
+              disabled={
+                passengers == 0 ||
+                startStation == "" ||
+                endStation == "" ||
+                fdate == ""
+              }
               onPress={() => {
                 var json = {
                   startStation: startStation,
