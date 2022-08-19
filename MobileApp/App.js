@@ -16,6 +16,8 @@ import ForgotPasswordScreen from "./screens/auth/ForgotPasswordScreen";
 import ChangePasswordScreen from "./screens/auth/ChangePassword";
 import TrainScheduleResultScreen from "./screens/schedules/TrainScheduleResultScreen";
 import BookingSearch from "./screens/booking/BookingSearchScreen";
+import ModeratorLiveUpdateScreen from "./screens/liveUpdates/ModeratorLiveUpdateScreen";
+
 export default function App() {
   const Stack = createNativeStackNavigator();
 
@@ -31,6 +33,16 @@ export default function App() {
           <Stack.Screen
             name="Login"
             component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ModeratorLiveUpdateScreen"
+            component={ModeratorLiveUpdateScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="TrainScheduleResult"
+            component={TrainScheduleResultScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
