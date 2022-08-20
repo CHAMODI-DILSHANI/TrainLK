@@ -69,6 +69,16 @@ export default function App() {
             component={TrainScheduleResultScreen}
             options={{ headerShown: false }}
           />
+          <Stack.Screen
+            name="ForgotPassword"
+            component={TrainScheduleResultScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Register"
+            component={TrainScheduleResultScreen}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </SafeAreaProvider>
     </NavigationContainer>

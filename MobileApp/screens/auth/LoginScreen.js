@@ -1,4 +1,5 @@
 import * as React from "react";
+// import { React, useState } from "react";
 import * as WebBrowser from "expo-web-browser";
 import tw from "twrnc";
 import * as Google from "expo-auth-session/providers/google";
@@ -7,17 +8,19 @@ import {
   Button,
   View,
   Text,
-  TextInput,
+  // TextInput,
   TouchableOpacity,
   Image,
 } from "react-native";
+import { TextInput } from "react-native-paper";
 import { LogBox } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import TextBox from "react-native-password-eye";
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
@@ -28,6 +31,7 @@ export default function LoginScreen() {
 
   const [userInfo, setUserInfo] = React.useState(null);
   const [authState, setAuthState] = React.useState(false);
+  const [secureTextEntry, setSecureTextEntry] = React.useState(true);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId:
@@ -67,74 +71,68 @@ export default function LoginScreen() {
   return (
     <View style={styles.mainBody}>
       <View style={styles.logoContainer}>
-        <Image source={require("../../assets/Logo.png")} style={styles.image} />
+        <Image
+          source={require("../../assets/login/login.png")}
+          style={styles.image}
+        />
       </View>
-      <Text style={styles.title}>Get Started</Text>
+      <Text style={tw`mb-6 font-semibold text-3xl`}>Get Started</Text>
 
-      <Text style={styles.textForm}>Email</Text>
-      {/* <View style={styles.action}> */}
-      {/* <FontAwesome name="user-o" color="#05375a" size={20} /> */}
       <TextInput
         placeholder="Your Email"
-        style={[styles.textInput]}
+        style={[tw`bg-transparent border-b h-11`]}
         autoCapitalize="none"
+        // required
         // onChangeText={(val) => textInputChange(val)}
       />
-      {/* </View> */}
-      <Text
-        style={[
-          styles.textForm,
-          {
-            marginTop: 35,
-          },
-        ]}
-      >
-        Password
-      </Text>
       <TextInput
         placeholder="Your Password"
-        secureTextEntry={true}
-        style={[
-          styles.textInput,
-          {
-            marginBottom: 35,
-          },
-        ]}
+        secureTextEntry={secureTextEntry}
+        style={tw`bg-transparent my-5 border-b h-11`}
         autoCapitalize="none"
+        right={
+          <TextInput.Icon
+            name="eye-off"
+            onPress={() => {
+              setSecureTextEntry(!secureTextEntry);
+              // <TextInput.Icon name="eye" />;
+              // this.Icon.name = "eye";
+              return false;
+            }}
+          />
+        }
         // onChangeText={(val) => handlePasswordChange(val)}
       />
+
+      <Text
+        style={tw`text-[#003B73] text-right my-2`}
+        onPress={() => navigation.navigate("ForgotPassword")}
+      >
+        Forgot Password?
+      </Text>
+
       <View style={tw`mt-5`}>
-        {/* <Button
-          style={[styles.buttonEdit, tw`rounded-3x1 p-2.6`]}
-          title="Continue"
-          borderRadius={10}
-          borderColor="red"
-          borderWidth={3}
-        ></Button> */}
         <TouchableOpacity
           style={[
-            tw`flex flex-row justify-center items-center bg-[#ffffff] p-2.6 rounded-3xl`,
-            { elevation: 3, shadowColor: "black" },
+            tw`flex flex-row justify-center items-center bg-[#0074B7] p-2.6 rounded-md`,
+            // { elevation: 3, shadowColor: "black" },
           ]}
         >
-          <Text style={tw`font-medium`}>CONTINUE</Text>
+          <Text style={tw`text-white font-medium`}>CONTINUE</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={tw`mt-5`}>
-        {/* <Button
-          style={styles.container}
-          name="google"
-          disabled={!request}
-          title="Login with Google"
-          onPress={() => {
-            promptAsync();
-          }}
-        /> */}
+      <View style={tw`flex-row my-6`}>
+        <View style={tw`bg-[#A3A3A3] h-0.5 flex-1 self-center`}></View>
+        <Text style={tw`self-center px-4 text-base text-[#808080]`}>OR</Text>
+        <View style={tw`bg-[#A3A3A3] h-0.5 flex-1 self-center`}></View>
+      </View>
+
+      <View style={tw``}>
         <TouchableOpacity
           style={[
-            tw`flex flex-row justify-center items-center bg-[#ffffff] p-2.3 rounded-3xl`,
-            { elevation: 3, shadowColor: "black" },
+            tw`flex flex-row justify-center items-center bg-[#cccccc] p-2.3 rounded-md`,
+            // { elevation: 3, shadowColor: "black" },
           ]}
           onPress={() => {
             promptAsync();
@@ -142,7 +140,7 @@ export default function LoginScreen() {
           disabled={!request}
         >
           <Image
-            source={require("../../assets/login/google.png")}
+            source={require("../../assets/login/google-logo.png")}
             style={tw`h-5.5 w-5 mr-3`}
           />
           <Text style={tw`font-medium`}>LOGIN WITH GOOGLE</Text>
@@ -152,11 +150,10 @@ export default function LoginScreen() {
       <View style={tw`mt-5`}>
         <TouchableOpacity
           style={[
-            tw`flex flex-row justify-center items-center bg-[#3b5998] p-2.6 rounded-3xl`,
-            { elevation: 3, shadowColor: "black" },
+            tw`flex flex-row justify-center items-center bg-[#3b5998] p-2.6 rounded-md`,
+            // { elevation: 3, shadowColor: "black" },
           ]}
         >
-          {/* <FontAwesomeIcon style={tw`flex-1`} icon={fafaceb} /> */}
           <FontAwesome
             style={tw`pr-3`}
             name="facebook"
@@ -166,7 +163,15 @@ export default function LoginScreen() {
           <Text style={tw`font-medium text-white`}>LOGIN WITH FACEBOOK</Text>
         </TouchableOpacity>
       </View>
-
+      <View style={tw`flex-row self-center mt-4`}>
+        <Text>New to TrainLK? </Text>
+        <Text
+          style={tw`text-[#003B73]`}
+          onPress={() => navigation.navigate("ForgotPassword")}
+        >
+          Register
+        </Text>
+      </View>
       {/* {userInfo ? <Text>{userInfo.email}</Text> : <Text>Nope</Text>} */}
       {/* {userInfo ? <Text>Hi {userInfo.given_name}</Text> : <Text>Nope</Text>} */}
     </View>
@@ -176,76 +181,15 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   mainBody: {
     padding: 15,
-    // fontFamily: "Poppins-Regular",
   },
   logoContainer: {
-    // alignItems: "center",
-    // margin: 5,
-    // borderWidth: 1,
-    // borderColor: "#A3A3A3",
     justifyContent: "center",
     alignItems: "center",
-    // height: 100,
-    // width: 100,
-    // flex: 1,
   },
-  title: {
-    // flex: 1,
-    //fontFamily: "Poppins",
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 30,
-    marginBottom: 20,
-  },
-  textForm: {
-    // color: "#05375a",
-    fontSize: 18,
-  },
-  action: {
-    flexDirection: "row",
-
-    // marginTop: 10,
-    // borderBottomWidth: 1,
-    // borderBottomColor: "#f2f2f2",
-    // paddingBottom: 5,
-  },
-  textInput: {
-    // flex: 1,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#A3A3A3",
-    color: "#05375a",
-    padding: 5,
-    paddingLeft: 8,
-    marginTop: 8,
-    backgroundColor: "#ffffff",
-    elevation: 3,
-    shadowColor: "black",
-  },
-  container: {
-    // flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    // borderRadius: 20,
-    // marginTop: 20,
-  },
-  buttonEdit: {
-    margin: 10,
-    borderWidth: 1,
-    borderColor: "#A3A3A3",
-    backgroundColor: "#ffffff",
-  },
-  // stretch: {
-  //   width: 50,
-  //   height: 200,
-  //   resizeMode: "stretch",
-  // },
   image: {
-    // flex: 1,
-    // aspectRatio: 1.5,
     resizeMode: "contain",
-    width: 125,
-    height: 225,
+    width: 200,
+    height: 200,
     margin: 0,
   },
 });
