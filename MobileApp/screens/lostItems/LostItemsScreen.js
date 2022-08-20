@@ -27,7 +27,11 @@ const LostItemsScreen = () => {
       <View style={[styles.mainBody, tw`mt-2`]}>
         {/* <TouchableOpacity> */}
         <TouchableOpacity
-          style={tw`flex-row h-40 bg-[#e4e7e7] rounded-xl p-4 mt-5`}
+          style={[
+            tw`flex-row h-40 bg-[#ffffff] rounded-xl p-4 mt-5`,
+            { elevation: 3, shadowColor: "black" },
+          ]}
+          // style={tw`flex-row h-40 bg-[#e4e7e7] rounded-xl p-4 mt-5`}
         >
           <Image
             style={tw`h-25 w-25 flex-0.25 `}
