@@ -72,7 +72,7 @@ export default LostItemsScreen;
 
 const styles = StyleSheet.create({
   mainBody: {
-    padding: 15,
+    padding: 20,
     // fontFamily: "Poppins-Regular",
   },
 });
