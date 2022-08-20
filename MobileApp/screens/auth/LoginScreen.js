@@ -16,11 +16,7 @@ import { TextInput } from "react-native-paper";
 import { LogBox } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { faEdit, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
-import TextBox from "react-native-password-eye";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
@@ -70,33 +66,53 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.mainBody}>
-      <View style={styles.logoContainer}>
+      <View style={tw`justify-center items-center`}>
         <Image
           source={require("../../assets/login/login.png")}
-          style={styles.image}
+          style={[tw`w-50 h-50`]}
         />
       </View>
       <Text style={tw`mb-6 font-semibold text-3xl`}>Get Started</Text>
 
       <TextInput
         placeholder="Your Email"
-        style={[tw`bg-transparent border-b h-11`]}
+        style={[tw`bg-transparent my-3 border-[#000000] border-b h-11`]}
         autoCapitalize="none"
+        left={
+          <TextInput.Icon
+            name={() => (
+              <MaterialCommunityIcons
+                name="email-outline"
+                size={24}
+                color="#444444"
+              />
+            )}
+          />
+        }
         // required
         // onChangeText={(val) => textInputChange(val)}
       />
       <TextInput
         placeholder="Your Password"
         secureTextEntry={secureTextEntry}
-        style={tw`bg-transparent my-5 border-b h-11`}
+        style={tw`bg-transparent my-3 border-[#444444] border-b-0 h-11`}
         autoCapitalize="none"
+        left={
+          <TextInput.Icon
+            name={() => (
+              <MaterialCommunityIcons
+                name="lock-outline"
+                size={24}
+                color="#444444"
+              />
+            )}
+          />
+        }
         right={
           <TextInput.Icon
-            name="eye-off"
+            name={secureTextEntry ? "eye-off" : "eye"}
             onPress={() => {
               setSecureTextEntry(!secureTextEntry);
-              // <TextInput.Icon name="eye" />;
-              // this.Icon.name = "eye";
               return false;
             }}
           />
@@ -105,7 +121,7 @@ export default function LoginScreen() {
       />
 
       <Text
-        style={tw`text-[#003B73] text-right my-2`}
+        style={tw`text-[#003B73] text-right my-2 self-end`}
         onPress={() => navigation.navigate("ForgotPassword")}
       >
         Forgot Password?
@@ -167,7 +183,7 @@ export default function LoginScreen() {
         <Text>New to TrainLK? </Text>
         <Text
           style={tw`text-[#003B73]`}
-          onPress={() => navigation.navigate("ForgotPassword")}
+          onPress={() => navigation.navigate("Register")}
         >
           Register
         </Text>
@@ -180,16 +196,9 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   mainBody: {
-    padding: 15,
-  },
-  logoContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 20,
   },
   image: {
     resizeMode: "contain",
-    width: 200,
-    height: 200,
-    margin: 0,
   },
 });

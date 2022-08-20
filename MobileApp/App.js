@@ -7,9 +7,12 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import HomeScreen from "./screens/home/HomeScreen";
 import TrainScheduleSearchScreen from "./screens/schedules/TrainScheduleSearchScreen";
 import TrainLiveUpdatesScreen from "./screens/liveUpdates/TrainLiveUpdatesScreen";
+import AvailableTrainsScreen from "./screens/liveUpdates/AvailableTrainsScreen";
 import LostItemsScreen from "./screens/lostItems/LostItemsScreen";
 import NewsUpdatesScreen from "./screens/news/NewsUpdatesScreen";
 import LoginScreen from "./screens/auth/LoginScreen";
+import RegisterScreen from "./screens/auth/RegisterScreen";
+import ForgotPasswordScreen from "./screens/auth/ForgotPasswordScreen";
 import TrainScheduleResultScreen from "./screens/schedules/TrainScheduleResultScreen";
 import BookingSearch from "./screens/booking/BookingSearchScreen";
 export default function App() {
@@ -29,14 +32,15 @@ export default function App() {
             component={TrainScheduleResultScreen}
             options={{ headerShown: false }}
           /> */}
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{ headerShown: false }}
-          />
+
           <Stack.Screen
             name="HomeScreen"
             component={HomeScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
@@ -71,12 +75,17 @@ export default function App() {
           />
           <Stack.Screen
             name="ForgotPassword"
-            component={TrainScheduleResultScreen}
+            component={ForgotPasswordScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Register"
-            component={TrainScheduleResultScreen}
+            component={RegisterScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="AvailableTrains"
+            component={AvailableTrainsScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
