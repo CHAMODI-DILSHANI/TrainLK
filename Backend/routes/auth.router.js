@@ -15,6 +15,7 @@ authRouter.post("/oAuth", async (req, res) => {
     );
 
     let userId;
+    let userRole;
 
     if (response.length == 0) {
       // Register the user with this associated google account
@@ -23,17 +24,28 @@ authRouter.post("/oAuth", async (req, res) => {
         [email, firstName, lastName, oAuthProvider, externalId]
       );
       userId = response.insertId;
+      userRole = "client";
     } else {
-      userId = response.id;
+      userId = response[0].id;
+
+      if (response[0].role == 1) {
+        userRole = "admin";
+      } else if (response[0].role == 2) {
+        userRole = "moderator";
+      } else if (response[0].role == 3) {
+        userRole = "client";
+      }
     }
 
+    console.log(userRole);
+
     const accessToken = jsonwebtoekn.sign(
-      { id: userId },
+      { id: userId, role: userRole },
       process.env.JWT_ACCESS_TOKEN_SECRET,
       { expiresIn: "60s" }
     );
     const refreshToken = jsonwebtoekn.sign(
-      { id: userId },
+      { id: userId, role: userRole },
       process.env.JWT_REFRESH_TOKEN_SECRET,
       { expiresIn: "365d" }
     );
