@@ -341,6 +341,7 @@ const TrainScheduleSearchScreen = () => {
                   time: timeString,
                 };
                 console.log(json);
+                navigate.navigate("TrainScheduleResultScreen");
               }}
             >
               <FontAwesomeIcon color="white" icon={faMagnifyingGlass} />

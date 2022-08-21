@@ -1,14 +1,10 @@
 import * as React from "react";
-// import { React, useState } from "react";
-import * as WebBrowser from "expo-web-browser";
 import tw from "twrnc";
-import * as Google from "expo-auth-session/providers/google";
 import {
   StyleSheet,
   Button,
   View,
   Text,
-  // TextInput,
   TouchableOpacity,
   Image,
 } from "react-native";
@@ -17,52 +13,13 @@ import { LogBox } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import LoginWithGoogle from "../../components/auth/LoginWithGoogle";
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
-WebBrowser.maybeCompleteAuthSession();
-
 export default function LoginScreen() {
   const navigation = useNavigation();
-
-  const [userInfo, setUserInfo] = React.useState(null);
-  const [authState, setAuthState] = React.useState(false);
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
-
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId:
-      "491765905804-bku9lib9uqmtubfmoli0kr38ql3mu8oq.apps.googleusercontent.com",
-    iosClientId:
-      "491765905804-rj8rave6ci6e80bt33ps8m9pncgnhfs2.apps.googleusercontent.com",
-    androidClientId:
-      "491765905804-1ucksva4pl2bieaav1s48h0d86mjh6eg.apps.googleusercontent.com",
-    webClientId:
-      "491765905804-sprj61g3bgish54daqrcrg6i02trgcsm.apps.googleusercontent.com",
-  });
-
-  React.useEffect(() => {
-    async function fetchUserInfoFromGoogleAPI() {
-      const googleAPIEndpoint = "https://www.googleapis.com/oauth2/v3/userinfo";
-
-      try {
-        if (response?.type === "success") {
-          const responseData = await fetch(googleAPIEndpoint, {
-            headers: {
-              Authorization: `Bearer ${response.authentication.accessToken}`,
-            },
-          });
-
-          const fetchedUserInfo = await responseData.json();
-          setUserInfo(fetchedUserInfo);
-          navigation.navigate("HomeScreen");
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    }
-
-    fetchUserInfoFromGoogleAPI();
-  }, [response]);
 
   return (
     <View style={styles.mainBody}>
@@ -144,23 +101,8 @@ export default function LoginScreen() {
         <View style={tw`bg-[#A3A3A3] h-0.5 flex-1 self-center`}></View>
       </View>
 
-      <View style={tw``}>
-        <TouchableOpacity
-          style={[
-            tw`flex flex-row justify-center items-center bg-[#cccccc] p-2.3 rounded-md`,
-            // { elevation: 3, shadowColor: "black" },
-          ]}
-          onPress={() => {
-            promptAsync();
-          }}
-          disabled={!request}
-        >
-          <Image
-            source={require("../../assets/login/google-logo.png")}
-            style={tw`h-5.5 w-5 mr-3`}
-          />
-          <Text style={tw`font-medium`}>LOGIN WITH GOOGLE</Text>
-        </TouchableOpacity>
+      <View style={tw`flex`}>
+        <LoginWithGoogle />
       </View>
 
       <View style={tw`mt-5`}>
@@ -179,6 +121,7 @@ export default function LoginScreen() {
           <Text style={tw`font-medium text-white`}>LOGIN WITH FACEBOOK</Text>
         </TouchableOpacity>
       </View>
+
       <View style={tw`flex-row self-center mt-4`}>
         <Text>New to TrainLK? </Text>
         <Text
@@ -188,8 +131,6 @@ export default function LoginScreen() {
           Register
         </Text>
       </View>
-      {/* {userInfo ? <Text>{userInfo.email}</Text> : <Text>Nope</Text>} */}
-      {/* {userInfo ? <Text>Hi {userInfo.given_name}</Text> : <Text>Nope</Text>} */}
     </View>
   );
 }
