@@ -10,6 +10,9 @@ import TrainLiveUpdatesScreen from "./screens/liveUpdates/TrainLiveUpdatesScreen
 import LostItemsScreen from "./screens/lostItems/LostItemsScreen";
 import NewsUpdatesScreen from "./screens/news/NewsUpdatesScreen";
 import LoginScreen from "./screens/auth/LoginScreen";
+import becomeModeratorFeatures from "./screens/moderator/becomeModerator/becomeModerator_features";
+import howtobecomeModerator from "./screens/moderator/becomeModerator/becomeModerator_how";
+
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -23,6 +26,16 @@ export default function App() {
       />
       <SafeAreaProvider>
         <Stack.Navigator>
+          <Stack.Screen
+            name="howtobecomeModerator"
+            component={howtobecomeModerator}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="becomeModerator"
+            component={becomeModeratorFeatures}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name="Login"
             component={LoginScreen}
