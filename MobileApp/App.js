@@ -7,9 +7,13 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import HomeScreen from "./screens/home/HomeScreen";
 import TrainScheduleSearchScreen from "./screens/schedules/TrainScheduleSearchScreen";
 import TrainLiveUpdatesScreen from "./screens/liveUpdates/TrainLiveUpdatesScreen";
+import AvailableTrainsScreen from "./screens/liveUpdates/AvailableTrainsScreen";
 import LostItemsScreen from "./screens/lostItems/LostItemsScreen";
 import NewsUpdatesScreen from "./screens/news/NewsUpdatesScreen";
 import LoginScreen from "./screens/auth/LoginScreen";
+import RegisterScreen from "./screens/auth/RegisterScreen";
+import ForgotPasswordScreen from "./screens/auth/ForgotPasswordScreen";
+import ChangePasswordScreen from "./screens/auth/ChangePassword";
 import TrainScheduleResultScreen from "./screens/schedules/TrainScheduleResultScreen";
 import BookingSearch from "./screens/booking/BookingSearchScreen";
 export default function App() {
@@ -62,6 +66,27 @@ export default function App() {
           <Stack.Screen
             name="TrainScheduleResult"
             component={TrainScheduleResultScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ForgotPassword"
+            component={ForgotPasswordScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Register"
+            component={RegisterScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ChangePasswordScreen"
+            component={ChangePasswordScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="AvailableTrains"
+            component={AvailableTrainsScreen}
+            options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </SafeAreaProvider>
