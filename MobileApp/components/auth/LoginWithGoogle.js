@@ -11,6 +11,8 @@ import * as Google from "expo-auth-session/providers/google";
 import { useNavigation } from "@react-navigation/native";
 import tw from "twrnc";
 import { Shadow } from "react-native-shadow-2";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -19,6 +21,7 @@ const LoginWithGoogle = () => {
 
   const [userInfo, setUserInfo] = React.useState(null);
   const [authState, setAuthState] = React.useState(false);
+  const { login, logout, setIsLoading } = useContext(AuthContext);
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId:
@@ -32,6 +35,36 @@ const LoginWithGoogle = () => {
   });
 
   React.useEffect(() => {
+    async function continueWithGoogle(
+      email,
+      firstName,
+      lastName,
+      externalId,
+      oAuthProvider
+    ) {
+      const endpoint = "http://192.168.1.100:8080/api/v1/auth/oauth";
+
+      const data = { email, firstName, lastName, externalId, oAuthProvider };
+
+      try {
+        setIsLoading(true);
+        const rawResponse = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        const content = await rawResponse.json();
+        console.log("--------- BACKEND RESPONSE --------");
+        console.log(content);
+        login(content.accessToken, content.refreshToken);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     async function fetchUserInfoFromGoogleAPI() {
       const googleAPIEndpoint = "https://www.googleapis.com/oauth2/v3/userinfo";
 
@@ -45,7 +78,16 @@ const LoginWithGoogle = () => {
 
           const fetchedUserInfo = await responseData.json();
           setUserInfo(fetchedUserInfo);
-          navigation.navigate("HomeScreen");
+          console.log(fetchedUserInfo);
+
+          continueWithGoogle(
+            fetchedUserInfo.email,
+            fetchedUserInfo.given_name,
+            fetchedUserInfo.family_name,
+            fetchedUserInfo.sub,
+            "google"
+          );
+          // navigation.navigate("HomeScreen");
         }
       } catch (e) {
         console.log(e);
@@ -76,9 +118,6 @@ const LoginWithGoogle = () => {
           </Shadow>
         </View>
       </TouchableWithoutFeedback>
-
-      {userInfo ? <Text>{userInfo.email}</Text> : <Text>Nope</Text>}
-      {userInfo ? <Text>Hi {userInfo.given_name}</Text> : <Text>Nope</Text>}
     </View>
   );
 };

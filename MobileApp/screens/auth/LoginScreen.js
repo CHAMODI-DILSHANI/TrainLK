@@ -15,14 +15,18 @@ import { LogBox } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useContext } from "react";
+import { View } from "react-native";
 import { LogBox } from "react-native";
 import LoginWithGoogle from "../../components/auth/LoginWithGoogle";
+import { AuthContext } from "../../context/AuthContext";
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
 export default function LoginScreen() {
   const navigation = useNavigation();
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
+  const { accessToken } = useContext(AuthContext);
 
   return (
     <View style={styles.mainBody}>
