@@ -3,14 +3,15 @@ import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import tw from "twrnc";
 import { useNavigation } from "@react-navigation/native";
+import TopBar from "../../components/navigation/TopBar";
 
 const TrainLiveUpdatesScreen = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.mainBody}>
-      <Text>TrainLiveUpdatesScreen</Text>
-      <View style={tw`mt-5`}>
+    <View>
+      <TopBar title="Live Updates" goBack={true} />
+      <View style={tw`px-3`}>
         <TouchableOpacity
           style={[
             tw`flex flex-row justify-center items-center bg-[#0074B7] p-2.6 rounded-md`,
@@ -23,7 +24,7 @@ const TrainLiveUpdatesScreen = () => {
             size={20}
             color="white"
           />
-          <Text style={tw`font-medium text-white`}>VIEW AVAILABLE TRAINS</Text>
+          <Text style={tw`font-medium text-white`}>UPDATE TRAINS</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -32,8 +33,4 @@ const TrainLiveUpdatesScreen = () => {
 
 export default TrainLiveUpdatesScreen;
 
-const styles = StyleSheet.create({
-  mainBody: {
-    padding: 20,
-  },
-});
+const styles = StyleSheet.create({});

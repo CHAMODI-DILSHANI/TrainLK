@@ -20,6 +20,7 @@ import {
 import tw from "twrnc";
 
 import { useFonts } from "expo-font";
+import TopBar from "../../components/navigation/TopBar";
 
 const ModeratorLiveUpdateScreen = () => {
   const [status, setStatus] = useState("");
@@ -60,16 +61,7 @@ const ModeratorLiveUpdateScreen = () => {
 
   return (
     <ScrollView>
-      <View
-        style={tw`px-3 py-2 mx-3 my-2 flex-row items-center justify-between bg-white border border-gray-300 rounded-2`}
-      >
-        {/* TOP BAR */}
-        <Text style={tw`text-lg font-bold`}>Live Updates</Text>
-        <View style={tw`flex-row items-center`}>
-          <FontAwesomeIcon icon={faUser} style={tw`mr-4`} />
-          <FontAwesomeIcon icon={faBell} />
-        </View>
-      </View>
+      <TopBar title="Update" goBack={true} />
       <View
         style={tw`bg-white px-3 py-3 mx-3 rounded-2 border border-1 border-gray-300`}
       >

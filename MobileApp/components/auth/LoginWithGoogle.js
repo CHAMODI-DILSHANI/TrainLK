@@ -98,27 +98,29 @@ const LoginWithGoogle = () => {
   }, [response]);
 
   return (
-    <View>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          promptAsync();
-        }}
-      >
-        <View style={tw`m-3`}>
-          <Shadow style={[tw`bg-white rounded-2`]} distance={2} offset={[0, 1]}>
-            <View style={tw`p-3 flex-row items-center`}>
-              <Image
-                style={tw`w-5 h-5 mr-4`}
-                source={require("./../../assets/google_logo_icon_169090.png")}
-              />
-              <Text style={tw`text-gray-600 font-medium`}>
-                Continue with Google
-              </Text>
-            </View>
-          </Shadow>
-        </View>
-      </TouchableWithoutFeedback>
-    </View>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        promptAsync();
+      }}
+    >
+      <View>
+        <Shadow
+          style={[tw`bg-white rounded-2 w-full flex-row justify-center`]}
+          distance={2}
+          offset={[0, 1]}
+        >
+          <View style={tw`p-3 flex-row items-center`}>
+            <Image
+              style={tw`w-5 h-5 mr-4`}
+              source={require("./../../assets/google_logo_icon_169090.png")}
+            />
+            <Text style={tw`text-gray-600 font-medium`}>
+              Continue with Google
+            </Text>
+          </View>
+        </Shadow>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

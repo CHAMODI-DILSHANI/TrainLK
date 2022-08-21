@@ -16,7 +16,7 @@ const ScheduleResultCard = ({ startStationInfo, endStationInfo }) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <View style={tw`border border-gray-300 rounded-2 bg-white p-2 my-2`}>
+    <View style={tw`border border-gray-400 rounded-2 bg-white p-2 my-2`}>
       <View style={tw`flex-row justify-end`}>
         {!expanded && (
           <TouchableOpacity

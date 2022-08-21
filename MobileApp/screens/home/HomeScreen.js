@@ -78,7 +78,7 @@ const HomeScreen = () => {
                 style={{ width: 70, height: 70, marginBottom: 20 }}
                 source={{ uri: item.img }}
               />
-              <Text style={tw`text-lg font-semibold`}>{item.title}</Text>
+              <Text style={tw`font-semibold`}>{item.title}</Text>
               <Icon
                 type="antdesign"
                 name="arrowright"

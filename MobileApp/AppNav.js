@@ -15,6 +15,10 @@ import LoginScreen from "./screens/auth/LoginScreen";
 import TrainScheduleResultScreen from "./screens/schedules/TrainScheduleResultScreen";
 import BookingSearch from "./screens/booking/BookingSearchScreen";
 import ModeratorLiveUpdateScreen from "./screens/liveUpdates/ModeratorLiveUpdateScreen";
+import AvailableTrainsScreen from "./screens/liveUpdates/AvailableTrainsScreen";
+import RegisterScreen from "./screens/auth/RegisterScreen";
+import ForgotPasswordScreen from "./screens/auth/ForgotPasswordScreen";
+
 import { AuthContext, AuthProvider } from "./context/AuthContext";
 import { useContext } from "react";
 import { useState } from "react";
@@ -113,6 +117,30 @@ const AppNav = () => {
               <Stack.Screen
                 name="ProfileScreen"
                 component={ProfileScreen}
+                options={{ headerShown: false }}
+              />
+            )}
+
+            {accessToken && (
+              <Stack.Screen
+                name="AvailableTrains"
+                component={AvailableTrainsScreen}
+                options={{ headerShown: false }}
+              />
+            )}
+
+            {!accessToken && (
+              <Stack.Screen
+                name="Register"
+                component={RegisterScreen}
+                options={{ headerShown: false }}
+              />
+            )}
+
+            {!accessToken && (
+              <Stack.Screen
+                name="ForgotPassword"
+                component={ForgotPasswordScreen}
                 options={{ headerShown: false }}
               />
             )}
