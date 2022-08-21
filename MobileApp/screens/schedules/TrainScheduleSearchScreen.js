@@ -19,7 +19,7 @@ import {
 // import SearchSelectOption from "../../components/search/SearchSelectOption";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { format } from "date-fns";
-import Navigation from "../../components/navigation/Navigation";
+import TopBar from "../../components/navigation/TopBar";
 
 const stations = [
   { id: 1, name: "Colombo Fort" },
@@ -97,11 +97,9 @@ const TrainScheduleSearchScreen = () => {
   // ***********************************
   return (
     <View style={tw`flex bg-[#ffffff] flex-col h-full`}>
-      <Navigation
-        content="Train Schedules"
-        goBack="HomeScreen"
-        navigate={navigate}
-      />
+      <View style={tw`-z-10`}>
+        <TopBar title="Train Schedules" goBack={true} />
+      </View>
       <View style={tw` h-100`}>
         <Image
           style={tw`h-full w-full -mt-20`}

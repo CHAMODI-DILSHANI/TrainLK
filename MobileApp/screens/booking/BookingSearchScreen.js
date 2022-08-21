@@ -362,21 +362,21 @@ const BookingSearch = () => {
                 fdate == ""
               }
               onPress={() => {
-                axios
-                  .get(utils.lanip + "schedules")
-                  .then((res) => {
-                    console.log(res.data);
-                  })
-                  .catch((e) => {
-                    console.log(e);
-                  });
-                // var json = {
-                //   startStation: startStation,
-                //   endStation: endStation,
-                //   date: fdate,
-                //   passengers: passengers,
-                // };
-                // console.log(json);
+                // axios
+                //   .get(utils.lanip + "schedules")
+                //   .then((res) => {
+                //     console.log(res.data);
+                //   })
+                //   .catch((e) => {
+                //     console.log(e);
+                //   });
+                var json = {
+                  startStation: startStation,
+                  endStation: endStation,
+                  date: fdate,
+                  passengers: passengers,
+                };
+                console.log(json);
               }}
             >
               <FontAwesomeIcon
