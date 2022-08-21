@@ -13,6 +13,7 @@ import NewsUpdatesScreen from "./screens/news/NewsUpdatesScreen";
 import LoginScreen from "./screens/auth/LoginScreen";
 import RegisterScreen from "./screens/auth/RegisterScreen";
 import ForgotPasswordScreen from "./screens/auth/ForgotPasswordScreen";
+import ChangePasswordScreen from "./screens/auth/ChangePassword";
 import TrainScheduleResultScreen from "./screens/schedules/TrainScheduleResultScreen";
 import BookingSearch from "./screens/booking/BookingSearchScreen";
 export default function App() {
@@ -81,6 +82,11 @@ export default function App() {
           <Stack.Screen
             name="Register"
             component={RegisterScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ChangePasswordScreen"
+            component={ChangePasswordScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
