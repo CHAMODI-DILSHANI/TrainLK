@@ -37,8 +37,6 @@ authRouter.post("/oAuth", async (req, res) => {
       }
     }
 
-    console.log(userRole);
-
     const accessToken = jsonwebtoekn.sign(
       { id: userId, role: userRole },
       process.env.JWT_ACCESS_TOKEN_SECRET,
