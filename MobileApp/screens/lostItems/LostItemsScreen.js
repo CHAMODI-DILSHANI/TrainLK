@@ -28,13 +28,13 @@ const LostItemsScreen = () => {
         {/* <TouchableOpacity> */}
         <TouchableOpacity
           style={[
-            tw`flex-row h-40 bg-[#ffffff] rounded-xl p-4 mt-5`,
+            tw`flex-row bg-[#ffffff] rounded-xl p-4 mt-5 items-center`,
             { elevation: 3, shadowColor: "black" },
           ]}
           // style={tw`flex-row h-40 bg-[#e4e7e7] rounded-xl p-4 mt-5`}
         >
           <Image
-            style={tw`h-25 w-25 flex-0.25 `}
+            style={tw`h-16 w-16 flex-0.25 `}
             // blurRadius={10}
             // resizeMode="cover"
             source={{
@@ -45,7 +45,7 @@ const LostItemsScreen = () => {
           <View style={[tw`flex-col flex-0.75`]}>
             <Text
               style={[
-                tw`px-4 text-base text-justify flex-auto text-[#444444]`,
+                tw`px-4 text-justify flex-auto text-[#444444] text-sm`,
                 { flexWrap: "wrap" },
               ]}
               numberOfLines={4}
@@ -54,8 +54,8 @@ const LostItemsScreen = () => {
               Mirigama to Colombo Fort. National Identity Card , Bank Cards and
               Driving License
             </Text>
-            <View style={[tw`flex-row px-4 flex-row-reverse`]}>
-              <Text style={tw`pl-2 text-[#444444] font-semibold`}>
+            <View style={[tw`pt-2 flex-row px-4 flex-row-reverse`]}>
+              <Text style={tw`pl-2 text-[#444444] font-semibold text-xs`}>
                 3 hrs ago
               </Text>
               <FontAwesomeIcon icon={faClockRotateLeft} color={"#444444"} />
