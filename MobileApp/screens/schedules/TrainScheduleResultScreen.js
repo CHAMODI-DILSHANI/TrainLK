@@ -6,12 +6,16 @@ import TopBar from "../../components/navigation/TopBar";
 
 const TrainScheduleResultScreen = () => {
   return (
-    <ScrollView style={tw`px-3`}>
-      <TopBar title="Results" goBack={true} />
+    <ScrollView>
+      <View style={tw`bg-white mb-2`}>
+        <TopBar title="Results" goBack={true} />
+      </View>
 
-      <ScheduleResultCard />
-      <ScheduleResultCard />
-      <ScheduleResultCard />
+      <View style={tw`px-3`}>
+        <ScheduleResultCard />
+        <ScheduleResultCard />
+        <ScheduleResultCard />
+      </View>
     </ScrollView>
   );
 };
