@@ -12,7 +12,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ScheduleSearchResultCardStation from "./ScheduleSearchResultCardStation";
 
-const ScheduleResultCard = ({ startStationInfo, endStationInfo }) => {
+const ScheduleResultCard = ({ data }) => {
+  console.log("inside card");
+  console.log(data);
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -40,17 +42,25 @@ const ScheduleResultCard = ({ startStationInfo, endStationInfo }) => {
       </View>
 
       {/* pass props here */}
-      <ScheduleSearchResultCardStation />
-      <ScheduleSearchResultCardStation />
+      <ScheduleSearchResultCardStation
+        stationName={data.inStation}
+        inTime={data.inInfo.in}
+        outTime={data.inInfo.out}
+      />
+      <ScheduleSearchResultCardStation
+        stationName={data.outStation}
+        inTime={data.outInfo.in}
+        outTime={data.outInfo.out}
+      />
 
       <View style={tw`flex-row justify-between mt-6 px-3.5`}>
         <View style={tw`flex-row items-center`}>
           <FontAwesomeIcon icon={faWaveSquare} style={tw`text-gray-500`} />
-          <Text style={tw`ml-2 text-gray-600`}>Express train</Text>
+          <Text style={tw`ml-2 text-gray-600`}>{data.type}</Text>
         </View>
         <View style={tw`flex-row items-center`}>
           <FontAwesomeIcon icon={faCalendarDays} style={tw`text-gray-500`} />
-          <Text style={tw`ml-2 text-gray-600`}>Daily</Text>
+          <Text style={tw`ml-2 text-gray-600`}>{data.frequency}</Text>
         </View>
       </View>
 
@@ -61,21 +71,27 @@ const ScheduleResultCard = ({ startStationInfo, endStationInfo }) => {
           >
             <View style={tw`flex-row`}>
               <FontAwesomeIcon icon={faRoute} />
-              <Text style={tw`text-xs ml-2`}>50 km</Text>
+              <Text style={tw`text-xs ml-2`}>{data.distance} km</Text>
             </View>
             <View style={tw`flex-row`}>
               <FontAwesomeIcon icon={faClockFour} />
-              <Text style={tw`text-xs ml-2`}>Travel time 45 minutes</Text>
+              <Text style={tw`text-xs ml-2`}>
+                Travel time {data.travelDuration}
+              </Text>
             </View>
           </View>
 
           <View style={tw`px-3 py-1`}>
-            <Text style={tw`text-xs font-medium`}>Train No: {"4080"}</Text>
             <Text style={tw`text-xs font-medium`}>
-              Train Name: {"Samudra devi"}
+              Train No: {data.trainInfo[0].trainNo}
             </Text>
-            <Text style={tw`text-xs font-medium`}>Start: {"Colombo fort"}</Text>
-            <Text style={tw`text-xs font-medium`}>End: {"Galle"}</Text>
+            <Text style={tw`text-xs font-medium`}>
+              Train Name: {data.trainInfo[0].trainName}
+            </Text>
+            <Text style={tw`text-xs font-medium`}>
+              Start: {data.startStation}
+            </Text>
+            <Text style={tw`text-xs font-medium`}>End: {data.endStation}</Text>
           </View>
         </View>
       )}

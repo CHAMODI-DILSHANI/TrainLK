@@ -54,10 +54,11 @@ import utils from "../../utils";
 
 const BookingSearch = () => {
   const [stations, setStations] = useState();
+  console.log(utils.lanip + "/stations");
   useEffect(() => {
     if (stations == null) {
       axios
-        .get(utils.lanip + "stations")
+        .get(utils.lanip + "/stations")
         .then((res) => {
           console.log(res.data);
           setStations(res.data);
@@ -169,8 +170,8 @@ const BookingSearch = () => {
             }}
             data={stations}
             onSelect={(selectedItem, index) => {
-              console.log(selectedItem);
-              console.log(selectedItem.id);
+              // console.log(selectedItem);
+              // console.log(selectedItem.id);
               setStartStation(selectedItem.stationName);
             }}
             buttonTextAfterSelection={(selectedItem, index) => {

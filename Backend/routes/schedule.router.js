@@ -6,17 +6,21 @@ Router.get("/", (req, resp) => {
   resp.send();
 });
 
-Router.get("/s", async (req, resp) => {
+Router.get("/:inStation/:outStation/:date/:time", async (req, resp) => {
   // returns the matching schedules list from the schedules_has_station_table
   const result = await searchSchedule(
-    req.body.inStation,
-    req.body.outStation,
-    req.body.date,
-    req.body.time
+    req.params.inStation,
+    req.params.outStation,
+    req.params.date,
+    req.params.time
   );
   const result2 = await Promise.all(
     result.map((i) =>
-      getSchedulesbyID(i.scheduleID, req.body.inStation, req.body.outStation)
+      getSchedulesbyID(
+        i.scheduleID,
+        req.params.inStation,
+        req.params.outStation
+      )
     )
   );
   resp.send(result2);
@@ -74,6 +78,9 @@ async function getSchedulesbyID(scheduleID, inStation, outStation) {
       r.stations = await getStationNames(r.scheduleID);
       r.startStation = r.stations[0].stationName;
       r.endStation = r.stations[r.stations.length - 1].stationName;
+      r.frequency = await changefrequency(r.frequency);
+      r.trainInfo = await getTrainInfo(r.trainID);
+      delete r.trainID;
     })
   );
 
@@ -143,6 +150,14 @@ async function getStationNameNDistance(inStationID, outStationID, scheduleID) {
       out: result2[0].departureTime,
     },
   };
+}
+
+async function getTrainInfo(trainID) {
+  const result = await query(
+    "select trainNo,trainName from train where trainID=?",
+    [trainID]
+  );
+  return result;
 }
 
 // async function getStartNDestination(scheduleID) {

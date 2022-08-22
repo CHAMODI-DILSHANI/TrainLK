@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import tw from "twrnc";
@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
   faCalendar,
   faCaretDown,
+  faChampagneGlasses,
   faClock,
   faEdit,
   faMagnifyingGlass,
@@ -20,19 +21,35 @@ import {
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { format } from "date-fns";
 import TopBar from "../../components/navigation/TopBar";
+import utils from "../../utils";
+import axios from "axios";
 
-const stations = [
-  { id: 1, name: "Colombo Fort" },
-  { id: 2, name: "Hikkaduwa" },
-  { id: 3, name: "Australia" },
-  { id: 4, name: "Ireland" },
-];
+// const stations = [
+//   { id: 1, name: "Colombo Fort" },
+//   { id: 2, name: "Hikkaduwa" },
+//   { id: 3, name: "Australia" },
+//   { id: 4, name: "Ireland" },
+// ];
 
 const onChangeTime = (event, selectedDate) => {
-  console.log(event + " --- " + selectedDate);
+  // console.log(event + " --- " + selectedDate);
 };
 
 const TrainScheduleSearchScreen = () => {
+  const [stations, setStations] = useState();
+  useEffect(() => {
+    if (stations == null) {
+      axios
+        .get(utils.lanip + "/stations")
+        .then((res) => {
+          // console.log(res.data);
+          setStations(res.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  });
   const navigate = useNavigation();
 
   var selectedPicker = "";
@@ -41,12 +58,12 @@ const TrainScheduleSearchScreen = () => {
 
   const [date, setDate] = useState(new Date());
   const [fdate, setfDate] = useState("");
-  const [passengers, setPassengers] = useState(0);
+  // const [passengers, setPassengers] = useState(0);
 
   const ndate = new Date();
   const mdate = new Date();
   mdate.setDate(mdate.getDate() + 5);
-  console.log(mdate);
+  // console.log(mdate);
 
   const [timeString, setTimeString] = useState();
 
@@ -56,10 +73,10 @@ const TrainScheduleSearchScreen = () => {
       if (selectedPicker == "Date") {
         const currentDate = format(selectedDate, "dd-MM-yyyy");
         setfDate(currentDate);
-        console.log(selectedDate);
+        // console.log(selectedDate);
       } else {
         const timeString = format(selectedDate, "hh:mm a");
-        console.log("came here");
+        // console.log("came here");
         setTimeString(timeString);
       }
     }
@@ -95,6 +112,25 @@ const TrainScheduleSearchScreen = () => {
   };
 
   // ***********************************
+
+  const fetchScheduleData = () => {
+    axios
+      .get(
+        `${utils.lanip}/schedules/${startStation.stationID}/${endStation.stationID}/a/b`
+      )
+      .then((res) => {
+        // console.log(res.data);
+        // return res.data;
+
+        navigate.navigate("TrainScheduleResultScreen", res.data);
+        // setStations(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        return [];
+      });
+  };
+
   return (
     <View style={tw`flex bg-[#ffffff] flex-col h-full`}>
       <View style={tw`-z-10`}>
@@ -128,7 +164,7 @@ const TrainScheduleSearchScreen = () => {
                     Start Station :
                   </Text>
                   <Text style={tw`ml-2 text-sm`}>
-                    {selectedItem ? startStation : ""}
+                    {selectedItem ? startStation.stationName : ""}
                   </Text>
                   <FontAwesomeIcon
                     icon={faCaretDown}
@@ -142,19 +178,19 @@ const TrainScheduleSearchScreen = () => {
             }}
             data={stations}
             onSelect={(selectedItem, index) => {
-              console.log(selectedItem);
-              console.log(selectedItem.id);
-              setStartStation(selectedItem.name);
+              // console.log(selectedItem);
+              // console.log(selectedItem.id);
+              setStartStation(selectedItem);
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
               // text represented after item is selected
               // if data array is an array of objects then return selectedItem.property to render after item is selected
-              return selectedItem.name;
+              return selectedItem.stationName;
             }}
             rowTextForSelection={(item, index) => {
               // text represented for each item in dropdown
               // if data array is an array of objects then return item.property to represent item in dropdown
-              return item.name;
+              return item.stationName;
             }}
             search={true}
             placeholder=" testing"
@@ -165,19 +201,19 @@ const TrainScheduleSearchScreen = () => {
             // renderCustomizedButtonChild={<SearchSelectOption />}
             data={stations}
             onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index);
-              setEndStation(selectedItem.name);
+              // console.log(selectedItem, index);
+              setEndStation(selectedItem);
             }}
             rowTextStyle={tw`text-sm`}
             buttonTextAfterSelection={(selectedItem, index) => {
               // text represented after item is selected
               // if data array is an array of objects then return selectedItem.property to render after item is selected
-              return selectedItem.name;
+              return selectedItem.stationName;
             }}
             rowTextForSelection={(item, index) => {
               // text represented for each item in dropdown
               // if data array is an array of objects then return item.property to represent item in dropdown
-              return item.name;
+              return item.stationName;
             }}
             search={true}
             buttonStyle={{
@@ -198,7 +234,7 @@ const TrainScheduleSearchScreen = () => {
                     End Station :
                   </Text>
                   <Text style={tw`ml-2 text-sm pl-1`}>
-                    {selectedItem ? endStation : ""}
+                    {selectedItem ? endStation.stationName : ""}
                   </Text>
                   <FontAwesomeIcon
                     icon={faCaretDown}
@@ -338,8 +374,17 @@ const TrainScheduleSearchScreen = () => {
                   date: fdate,
                   time: timeString,
                 };
-                console.log(json);
-                navigate.navigate("TrainScheduleResultScreen");
+                // console.log(json);
+                console.log(utils.lanip + "/schedules/1/3/a/b");
+                // fetch(utils.lanip + "/schedules/1/3/a/b").then((json) => {
+                //   console.log(json);
+                // });
+
+                fetchScheduleData();
+                // navigate.navigate(
+                //   "TrainScheduleResultScreen",
+                //   fetchScheduleData()
+                // );
               }}
             >
               <FontAwesomeIcon color="white" icon={faMagnifyingGlass} />
