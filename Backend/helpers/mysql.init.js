@@ -1,15 +1,16 @@
 const mysql = require("mysql");
 const util = require("util");
+require("dotenv").config();
 
 let connection = mysql.createConnection({
   host: "localhost",
   port: process.env.MYSQL_PORT,
   user: "root",
-  password: "",
+  password: "root",
   database: "trainlk",
 });
 
-connection.connect((err) => {
+connection.connect(err => {
   if (err) {
     console.log("Error occurred ", err);
   } else {

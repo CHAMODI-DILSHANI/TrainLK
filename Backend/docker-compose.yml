@@ -10,6 +10,8 @@ services:
       MARIADB_ROOT_PASSWORD: root
       MARIADB_USER: kasun
       MARIADB_PASSWORD: 1234
+    volumes:
+      - ./../../DB/maria_volume:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin
@@ -18,3 +20,6 @@ services:
       - 8082:80
     environment:
       - PMA_ARBITRARY=1
+
+volumes:
+  maria_volume:
