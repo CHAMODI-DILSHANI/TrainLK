@@ -10,10 +10,9 @@ import TrainLiveUpdatesScreen from "./screens/liveUpdates/TrainLiveUpdatesScreen
 import LostItemsScreen from "./screens/lostItems/LostItemsScreen";
 import NewsUpdatesScreen from "./screens/news/NewsUpdatesScreen";
 import LoginScreen from "./screens/auth/LoginScreen";
-import becomeModeratorFeatures from "./screens/moderator/becomeModerator/becomeModerator_features";
-import howtobecomeModerator from "./screens/moderator/becomeModerator/becomeModerator_how";
-import becomeModeratorFormScreen from "./screens/moderator/becomeModerator/becomeModerator_form";
-
+import BecomeModeratorFormScreen from "./screens/moderator/becomeModerator/BecomeModeratorFormScreen";
+import BecomeModeratorFeatures from "./screens/moderator/becomeModerator/BecomeModeratorFeatures";
+import HowtobecomeModerator from "./screens/moderator/becomeModerator/HowtobecomeModerator";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -29,21 +28,20 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen
             name="becomeModeratorFormScreen"
-            component={becomeModeratorFormScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="howtobecomeModerator"
-            component={howtobecomeModerator}
+            component={BecomeModeratorFormScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
             name="becomeModerator"
-            component={becomeModeratorFeatures}
+            component={BecomeModeratorFeatures}
             options={{ headerShown: false }}
           />
-          
-          
+          <Stack.Screen
+            name="howtobecomeModerator"
+            component={HowtobecomeModerator}
+            options={{ headerShown: false }}
+          />
+
           <Stack.Screen
             name="Login"
             component={LoginScreen}
