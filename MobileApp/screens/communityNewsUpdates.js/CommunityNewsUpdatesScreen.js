@@ -5,16 +5,16 @@ import tw from "twrnc";
 import { useNavigation } from "@react-navigation/native";
 import TopBar from "../../components/navigation/TopBar";
 import NewsInfoCard from "../../components/communityUpdates/NewsInfoCard";
-import NewsUpdateDataScreen from "./NewsUpdateDataScreen";
+import CommunityNewsUpdateDataScreen from "./CommunityNewsUpdateDataScreen";
 
-const NewsUpdatesScreen = () => {
+const CommunityNewsUpdatesScreen = () => {
   const navigation = useNavigation();
 
   return (
     <Provider>
       <View style={tw`h-full`}>
         <View>
-          <TopBar title="News Updates" goBack={true} />
+          <TopBar title="Community News Updates" goBack={true} />
         </View>
         <ScrollView style={[tw`my-2 px-4`]}>
           <View style={tw`mb-6`}>
@@ -28,7 +28,7 @@ const NewsUpdatesScreen = () => {
         <FAB
           icon="pen"
           style={tw`absolute bottom-10 right-6 bg-[#8aade6]`}
-          onPress={() => navigation.navigate(NewsUpdateDataScreen)}
+          onPress={() => navigation.navigate(CommunityNewsUpdateDataScreen)}
           mode="flat"
         />
       </View>
@@ -36,6 +36,6 @@ const NewsUpdatesScreen = () => {
   );
 };
 
-export default NewsUpdatesScreen;
+export default CommunityNewsUpdatesScreen;
 
 const styles = StyleSheet.create({});

@@ -42,8 +42,8 @@ const HomeScreen = () => {
     },
     {
       id: 4,
-      title: "Lost Items",
-      screen: "LostItemsScreen",
+      title: "Community Updates",
+      screen: "CommunityUpdatesScreen",
       img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/travel-dynamic-premium.png",
     },
     {
@@ -67,7 +67,7 @@ const HomeScreen = () => {
       <FlatList
         numColumns={2}
         data={navigationOptions}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => navigation.navigate(item.screen)}
