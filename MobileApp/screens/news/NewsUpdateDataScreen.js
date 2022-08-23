@@ -17,7 +17,7 @@ const NewsUpdateDataScreen = () => {
     <View>
       <TopBar title="News Details" goBack={true} />
       <ScrollView>
-        <View style={[tw`my-2 px-5`]}>
+        <View style={[tw`my-2 px-5 mb-6`]}>
           <View style={tw`flex-col my-2`}>
             <Text style={tw`my-1.5 text-base font-semibold`}>Title</Text>
             <TextInput

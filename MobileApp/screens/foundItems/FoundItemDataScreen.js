@@ -60,7 +60,7 @@ const FoundItemDataScreen = () => {
     <View>
       <TopBar title="New Found Item Details" goBack={true} />
       <ScrollView>
-        <View style={[tw`my-2 px-5`]}>
+        <View style={[tw`my-2 px-5 mb-6`]}>
           <View style={tw`flex-col my-2`}>
             <Text style={tw`my-1.5 text-base font-semibold`}>Type</Text>
             <View style={tw`flex flex-row mt-1 mx-3`}>

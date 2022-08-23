@@ -17,11 +17,13 @@ const CommunityNewsUpdatesScreen = () => {
           <TopBar title="Community News Updates" goBack={true} />
         </View>
         <ScrollView style={[tw`my-2 px-4`]}>
-          <NewsInfoCard
-            title="News Heading"
-            data="News Details and everything typed in news data is here......"
-            time="3 hrs"
-          />
+          <View style={tw`mb-6`}>
+            <NewsInfoCard
+              title="News Heading"
+              data="News Details and everything typed in news data is here......"
+              time="3 hrs"
+            />
+          </View>
         </ScrollView>
         <FAB
           icon="pen"
