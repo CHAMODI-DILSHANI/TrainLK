@@ -154,6 +154,7 @@ const LostItemDataScreen = () => {
               icon="camera"
               style={tw`flex-1 bg-[#ccd5e3] mx-3 my-2 border-[#444444] rounded-md text-[#444444] items-center`}
               onPress={pickImage}
+              MediaTypeOptions="Image"
             >
               Attach Image
             </Button>
