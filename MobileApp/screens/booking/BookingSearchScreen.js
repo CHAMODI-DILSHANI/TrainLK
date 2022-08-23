@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -41,15 +41,35 @@ import {
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { format } from "date-fns";
 import Navigation from "../../components/navigation/Navigation";
+// import Axios from "axios"
+import axios from "axios";
+import utils from "../../utils";
 
-const stations = [
-  { id: 1, name: "Colombo Fort" },
-  { id: 2, name: "Hikkaduwa" },
-  { id: 3, name: "Australia" },
-  { id: 4, name: "Ireland" },
-];
+// const stations = [
+//   { id: 1, name: "Colombo Fort" },
+//   { id: 2, name: "Hikkaduwa" },
+//   { id: 3, name: "Australia" },
+//   { id: 4, name: "Ireland" },
+// ];
 
 const BookingSearch = () => {
+  const [stations, setStations] = useState();
+  console.log(utils.lanip + "/stations");
+  useEffect(() => {
+    if (stations == null) {
+      axios
+        .get(utils.lanip + "/stations")
+        .then((res) => {
+          console.log(res.data);
+          setStations(res.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  });
+
+  // getStations();
   const navigate = useNavigation();
   const [startStation, setStartStation] = useState("");
   const [endStation, setEndStation] = useState("");
@@ -66,6 +86,7 @@ const BookingSearch = () => {
   console.log(mdate);
 
   const onChange = (event, selectedDate) => {
+    // here it checks if we cancels the selection and ignores it
     if (event.type != "dismissed") {
       const currentDate = format(selectedDate, "dd-MM-yyyy");
       setfDate(currentDate);
@@ -149,41 +170,42 @@ const BookingSearch = () => {
             }}
             data={stations}
             onSelect={(selectedItem, index) => {
-              console.log(selectedItem);
-              console.log(selectedItem.id);
-              setStartStation(selectedItem.name);
+              // console.log(selectedItem);
+              // console.log(selectedItem.id);
+              setStartStation(selectedItem.stationName);
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
               // text represented after item is selected
               // if data array is an array of objects then return selectedItem.property to render after item is selected
-              return selectedItem.name;
+              return selectedItem.stationName;
             }}
             rowTextForSelection={(item, index) => {
               // text represented for each item in dropdown
               // if data array is an array of objects then return item.property to represent item in dropdown
-              return item.name;
+              return item.stationName;
             }}
             search={true}
             placeholder=" testing"
           />
         </View>
         <View style={tw`flex flex-row pl-6 pb-6`}>
+          {console.log(stations)}
           <SelectDropdown
             // renderCustomizedButtonChild={<SearchSelectOption />}
             data={stations}
             onSelect={(selectedItem, index) => {
               console.log(selectedItem, index);
-              setEndStation(selectedItem.name);
+              setEndStation(selectedItem.stationName);
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
               // text represented after item is selected
               // if data array is an array of objects then return selectedItem.property to render after item is selected
-              return selectedItem.name;
+              return selectedItem.stationName;
             }}
             rowTextForSelection={(item, index) => {
               // text represented for each item in dropdown
               // if data array is an array of objects then return item.property to represent item in dropdown
-              return item.name;
+              return item.stationName;
             }}
             rowTextStyle={tw`text-sm`}
             search={true}
@@ -341,6 +363,14 @@ const BookingSearch = () => {
                 fdate == ""
               }
               onPress={() => {
+                // axios
+                //   .get(utils.lanip + "schedules")
+                //   .then((res) => {
+                //     console.log(res.data);
+                //   })
+                //   .catch((e) => {
+                //     console.log(e);
+                //   });
                 var json = {
                   startStation: startStation,
                   endStation: endStation,

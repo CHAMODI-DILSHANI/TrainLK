@@ -3,8 +3,11 @@ import React from "react";
 import tw from "twrnc";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faTrainSubway, faCaretLeft } from "@fortawesome/free-solid-svg-icons";
+import { format } from "date-fns";
 
 const ScheduleSearchResultCardStation = ({ stationName, inTime, outTime }) => {
+  const inTimeF = new Date("01/01/2002 " + inTime);
+  const outTimeF = new Date("01/01/2002 " + outTime);
   return (
     <View style={tw`px-2`}>
       <View style={tw`flex-row`}>
@@ -31,7 +34,7 @@ const ScheduleSearchResultCardStation = ({ stationName, inTime, outTime }) => {
               </View>
               <View>
                 <Text style={tw`text-xs font-medium text-gray-500`}>
-                  11:45AM
+                  {format(inTimeF, "hh:mm a")}
                 </Text>
               </View>
             </View>
@@ -47,7 +50,9 @@ const ScheduleSearchResultCardStation = ({ stationName, inTime, outTime }) => {
                 <Text style={tw`text-center text-xs font-medium`}>OUT</Text>
               </View>
               <View>
-                <Text style={tw`text-xs font-medium`}>11:45AM</Text>
+                <Text style={tw`text-xs font-medium`}>
+                  {format(outTimeF, "hh:mm a")}
+                </Text>
               </View>
             </View>
           </View>
@@ -56,7 +61,7 @@ const ScheduleSearchResultCardStation = ({ stationName, inTime, outTime }) => {
           <FontAwesomeIcon icon={faCaretLeft} style={tw` m-auto`} />
         </View>
         <View style={tw`flex-1 h-15 justify-center`}>
-          <Text style={tw`font-medium my-auto ml-2`}>Colombo Fort</Text>
+          <Text style={tw`font-medium my-auto ml-2`}>{stationName}</Text>
         </View>
       </View>
     </View>
