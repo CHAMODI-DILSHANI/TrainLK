@@ -6,26 +6,24 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import {
-  faCaretDown,
-  faMagnifyingGlass,
-} from "@fortawesome/free-solid-svg-icons";
 import * as React from "react";
 import tw from "twrnc";
 import { useNavigation } from "@react-navigation/native";
 import TopBar from "../../components/navigation/TopBar";
-import SelectList from "react-native-dropdown-select-list";
 import SelectDropdown from "react-native-select-dropdown";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faCaretDown,
+  faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
 import { TextInput, Button } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { AntDesign } from "@expo/vector-icons";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-const LostItemDataScreen = () => {
+const FoundItemDataScreen = () => {
   const navigation = useNavigation();
 
   const [selected, setSelected] = React.useState("");
+  const [type, setType] = React.useState();
 
   const itemTypes = [
     "Wallet",
@@ -39,7 +37,6 @@ const LostItemDataScreen = () => {
   const [height, setHeight] = React.useState(undefined);
   const [Description, setDescription] = React.useState("");
   const [Details, setDetails] = React.useState("");
-  const [type, setType] = React.useState();
 
   const [image, setImage] = React.useState(null);
 
@@ -61,10 +58,10 @@ const LostItemDataScreen = () => {
 
   return (
     <View>
-      <TopBar title="New Lost Item Details" goBack={true} />
+      <TopBar title="New Found Item Details" goBack={true} />
       <ScrollView>
         <View style={[tw`my-2 px-5`]}>
-          <View style={tw` my-2`}>
+          <View style={tw`flex-col my-2`}>
             <Text style={tw`my-1.5 text-base font-semibold`}>Type</Text>
             <View style={tw`flex flex-row mt-1 mx-3`}>
               <SelectDropdown
@@ -179,6 +176,6 @@ const LostItemDataScreen = () => {
   );
 };
 
-export default LostItemDataScreen;
+export default FoundItemDataScreen;
 
 const styles = StyleSheet.create({});

@@ -42,7 +42,7 @@ const LoginWithGoogle = () => {
       externalId,
       oAuthProvider
     ) {
-      const endpoint = "http://10.22.166.207:8080/api/v1/auth/oauth";
+      const endpoint = "http://10.22.164.157:8080/api/v1/auth/oauth";
 
       const data = { email, firstName, lastName, externalId, oAuthProvider };
 

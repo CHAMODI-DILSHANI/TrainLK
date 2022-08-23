@@ -10,6 +10,7 @@ import HomeScreen from "./screens/home/HomeScreen";
 import TrainScheduleSearchScreen from "./screens/schedules/TrainScheduleSearchScreen";
 import TrainLiveUpdatesScreen from "./screens/liveUpdates/TrainLiveUpdatesScreen";
 import LostItemsScreen from "./screens/lostItems/LostItemsScreen";
+import FoundItemsScreen from "./screens/foundItems/FoundItemsScreen";
 import NewsUpdatesScreen from "./screens/news/NewsUpdatesScreen";
 import LoginScreen from "./screens/auth/LoginScreen";
 import TrainScheduleResultScreen from "./screens/schedules/TrainScheduleResultScreen";
@@ -18,6 +19,12 @@ import ModeratorLiveUpdateScreen from "./screens/liveUpdates/ModeratorLiveUpdate
 import AvailableTrainsScreen from "./screens/liveUpdates/AvailableTrainsScreen";
 import RegisterScreen from "./screens/auth/RegisterScreen";
 import ForgotPasswordScreen from "./screens/auth/ForgotPasswordScreen";
+import LostItemDataScreen from "./screens/lostItems/LostItemDataScreen";
+import FoundItemDataScreen from "./screens/foundItems/FoundItemDataScreen";
+import CommunityUpdatesScreen from "./screens/communityUpdates/CommunityUpdatesScreen";
+import CommunityNewsUpdatesScreen from "./screens/communityNewsUpdates.js/CommunityNewsUpdatesScreen";
+import CommunityNewsUpdateDataScreen from "./screens/communityNewsUpdates.js/CommunityNewsUpdateDataScreen";
+import NewsUpdateDataScreen from "./screens/news/NewsUpdateDataScreen";
 
 import { AuthContext, AuthProvider } from "./context/AuthContext";
 import { useContext } from "react";
@@ -98,6 +105,7 @@ const AppNav = () => {
                 options={{ headerShown: false }}
               />
             )}
+
             {accessToken && (
               <Stack.Screen
                 name="LostItemsScreen"
@@ -105,6 +113,7 @@ const AppNav = () => {
                 options={{ headerShown: false }}
               />
             )}
+
             {accessToken && (
               <Stack.Screen
                 name="BookingSearchScreen"
@@ -141,6 +150,62 @@ const AppNav = () => {
               <Stack.Screen
                 name="ForgotPassword"
                 component={ForgotPasswordScreen}
+                options={{ headerShown: false }}
+              />
+            )}
+
+            {accessToken && (
+              <Stack.Screen
+                name="LostItemDataScreen"
+                component={LostItemDataScreen}
+                options={{ headerShown: false }}
+              />
+            )}
+
+            {accessToken && (
+              <Stack.Screen
+                name="FoundItemDataScreen"
+                component={FoundItemDataScreen}
+                options={{ headerShown: false }}
+              />
+            )}
+
+            {accessToken && (
+              <Stack.Screen
+                name="FoundItemsScreen"
+                component={FoundItemsScreen}
+                options={{ headerShown: false }}
+              />
+            )}
+
+            {accessToken && (
+              <Stack.Screen
+                name="CommunityUpdatesScreen"
+                component={CommunityUpdatesScreen}
+                options={{ headerShown: false }}
+              />
+            )}
+
+            {accessToken && (
+              <Stack.Screen
+                name="CommunityNewsUpdatesScreen"
+                component={CommunityNewsUpdatesScreen}
+                options={{ headerShown: false }}
+              />
+            )}
+
+            {accessToken && (
+              <Stack.Screen
+                name="CommunityNewsUpdateDataScreen"
+                component={CommunityNewsUpdateDataScreen}
+                options={{ headerShown: false }}
+              />
+            )}
+
+            {accessToken && (
+              <Stack.Screen
+                name="NewsUpdateDataScreen"
+                component={NewsUpdateDataScreen}
                 options={{ headerShown: false }}
               />
             )}
