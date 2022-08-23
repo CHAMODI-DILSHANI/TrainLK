@@ -6,7 +6,8 @@ const { err_501, err_400_s } = require("../helpers/errors");
 const { connection, query } = require("./../helpers/mysql.init");
 
 authRouter.post("/oAuth", async (req, res) => {
-  const { email, firstName, lastName, externalId, oAuthProvider } = req.body;
+  const { email, firstName, lastName, externalId, oAuthProvider, picture } =
+    req.body;
 
   try {
     let response = await query(
@@ -20,8 +21,8 @@ authRouter.post("/oAuth", async (req, res) => {
     if (response.length == 0) {
       // Register the user with this associated google account
       const response = await query(
-        "INSERT INTO users(email, firstName, lastName, accountType, externalId) VALUES(?, ?, ?, ?, ?)",
-        [email, firstName, lastName, oAuthProvider, externalId]
+        "INSERT INTO users(email, firstName, lastName, accountType, externalId, picture) VALUES(?, ?, ?, ?, ?, ?)",
+        [email, firstName, lastName, oAuthProvider, externalId, picture]
       );
       userId = response.insertId;
       userRole = "client";

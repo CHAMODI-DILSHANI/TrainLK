@@ -40,11 +40,19 @@ const LoginWithGoogle = () => {
       firstName,
       lastName,
       externalId,
-      oAuthProvider
+      oAuthProvider,
+      picture
     ) {
       const endpoint = "http://10.22.164.157:8080/api/v1/auth/oauth";
 
-      const data = { email, firstName, lastName, externalId, oAuthProvider };
+      const data = {
+        email,
+        firstName,
+        lastName,
+        externalId,
+        oAuthProvider,
+        picture,
+      };
 
       try {
         setIsLoading(true);
@@ -85,7 +93,8 @@ const LoginWithGoogle = () => {
             fetchedUserInfo.given_name,
             fetchedUserInfo.family_name,
             fetchedUserInfo.sub,
-            "google"
+            "google",
+            fetchedUserInfo.picture
           );
           // navigation.navigate("HomeScreen");
         }
