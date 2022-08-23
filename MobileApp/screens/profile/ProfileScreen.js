@@ -35,12 +35,14 @@ const ProfileScreen = () => {
       <TopBar title="Profile" goBack={true} />
 
       <View style={tw`pt-4 flex-col items-center`}>
-        <Image
-          style={tw`w-20 h-20 rounded-50 border border-gray-400 p-2`}
-          source={{
-            uri: `${userInfo.picture}`,
-          }}
-        />
+        {userInfo && userInfo.picture && (
+          <Image
+            style={tw`w-20 h-20 rounded-50 border border-gray-400 p-2`}
+            source={{
+              uri: `${userInfo.picture}`,
+            }}
+          />
+        )}
 
         <View style={tw`flex-row mt-2 items-center`}>
           <Text style={tw`text-blue-400 font-black mr-2`}>
