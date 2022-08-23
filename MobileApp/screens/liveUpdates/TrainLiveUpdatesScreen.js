@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import React, { useContext } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import tw from "twrnc";
@@ -7,12 +13,87 @@ import TopBar from "../../components/navigation/TopBar";
 import { AuthContext } from "../../context/AuthContext";
 import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faTrainSubway,
+  faCaretRight,
+  faCaretDown,
+  faCaretUp,
+} from "@fortawesome/free-solid-svg-icons";
+import LiveUpdateCard from "../../components/liveUpdates/LiveUpdateCard";
 
 const TrainLiveUpdatesScreen = () => {
   const navigation = useNavigation();
 
   const { accessToken } = useContext(AuthContext);
   const [isModerator, setIsModerator] = useState(false);
+
+  const data1 = {
+    start: "Maradana",
+    end: "Beliattha",
+    status: {
+      stationId: "004",
+      station: "Moratuwa",
+      mode: "stopped",
+      time: "11:45AM",
+    },
+    stations: [
+      { id: "001", name: "colombo fort" },
+      { id: "002", name: "colombo fort" },
+      { id: "003", name: "colombo fort" },
+      { id: "004", name: "colombo fort" },
+      { id: "005", name: "colombo fort" },
+      { id: "006", name: "colombo fort" },
+      { id: "007", name: "colombo fort" },
+    ],
+    lastUpdateTime: "11:12",
+  };
+
+  const data2 = {
+    start: "Maradana",
+    end: "Beliattha",
+    status: {
+      stationId: "004",
+      station: "Moratuwa",
+      mode: "passing",
+      time: "11:45AM",
+    },
+    stations: [
+      { id: "001", name: "colombo fort" },
+      { id: "002", name: "colombo fort" },
+      { id: "003", name: "colombo fort" },
+      { id: "004", name: "colombo fort" },
+      { id: "005", name: "colombo fort" },
+      { id: "006", name: "colombo fort" },
+      { id: "007", name: "colombo fort" },
+      { id: "008", name: "colombo fort" },
+      { id: "009", name: "colombo fort" },
+      { id: "010", name: "colombo fort" },
+      { id: "011", name: "colombo fort" },
+    ],
+    lastUpdateTime: "11:12",
+  };
+
+  const data3 = {
+    start: "Maradana",
+    end: "Beliattha",
+    status: {
+      stationId: "004",
+      station: "Moratuwa",
+      mode: "in",
+      time: "11:45AM",
+    },
+    stations: [
+      { id: "001", name: "colombo fort" },
+      { id: "002", name: "colombo fort" },
+      { id: "003", name: "colombo fort" },
+      { id: "004", name: "colombo fort" },
+      { id: "005", name: "colombo fort" },
+      { id: "006", name: "colombo fort" },
+      { id: "007", name: "colombo fort" },
+    ],
+    lastUpdateTime: "11:12",
+  };
 
   useEffect(() => {
     var decoded = jwt_decode(accessToken);
@@ -22,7 +103,7 @@ const TrainLiveUpdatesScreen = () => {
   }, []);
 
   return (
-    <View>
+    <ScrollView>
       <TopBar title="Live Updates" goBack={true} />
       <View style={tw`px-3`}>
         {isModerator && (
@@ -42,7 +123,15 @@ const TrainLiveUpdatesScreen = () => {
           </TouchableOpacity>
         )}
       </View>
-    </View>
+
+      <View style={tw`p-3`}>
+        {/* CARD */}
+        <LiveUpdateCard data={data1} />
+        <LiveUpdateCard data={data2} />
+        <LiveUpdateCard data={data3} />
+        <LiveUpdateCard data={data1} />
+      </View>
+    </ScrollView>
   );
 };
 
