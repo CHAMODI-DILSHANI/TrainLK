@@ -28,10 +28,20 @@ Router.get("/:inStation/:outStation/:date/:time", async (req, resp) => {
 
 // function to search matching stations
 async function searchSchedule(inStation, outStation, date, time) {
+  console.log(await encodeDate(date));
+  console.log(time);
+  // console.log(
+  //   `select s.scheduleID,stationOrder,arrivalTime,departureTime from schedule_has_station st JOIN schedule s on s.scheduleID=st.scheduleID where stationID in(${inStation},${outStation}) and frequency LIKE ${await encodeDate(
+  //     date
+  //   )} order by st.scheduleID,stationOrder;`
+  // );
   const result = await query(
-    "select * from schedule_has_station where stationID in(?,?) order by scheduleID,stationOrder",
-    [inStation, outStation]
+    `select * from schedule_has_station st JOIN schedule s on s.scheduleID=st.scheduleID where stationID in(?,?) and arrivalTime>=? and frequency LIKE ? order by st.scheduleID,stationOrder;`,
+    // "select s.scheduleID,`stationOrder`,`arrivalTime`,`departureTime` from schedule_has_station st JOIN schedule s on s.scheduleID=st.scheduleID where stationID in('1','3') and departureTime>=? and frequency LIKE ? order by st.scheduleID,stationOrder;",
+    // [inStation, outStation, time, await encodeDate(date)]
+    [inStation, outStation, time, await encodeDate(date)]
   );
+  console.log(result);
 
   // this doesnt work (just skips on before it returns)
   // console.log(await result.filter(filterSchedule));
@@ -198,6 +208,24 @@ function changefrequency(string) {
     return "Weekend";
   } else {
     return "Other";
+  }
+}
+
+async function encodeDate(day) {
+  if (day == "Mon") {
+    return "_1______";
+  } else if (day == "Tue") {
+    return "__1____";
+  } else if (day == "Wed") {
+    return "___1___";
+  } else if (day == "Thu") {
+    return "____1__";
+  } else if (day == "Fri") {
+    return "_____1_";
+  } else if (day == "Sat") {
+    return "______1";
+  } else {
+    return "1______";
   }
 }
 

@@ -23,7 +23,6 @@ import { format } from "date-fns";
 import TopBar from "../../components/navigation/TopBar";
 import utils from "../../utils";
 import axios from "axios";
-
 // const stations = [
 //   { id: 1, name: "Colombo Fort" },
 //   { id: 2, name: "Hikkaduwa" },
@@ -66,11 +65,13 @@ const TrainScheduleSearchScreen = () => {
   // console.log(mdate);
 
   const [timeString, setTimeString] = useState();
+  const [timeX, setTimeX] = useState();
 
   //onchange function of setDate in the ui
   const onChange = (event, selectedDate) => {
     if (event.type != "dismissed") {
       if (selectedPicker == "Date") {
+        setDate(selectedDate);
         const currentDate = format(selectedDate, "dd-MM-yyyy");
         setfDate(currentDate);
         // console.log(selectedDate);
@@ -78,6 +79,7 @@ const TrainScheduleSearchScreen = () => {
         const timeString = format(selectedDate, "hh:mm a");
         // console.log("came here");
         setTimeString(timeString);
+        setTimeX(format(selectedDate, "HH:mm"));
       }
     }
   };
@@ -105,23 +107,32 @@ const TrainScheduleSearchScreen = () => {
       value: date,
       onChange,
       mode: "time",
+      // display: "clock",
       is24Hour: true,
-      maximumDate: mdate,
-      minimumDate: ndate,
     });
   };
 
   // ***********************************
 
   const fetchScheduleData = () => {
+    console.log(
+      `${utils.lanip}/schedules/${startStation.stationID}/${
+        endStation.stationID
+      }/${format(date, "EEE")}/${timeX}`
+    );
+    // ===============================================
+    // ==============================================
+    // ===========================================
+    // meke date eka pass karanna onida nattan day eka witharak athida??????
     axios
       .get(
-        `${utils.lanip}/schedules/${startStation.stationID}/${endStation.stationID}/a/b`
+        `${utils.lanip}/schedules/${startStation.stationID}/${
+          endStation.stationID
+        }/${format(date, "EEE")}/${timeX}`
       )
       .then((res) => {
         // console.log(res.data);
         // return res.data;
-
         navigate.navigate("TrainScheduleResultScreen", res.data);
         // setStations(res.data);
       })
@@ -273,20 +284,22 @@ const TrainScheduleSearchScreen = () => {
               icon={faCalendar}
             />
             <Text style={tw`ml-2 text-sm text-gray-400 flex-1`}>Date :</Text>
-            <View style={tw`ml-2 flex-1`}>
-              {fdate == "" ? (
-                <Text style={tw`text-sm text-gray-400`}>Select a date</Text>
-              ) : (
-                <Text style={tw`text-sm`}>{fdate}</Text>
-              )}
-            </View>
             <TouchableOpacity
-              style={tw`absolute right-2`}
+              style={tw`flex-1`}
               onPress={() => {
                 showDatepicker();
               }}
             >
-              <FontAwesomeIcon icon={faEdit} />
+              <View style={tw`ml-2 flex-1`}>
+                {fdate == "" ? (
+                  <Text style={tw`text-sm text-gray-400`}>Select a date</Text>
+                ) : (
+                  <Text style={tw`text-sm`}>{fdate}</Text>
+                )}
+              </View>
+              <View style={tw`absolute right-2`}>
+                <FontAwesomeIcon icon={faEdit} />
+              </View>
             </TouchableOpacity>
           </View>
 
@@ -295,20 +308,22 @@ const TrainScheduleSearchScreen = () => {
           >
             <FontAwesomeIcon style={tw`text-gray-400 text-sm`} icon={faClock} />
             <Text style={tw`ml-2 text-sm text-gray-400 flex-1`}>Time :</Text>
-            <View style={tw`ml-2 flex-1`}>
-              {timeString == null ? (
-                <Text style={tw`text-sm text-gray-400`}>Select the time</Text>
-              ) : (
-                <Text style={tw`text-sm`}>{timeString}</Text>
-              )}
-            </View>
             <TouchableOpacity
-              style={tw`absolute right-2`}
               onPress={() => {
                 showTimepicker();
               }}
+              style={tw`flex-1`}
             >
-              <FontAwesomeIcon icon={faEdit} />
+              <View style={tw`ml-2 flex-1`}>
+                {timeString == null ? (
+                  <Text style={tw`text-sm text-gray-400`}>Select the time</Text>
+                ) : (
+                  <Text style={tw`text-sm`}>{timeString}</Text>
+                )}
+              </View>
+              <View style={tw`absolute right-2`}>
+                <FontAwesomeIcon icon={faEdit} />
+              </View>
             </TouchableOpacity>
           </View>
 
