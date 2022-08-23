@@ -40,10 +40,11 @@ import {
 // import SearchSelectOption from "../../components/search/SearchSelectOption";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { format } from "date-fns";
-import Navigation from "../../components/navigation/Navigation";
+// import Navigation from "../../components/navigation/Navigation";
 // import Axios from "axios"
 import axios from "axios";
 import utils from "../../utils";
+import TopBar from "../../components/navigation/TopBar";
 
 // const stations = [
 //   { id: 1, name: "Colombo Fort" },
@@ -115,12 +116,14 @@ const BookingSearch = () => {
   return (
     <View style={tw`flex bg-[#ffffff] flex-col h-full`}>
       {/* <Text>TrainLiveUpdatesScreen</Text> */}
-      <Navigation
+      {/* <Navigation
         content="Booking Search"
         navigate={navigate}
         goBack="HomeScreen"
-      />
-
+      /> */}
+      <View style={tw`-z-10`}>
+        <TopBar title="Bookings Search" goBack={true} />
+      </View>
       <View style={tw` h-100`}>
         <Image
           style={tw`h-full w-full`}
