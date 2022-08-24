@@ -64,7 +64,6 @@ const BecomeModeratorFormScreen = () => {
   const [image, setImage] = useState();
   const [startStation, setStartStation] = useState();
 
-
   useEffect(() => {
     // console.log("Hiii");
     // console.log(image);
@@ -128,14 +127,12 @@ const BecomeModeratorFormScreen = () => {
                 style={tw`h-6.6 w-5 mr-2 `}
               />
               <Text style={tw`font-medium`}>NIC front</Text>
-
             </TouchableOpacity>
             {image && (
               <Image source={{ uri: image }} style={tw`w-30 h-30 ml-5 mt-2`} />
             )}
           </View>
         </View>
-
 
         <View style={tw`flex-1`}>
           <View style={tw``}>
@@ -147,7 +144,6 @@ const BecomeModeratorFormScreen = () => {
             >
               <Image
                 source={require("./../../../assets/Moderator/file-upload-icon.png")}
-
                 style={tw`h-6.6 w-5 mr-2`}
               />
               <Text style={tw`font-medium`}>NIC back</Text>
@@ -237,7 +233,7 @@ const BecomeModeratorFormScreen = () => {
         multiline={true}
         numberOfLines={4}
         style={[
-          tw`bg-transparent my-3 border-[#A3A3A3] border h-20 line-clamp-3 ml-5 mr-5`,
+          tw`bg-transparent my-3 border-[#A3A3A3] border h-20  ml-5 mr-5`,
         ]}
         autoCapitalize="none"
         placeholder="Add decrpition about you"
