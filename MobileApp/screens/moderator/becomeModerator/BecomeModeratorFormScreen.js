@@ -16,6 +16,27 @@ import tw from "twrnc";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import { useEffect } from "react";
+import SelectDropdown from "react-native-select-dropdown";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faArrowDownUpAcrossLine,
+  faArrowDownUpLock,
+  faCalendar,
+  faCalendarDay,
+  faCalendarPlus,
+  faCaretDown,
+  faEdit,
+  faMagnifyingGlass,
+  faMinus,
+  faMinusCircle,
+  faPeopleGroup,
+  faPeopleLine,
+  faPlus,
+  faPlusCircle,
+  faRightLeft,
+  faSync,
+  faTrainSubway,
+} from "@fortawesome/free-solid-svg-icons";
 // import Icon from "react-native-vector-icons/FontAwesome";
 
 // import {
@@ -27,9 +48,21 @@ import { useEffect } from "react";
 //   { id: 3, name: "Australia" },
 //   { id: 4, name: "Ireland" },
 // ];
+const Lines = [
+  "Main Line",
+  "Matale Line",
+  "Puttalam Line",
+  "Nothern Line",
+  "Batticoloa Line",
+  "Coast Line",
+  "KV Line",
+  "Trincomalee Line",
+  "Talaimannar Line",
+];
 
 const BecomeModeratorFormScreen = () => {
   const [image, setImage] = useState();
+  const [startStation, setStartStation] = useState();
 
   useEffect(() => {
     // console.log("Hiii");
@@ -128,11 +161,65 @@ const BecomeModeratorFormScreen = () => {
         style={[tw`bg-transparent my-3 border-[#A3A3A3] border h-9 ml-5 mr-5`]}
         autoCapitalize="none"
       />
-      <Text style={tw`mt-1 font-medium text-base ml-5`}>Workplace</Text>
-      <TextInput
+      <Text style={tw`mt-1 font-medium text-base ml-5`}>Train Line</Text>
+      <View style={tw`flex-row ml-5`}>
+        <SelectDropdown
+          buttonStyle={{
+            flexBasis: "94.5%",
+            backgroundColor: "#ffffff",
+            borderColor: "#a3a3a3",
+            borderStyle: "solid",
+            borderWidth: 1,
+          }}
+          rowTextStyle={tw`text-sm`}
+          renderCustomizedButtonChild={(selectedItem, index) => {
+            return (
+              <View style={tw`flex-row items-center  `}>
+                {/* <FontAwesomeIcon
+                style={tw`text-gray-400 text-sm`}
+                icon={faTrainSubway}
+              />
+              <Text style={tw`ml-2 text-sm text-gray-400`}>
+                Start Station :
+              </Text> */}
+                <Text style={tw`ml-2 text-sm`}>
+                  {selectedItem ? startStation : ""}
+                </Text>
+                <FontAwesomeIcon
+                  icon={faCaretDown}
+                  style={tw`absolute right-0`}
+                />
+              </View>
+            );
+          }}
+          renderSearchInputLeftIcon={() => {
+            return <FontAwesomeIcon icon={faMagnifyingGlass} />;
+          }}
+          data={Lines}
+          onSelect={(selectedItem, index) => {
+            // console.log(selectedItem);
+            // console.log(selectedItem.id);
+            setStartStation(selectedItem);
+          }}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            // text represented after item is selected
+            // if data array is an array of objects then return selectedItem.property to render after item is selected
+            return selectedItem;
+          }}
+          rowTextForSelection={(item, index) => {
+            // text represented for each item in dropdown
+            // if data array is an array of objects then return item.property to represent item in dropdown
+            return item;
+          }}
+          search={true}
+          placeholder=" testing"
+        />
+      </View>
+
+      {/* <TextInput
         style={[tw`bg-transparent my-3 border-[#A3A3A3] border h-9 ml-5 mr-5`]}
         autoCapitalize="none"
-      />
+      /> */}
       <Text style={tw`mt-1 font-medium text-base ml-5`}>Travel Frequency</Text>
       <TextInput
         style={[tw`bg-transparent my-3 border-[#A3A3A3] border h-9 ml-5 mr-5`]}

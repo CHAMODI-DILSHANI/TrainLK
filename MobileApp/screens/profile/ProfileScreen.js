@@ -7,21 +7,23 @@ import tw from "twrnc";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import jwt_decode from "jwt-decode";
+import { useNavigation } from "@react-navigation/native";
 
 const ProfileScreen = () => {
   const { logout } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState(null);
   const { accessToken } = useContext(AuthContext);
+  const navigation = useNavigation();
 
   useEffect(() => {
     var decoded = jwt_decode(accessToken);
     console.log(decoded);
 
     function fetchProfile() {
-      const endpoint = `http://192.168.1.100:8080/api/v1/users/profile?id=${decoded.id}`;
+      const endpoint = `http://192.168.1.103:8080/api/v1/users/profile?id=${decoded.id}`;
       fetch(endpoint)
-        .then(response => response.json())
-        .then(json => {
+        .then((response) => response.json())
+        .then((json) => {
           console.log(json);
           setUserInfo(json);
         });
@@ -77,7 +79,11 @@ const ProfileScreen = () => {
       </View>
 
       {userInfo && userInfo.accountType && userInfo.accountType != "Moderator" && (
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("BecomeModeratorStep1");
+          }}
+        >
           <View style={tw`p-2 bg-gray-200 m-3 rounded-2`}>
             <Text style={tw`text-center text-blue-400 font-black`}>
               Become a moderator
