@@ -72,6 +72,7 @@ const BecomeModeratorFeatures = () => {
           onPress={() => {
             navigation.navigate("BecomeModeratorStep2");
           }}
+
         >
           <Text style={tw`font-medium text-white`}>Proceed</Text>
         </TouchableOpacity>

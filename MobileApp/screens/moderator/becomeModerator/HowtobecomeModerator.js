@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 const HowtobecomeModerator = () => {
   const navigation = useNavigation();
 
+
   return (
     <View style={tw`flex flex-col pl-6 pr-6 py-10 bg-[#ffffff]`}>
       <ScrollView style={tw`flex bg-[#ffffff] flex-col h-full `}>
@@ -70,6 +71,7 @@ const HowtobecomeModerator = () => {
           onPress={() => {
             navigation.navigate("BecomeModeratorStep3");
           }}
+
         >
           <Text style={tw`font-medium text-white`}>Proceed</Text>
         </TouchableOpacity>

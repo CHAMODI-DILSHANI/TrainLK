@@ -64,6 +64,7 @@ const BecomeModeratorFormScreen = () => {
   const [image, setImage] = useState();
   const [startStation, setStartStation] = useState();
 
+
   useEffect(() => {
     // console.log("Hiii");
     // console.log(image);
@@ -110,12 +111,14 @@ const BecomeModeratorFormScreen = () => {
       <Text style={tw`mt-1 font-medium text-base ml-5 mb-3`}>
         Upload ID card Images
       </Text>
+
       <View style={tw`flex-row justify-between px-5`}>
         <View style={tw`flex-1`}>
           <View style={tw``}>
             <TouchableOpacity
               style={[
                 tw`flex flex-row justify-center items-center bg-[#ffffff] pl-3 pr-4 pt-1.5 pb-1.5 rounded-md border-dashed border-2 border-black-500`,
+
                 // { elevation: 3, shadowColor: "black" },
               ]}
               onPress={pickImage}
@@ -125,12 +128,14 @@ const BecomeModeratorFormScreen = () => {
                 style={tw`h-6.6 w-5 mr-2 `}
               />
               <Text style={tw`font-medium`}>NIC front</Text>
+
             </TouchableOpacity>
             {image && (
               <Image source={{ uri: image }} style={tw`w-30 h-30 ml-5 mt-2`} />
             )}
           </View>
         </View>
+
 
         <View style={tw`flex-1`}>
           <View style={tw``}>
@@ -142,6 +147,7 @@ const BecomeModeratorFormScreen = () => {
             >
               <Image
                 source={require("./../../../assets/Moderator/file-upload-icon.png")}
+
                 style={tw`h-6.6 w-5 mr-2`}
               />
               <Text style={tw`font-medium`}>NIC back</Text>
@@ -220,6 +226,7 @@ const BecomeModeratorFormScreen = () => {
         style={[tw`bg-transparent my-3 border-[#A3A3A3] border h-9 ml-5 mr-5`]}
         autoCapitalize="none"
       /> */}
+
       <Text style={tw`mt-1 font-medium text-base ml-5`}>Travel Frequency</Text>
       <TextInput
         style={[tw`bg-transparent my-3 border-[#A3A3A3] border h-9 ml-5 mr-5`]}
