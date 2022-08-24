@@ -110,21 +110,21 @@ const BecomeModeratorFormScreen = () => {
       <Text style={tw`mt-1 font-medium text-base ml-5 mb-3`}>
         Upload ID card Images
       </Text>
-      <View style={tw`flex-row `}>
-        <View>
+      <View style={tw`flex-row justify-between px-5`}>
+        <View style={tw`flex-1`}>
           <View style={tw``}>
             <TouchableOpacity
               style={[
-                tw`flex flex-row justify-center items-center bg-[#ffffff] pl-3 pr-4 pt-1.5 pb-1.5 mr-3 ml-5 rounded-md border-dashed border-2 border-black-500`,
+                tw`flex flex-row justify-center items-center bg-[#ffffff] pl-3 pr-4 pt-1.5 pb-1.5 rounded-md border-dashed border-2 border-black-500`,
                 // { elevation: 3, shadowColor: "black" },
               ]}
               onPress={pickImage}
             >
               <Image
                 source={require("./../../../assets/Moderator/file-upload-icon.png")}
-                style={tw`h-6.6 w-5 mr-5 `}
+                style={tw`h-6.6 w-5 mr-2 `}
               />
-              <Text style={tw`font-medium`}>Image 1</Text>
+              <Text style={tw`font-medium`}>NIC front</Text>
             </TouchableOpacity>
             {image && (
               <Image source={{ uri: image }} style={tw`w-30 h-30 ml-5 mt-2`} />
@@ -132,21 +132,21 @@ const BecomeModeratorFormScreen = () => {
           </View>
         </View>
 
-        <View>
+        <View style={tw`flex-1`}>
           <View style={tw``}>
             <TouchableOpacity
               style={[
-                tw`flex flex-row justify-center items-center bg-[#ffffff] pl-3 pr-4 pt-1.5 pb-1.5 mr-8 ml-5 rounded-md border-dashed border-2 border-black-500`, // { elevation: 3, shadowColor: "black" },
+                tw`flex flex-row justify-center items-center bg-[#ffffff] pl-3 pr-4 pt-1.5 pb-1.5 ml-2  rounded-md border-dashed border-2 border-black-500`, // { elevation: 3, shadowColor: "black" },
               ]}
               onPress={pickImage2}
             >
               <Image
                 source={require("./../../../assets/Moderator/file-upload-icon.png")}
-                style={tw`h-6.6 w-5 mr-5`}
+                style={tw`h-6.6 w-5 mr-2`}
               />
-              <Text style={tw`font-medium`}>Image 2</Text>
+              <Text style={tw`font-medium`}>NIC back</Text>
             </TouchableOpacity>
-            {image && (
+            {image2 && (
               <Image
                 source={{ uri: image2 }}
                 style={tw`w-30 h-30 ml-5 mt-2 `}
