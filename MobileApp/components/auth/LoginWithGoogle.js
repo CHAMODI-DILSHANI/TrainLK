@@ -43,8 +43,7 @@ const LoginWithGoogle = () => {
       oAuthProvider,
       picture
     ) {
-      const endpoint = "http://192.168.1.103:8080/api/v1/auth/oauth";
-
+      const endpoint = "http://10.22.166.207:8080/api/v1/auth/oauth";
       const data = {
         email,
         firstName,

@@ -20,7 +20,7 @@ const ProfileScreen = () => {
     console.log(decoded);
 
     function fetchProfile() {
-      const endpoint = `http://192.168.1.103:8080/api/v1/users/profile?id=${decoded.id}`;
+      const endpoint = `http://10.22.166.207:8080/api/v1/users/profile?id=${decoded.id}`;
       fetch(endpoint)
         .then((response) => response.json())
         .then((json) => {
