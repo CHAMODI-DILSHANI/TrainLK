@@ -30,4 +30,29 @@ userRouter.get("/profile", async (req, res) => {
   return res.status(200).send(data);
 });
 
+userRouter.post("/moderator", async (req, res) => {
+  const result = await moderatorRequests(req.body);
+  res.send(result);
+});
+
+async function moderatorRequests(data) {
+  try {
+    const result = await query(
+      "insert into moderatorrequest values (?,?,?,?,?,?,?)",
+      [
+        data.userID,
+        data.contactNo,
+        data.nic,
+        data.frontImage,
+        data.backImage,
+        data.travelFrequency,
+        data.railwayLine,
+      ]
+    );
+    return result;
+  } catch (e) {
+    return e;
+  }
+}
+
 module.exports = userRouter;
