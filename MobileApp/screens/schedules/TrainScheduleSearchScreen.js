@@ -40,11 +40,11 @@ const TrainScheduleSearchScreen = () => {
     if (stations == null) {
       axios
         .get(utils.lanip + "/stations")
-        .then((res) => {
+        .then(res => {
           // console.log(res.data);
           setStations(res.data);
         })
-        .catch((e) => {
+        .catch(e => {
           console.log(e);
         });
     }
@@ -128,15 +128,15 @@ const TrainScheduleSearchScreen = () => {
       .get(
         `${utils.lanip}/schedules/${startStation.stationID}/${
           endStation.stationID
-        }/${format(date, "EEE")}/${timeX}`
+        }/${format(date, "EEE")}/${timeX ?? "00:00"}`
       )
-      .then((res) => {
+      .then(res => {
         // console.log(res.data);
         // return res.data;
         navigate.navigate("TrainScheduleResultScreen", res.data);
         // setStations(res.data);
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
         return [];
       });
@@ -369,18 +369,16 @@ const TrainScheduleSearchScreen = () => {
             <TouchableOpacity
               style={[
                 tw` text-white py-2 rounded-4 flex-row justify-center items-center`,
-                startStation == null ||
-                endStation == "" ||
-                fdate == "" ||
-                timeString == null
-                  ? tw`bg-neutral-400`
+                startStation == null || endStation == "" || fdate == ""
+                  ? // ||
+                    // timeString == null
+                    tw`bg-neutral-400`
                   : tw`bg-sky-500`,
               ]}
               disabled={
-                startStation == "" ||
-                endStation == "" ||
-                fdate == "" ||
-                timeString == null
+                startStation == "" || endStation == "" || fdate == ""
+                // ||
+                // timeString == null
               }
               onPress={() => {
                 var json = {

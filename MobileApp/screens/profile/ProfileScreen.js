@@ -76,12 +76,22 @@ const ProfileScreen = () => {
         )}
       </View>
 
+      {userInfo && userInfo.accountType && userInfo.accountType != "Moderator" && (
+        <TouchableOpacity>
+          <View style={tw`p-2 bg-gray-200 m-3 rounded-2`}>
+            <Text style={tw`text-center text-blue-400 font-black`}>
+              Become a moderator
+            </Text>
+          </View>
+        </TouchableOpacity>
+      )}
+
       <TouchableOpacity
         onPress={() => {
           logout();
         }}
       >
-        <View style={tw`p-2 bg-gray-200 m-3 rounded-2`}>
+        <View style={tw`p-2 bg-gray-200 mb-3 mx-3 rounded-2`}>
           <Text style={tw`text-center text-blue-400 font-black`}>logout</Text>
         </View>
       </TouchableOpacity>
