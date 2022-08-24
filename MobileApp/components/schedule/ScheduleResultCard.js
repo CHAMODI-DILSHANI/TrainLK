@@ -93,6 +93,21 @@ const ScheduleResultCard = ({ data }) => {
             </Text>
             <Text style={tw`text-xs font-medium`}>End: {data.endStation}</Text>
           </View>
+
+          <Text style={tw`px-3 font-medium text-xs mt-2`}>Stops: </Text>
+          <View style={[tw`flex-row flex-wrap mt-2 px-3`]}>
+            {data.stations.map(station => (
+              <View
+                key={station.stationName}
+                style={tw`flex-row items-center mr-2`}
+              >
+                <View style={tw`w-1 h-1 bg-black rounded-100 mr-1`}></View>
+                <Text style={tw`text-xs font-medium text-gray-500`}>
+                  {station.stationName}
+                </Text>
+              </View>
+            ))}
+          </View>
         </View>
       )}
     </View>
