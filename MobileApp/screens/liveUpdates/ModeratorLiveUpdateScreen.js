@@ -38,9 +38,14 @@ const ModeratorLiveUpdateScreen = () => {
   useEffect(() => {
     setStations([
       "Colombo fort",
-      "Hikkaduwa",
+      "Mount Lavinia",
       "Moratuwa",
-      "Kaluthara",
+      "Panadura",
+      "Kaluthara south",
+      "Aluthgama",
+      "Benthota",
+      "Ambalangoda",
+      "Hikkaduwa",
       "Galle",
     ]);
 
@@ -68,7 +73,7 @@ const ModeratorLiveUpdateScreen = () => {
         {/* TOP SECTION */}
         <View style={tw`flex-row items-center justify-between mb-2`}>
           {/* <View style={tw`w-10 h-0.3 bg-gray-400 mr-2`}></View> */}
-          <Text style={{ fontFamily: "Grotesk-Bold" }}>Train Status</Text>
+          <Text>Train Status</Text>
           {/* <View style={tw`flex-1 h-0.3 bg-gray-400 ml-2 mr-2`}></View> */}
           <FontAwesomeIcon icon={faCircleInfo} style={tw`text-gray-500`} />
         </View>
@@ -91,14 +96,11 @@ const ModeratorLiveUpdateScreen = () => {
           </View>
 
           <View style={tw`flex-row justify-between`}>
-            <Text style={{ flex: 1, fontFamily: "Grotesk-Medium" }}>
-              Colombo Fort
-            </Text>
+            <Text style={{ flex: 1 }}>Colombo Fort</Text>
             <FontAwesomeIcon icon={faCaretUp} style={tw`text-blue-800`} />
             <Text
               style={{
                 flex: 1,
-                fontFamily: "Grotesk-Medium",
                 textAlign: "right",
               }}
             >
@@ -139,7 +141,7 @@ const ModeratorLiveUpdateScreen = () => {
 
           {/* Buttons Set */}
           <View>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 setStatus("IN");
               }}
@@ -155,7 +157,7 @@ const ModeratorLiveUpdateScreen = () => {
                   IN
                 </Text>
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity
               onPress={() => {
                 setStatus("PASSING");

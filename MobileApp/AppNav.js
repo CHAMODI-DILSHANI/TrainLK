@@ -33,6 +33,7 @@ import { AuthContext, AuthProvider } from "./context/AuthContext";
 import { useContext } from "react";
 import { useState } from "react";
 import ProfileScreen from "./screens/profile/ProfileScreen";
+import LiveTrainLocationView from "./screens/liveUpdates/LiveTrainLocationView";
 
 const AppNav = () => {
   const Stack = createNativeStackNavigator();
@@ -233,6 +234,14 @@ const AppNav = () => {
               <Stack.Screen
                 name="BecomeModeratorStep3"
                 component={BecomeModeratorFormScreen}
+                options={{ headerShown: false }}
+              />
+            )}
+
+            {accessToken && (
+              <Stack.Screen
+                name="LiveTrainLocationScreen"
+                component={LiveTrainLocationView}
                 options={{ headerShown: false }}
               />
             )}

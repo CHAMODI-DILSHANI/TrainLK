@@ -44,20 +44,20 @@ const HomeScreen = () => {
       id: 4,
       title: "Community Updates",
       screen: "CommunityUpdatesScreen",
-      img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/travel-dynamic-premium.png",
+      img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/chat-bubble-dynamic-premium.png",
     },
     {
       id: 5,
       title: "Station Info",
       screen: "LostItemsScreen",
-      img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/travel-dynamic-premium.png",
+      img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/notebook-dynamic-premium.png",
     },
-    {
-      id: 5,
-      title: "BookingSearchScreen",
-      screen: "BookingSearchScreen",
-      img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/travel-dynamic-premium.png",
-    },
+    // {
+    //   id: 5,
+    //   title: "Bookings",
+    //   screen: "BookingSearchScreen",
+    //   img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/travel-dynamic-premium.png",
+    // },
   ];
   return (
     <SafeAreaView
@@ -67,7 +67,7 @@ const HomeScreen = () => {
       <FlatList
         numColumns={2}
         data={navigationOptions}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => navigation.navigate(item.screen)}

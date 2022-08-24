@@ -37,13 +37,15 @@ const AvailableTrainsScreen = () => {
               color="#444444"
             />
             <View style={tw`flex-col ml-3 flex-1`}>
-              <Text style={tw`text-lg font-medium`}>Train Name</Text>
+              <Text style={tw`text-lg font-medium`}>
+                Colombo fort to Beliaththa
+              </Text>
               <View style={tw`flex-row`}>
                 <Text style={tw`flex-0.5 text-[#444444] text-base font-normal`}>
-                  Starting station
+                  Colombo fort
                 </Text>
                 <Text style={tw`flex-0.5 text-[#444444] text-base font-normal`}>
-                  Ending station
+                  Beliaththa
                 </Text>
               </View>
               <View style={tw`flex-row`}>
@@ -51,7 +53,46 @@ const AvailableTrainsScreen = () => {
                   10.25 AM
                 </Text>
                 <Text style={tw`flex-0.5 text-[#444444] text-xs font-light`}>
-                  4.30 PM
+                  1.30 PM
+                </Text>
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("ModeratorLiveUpdateScreen");
+          }}
+        >
+          <View
+            style={[
+              tw`flex-row bg-[#ffffff] p-3.5 rounded-md my-3.5 border-[#444444]`,
+              { elevation: 3, shadowColor: "black" },
+            ]}
+          >
+            <MaterialIcons
+              style={tw`self-center`}
+              name="train"
+              size={35}
+              color="#444444"
+            />
+            <View style={tw`flex-col ml-3 flex-1`}>
+              <Text style={tw`text-lg font-medium`}>Chilaw to Puttalama</Text>
+              <View style={tw`flex-row`}>
+                <Text style={tw`flex-0.5 text-[#444444] text-base font-normal`}>
+                  Chilaw
+                </Text>
+                <Text style={tw`flex-0.5 text-[#444444] text-base font-normal`}>
+                  Puttalama
+                </Text>
+              </View>
+              <View style={tw`flex-row`}>
+                <Text style={tw`flex-0.5 text-[#444444] text-xs font-light`}>
+                  1.25 PM
+                </Text>
+                <Text style={tw`flex-0.5 text-[#444444] text-xs font-light`}>
+                  3.30 PM
                 </Text>
               </View>
             </View>
