@@ -25,6 +25,9 @@ import CommunityUpdatesScreen from "./screens/communityUpdates/CommunityUpdatesS
 import CommunityNewsUpdatesScreen from "./screens/communityNewsUpdates.js/CommunityNewsUpdatesScreen";
 import CommunityNewsUpdateDataScreen from "./screens/communityNewsUpdates.js/CommunityNewsUpdateDataScreen";
 import NewsUpdateDataScreen from "./screens/news/NewsUpdateDataScreen";
+import BecomeModeratorFeatures from "./screens/moderator/becomeModerator/BecomeModeratorFeatures";
+import HowtobecomeModerator from "./screens/moderator/becomeModerator/HowtobecomeModerator";
+import BecomeModeratorFormScreen from "./screens/moderator/becomeModerator/BecomeModeratorFormScreen";
 
 import { AuthContext, AuthProvider } from "./context/AuthContext";
 import { useContext } from "react";
@@ -206,6 +209,30 @@ const AppNav = () => {
               <Stack.Screen
                 name="NewsUpdateDataScreen"
                 component={NewsUpdateDataScreen}
+                options={{ headerShown: false }}
+              />
+            )}
+
+            {accessToken && (
+              <Stack.Screen
+                name="BecomeModeratorStep1"
+                component={BecomeModeratorFeatures}
+                options={{ headerShown: false }}
+              />
+            )}
+
+            {accessToken && (
+              <Stack.Screen
+                name="BecomeModeratorStep2"
+                component={HowtobecomeModerator}
+                options={{ headerShown: false }}
+              />
+            )}
+
+            {accessToken && (
+              <Stack.Screen
+                name="BecomeModeratorStep3"
+                component={BecomeModeratorFormScreen}
                 options={{ headerShown: false }}
               />
             )}

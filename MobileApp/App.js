@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-
 import { AuthProvider } from "./context/AuthContext";
 import AppNav from "./AppNav";
 
