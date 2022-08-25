@@ -52,12 +52,12 @@ const HomeScreen = () => {
       screen: "LostItemsScreen",
       img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/notebook-dynamic-premium.png",
     },
-    // {
-    //   id: 5,
-    //   title: "Bookings",
-    //   screen: "BookingSearchScreen",
-    //   img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/travel-dynamic-premium.png",
-    // },
+    {
+      id: 5,
+      title: "Bookings",
+      screen: "BookingSearchScreen",
+      img: "https://3dicons.sgp1.cdn.digitaloceanspaces.com/v1/dynamic/premium/card-dynamic-premium.png",
+    },
   ];
   return (
     <SafeAreaView
