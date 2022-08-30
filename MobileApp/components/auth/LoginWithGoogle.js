@@ -13,6 +13,7 @@ import tw from "twrnc";
 import { Shadow } from "react-native-shadow-2";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import utils from "../../utils";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -43,7 +44,7 @@ const LoginWithGoogle = () => {
       oAuthProvider,
       picture
     ) {
-      const endpoint = "http://10.22.166.207:8080/api/v1/auth/oauth";
+      const endpoint = utils.api + "/auth/oauth";
       const data = {
         email,
         firstName,

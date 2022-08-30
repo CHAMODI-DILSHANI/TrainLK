@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import jwt_decode from "jwt-decode";
 import { useNavigation } from "@react-navigation/native";
+import utils from "../../utils";
 
 const ProfileScreen = () => {
   const { logout } = useContext(AuthContext);
@@ -20,7 +21,7 @@ const ProfileScreen = () => {
     console.log(decoded);
 
     function fetchProfile() {
-      const endpoint = `http://10.22.166.207:8080/api/v1/users/profile?id=${decoded.id}`;
+      const endpoint = `${utils.api}/users/profile?id=${decoded.id}`;
       fetch(endpoint)
         .then((response) => response.json())
         .then((json) => {

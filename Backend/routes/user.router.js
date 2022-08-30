@@ -35,6 +35,11 @@ userRouter.post("/moderator", async (req, res) => {
   res.send(result);
 });
 
+userRouter.get("/moderator", async (req, res) => {
+  const result = await getModeratorRequests();
+  res.send(result);
+});
+
 async function moderatorRequests(data) {
   try {
     const result = await query(
@@ -48,6 +53,17 @@ async function moderatorRequests(data) {
         data.travelFrequency,
         data.railwayLine,
       ]
+    );
+    return result;
+  } catch (e) {
+    return e;
+  }
+}
+
+async function getModeratorRequests() {
+  try {
+    const result = await query(
+      "select u.id,firstName,lastName,email,picture,contactNo,nic,frontImage,backImage,travelFrequency,railwayLine from users u join moderatorrequest m on u.id = m.userID"
     );
     return result;
   } catch (e) {
