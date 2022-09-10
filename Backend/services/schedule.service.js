@@ -4,6 +4,8 @@ const {
   encodeDate,
 } = require("../helpers/frequency.encode.decode");
 
+const sleep = require("../helpers/sleep");
+
 // function to search matching stations
 async function searchSchedule(inStation, outStation, date, time) {
   console.log(await encodeDate(date));
@@ -146,13 +148,6 @@ async function getTrainInfo(trainID) {
     [trainID]
   );
   return result;
-}
-
-// sleep function
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
 }
 
 function abs(x) {
