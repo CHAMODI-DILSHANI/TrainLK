@@ -1,6 +1,6 @@
 const express = require("express");
 const Router = express.Router();
-const searchService = require("../services/schedule.service");
+const scheduleService = require("../services/schedule.service");
 
 Router.get("/", (req, resp) => {
   resp.send();
@@ -8,7 +8,7 @@ Router.get("/", (req, resp) => {
 
 Router.get("/:inStation/:outStation/:date/:time", async (req, resp) => {
   // returns the matching schedules list from the schedules_has_station_table
-  const result = await searchService.searchSchedule(
+  const result = await scheduleService.searchSchedule(
     req.params.inStation,
     req.params.outStation,
     req.params.date,
@@ -16,7 +16,7 @@ Router.get("/:inStation/:outStation/:date/:time", async (req, resp) => {
   );
   const result2 = await Promise.all(
     result.map((i) =>
-      searchService.getSchedulesbyID(
+      scheduleService.getSchedulesbyID(
         i.scheduleID,
         req.params.inStation,
         req.params.outStation
@@ -24,6 +24,14 @@ Router.get("/:inStation/:outStation/:date/:time", async (req, resp) => {
     )
   );
   resp.send(result2);
+});
+
+Router.post("/", async (req, res) => {
+  if (await scheduleService.createNewSchedule(req.body)) {
+    res.status(201).send();
+  } else {
+    res.status(422).send();
+  }
 });
 
 // async function getStartNDestination(scheduleID) {
