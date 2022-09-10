@@ -174,8 +174,10 @@ async function createNewSchedule(data) {
     }
 
     await query("commit");
+    return true;
   } catch (e) {
     await query("rollback");
+    return false;
   }
 }
 

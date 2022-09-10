@@ -26,12 +26,12 @@ Router.get("/:inStation/:outStation/:date/:time", async (req, resp) => {
   resp.send(result2);
 });
 
-Router.post("/", (req, res) => {
-  // req.body.stations.forEach((val) => {
-  //   console.log(val);
-  // });
-  scheduleService.createNewSchedule(req.body);
-  res.send(req.body);
+Router.post("/", async (req, res) => {
+  if (await scheduleService.createNewSchedule(req.body)) {
+    res.status(201).send();
+  } else {
+    res.status(422).send();
+  }
 });
 
 // async function getStartNDestination(scheduleID) {
