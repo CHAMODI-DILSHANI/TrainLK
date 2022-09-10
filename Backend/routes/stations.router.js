@@ -1,15 +1,12 @@
 const express = require("express");
 const Router = express.Router();
 const { query } = require("../helpers/mysql.init");
+const stationsService = require("../services/stations.service");
 
 Router.get("/", async (req, resp) => {
-  const result = await getAllStations();
+  const result = await stationsService.getAllStations();
   resp.send(result);
   // resp.send({ message: "hi" });
 });
-
-async function getAllStations() {
-  return await query("select stationID,stationName from station");
-}
 
 module.exports = Router;
