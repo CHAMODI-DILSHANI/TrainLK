@@ -151,4 +151,32 @@ async function getTrainInfo(trainID) {
   return result;
 }
 
-module.exports = { searchSchedule, getSchedulesbyID };
+async function createNewSchedule(data) {
+  try {
+    await query("begin");
+    const scheduleInsertQ = await query(
+      "insert into schedule(trainID,frequency,type) values(?,?,?)",
+      [data.trainID, data.frequency, data.type]
+    );
+    // const query2 = await query(
+    //   "insert into test1(testName,testVal) values('test',1)"
+    // );
+    const scheduleID = scheduleInsertQ.insertId;
+    for (i in data.stations) {
+      var x = data.stations[i];
+      await query("insert into schedule_has_station values(?,?,?,?,?)", [
+        scheduleID,
+        x.stationID,
+        i,
+        x.in,
+        x.out,
+      ]);
+    }
+
+    await query("commit");
+  } catch (e) {
+    await query("rollback");
+  }
+}
+
+module.exports = { searchSchedule, getSchedulesbyID, createNewSchedule };
