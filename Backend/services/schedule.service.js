@@ -5,6 +5,7 @@ const {
 } = require("../helpers/frequency.encode.decode");
 
 const sleep = require("../helpers/sleep");
+const abs = require("../helpers/absolute");
 
 // function to search matching stations
 async function searchSchedule(inStation, outStation, date, time) {
@@ -148,14 +149,6 @@ async function getTrainInfo(trainID) {
     [trainID]
   );
   return result;
-}
-
-function abs(x) {
-  if (x < 0) {
-    return -x;
-  } else {
-    return x;
-  }
 }
 
 module.exports = { searchSchedule, getSchedulesbyID };
