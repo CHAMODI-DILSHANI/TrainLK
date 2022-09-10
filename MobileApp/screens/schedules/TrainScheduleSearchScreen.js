@@ -39,12 +39,12 @@ const TrainScheduleSearchScreen = () => {
   useEffect(() => {
     if (stations == null) {
       axios
-        .get(utils.lanip + "/stations")
-        .then(res => {
+        .get(utils.api + "/stations")
+        .then((res) => {
           // console.log(res.data);
           setStations(res.data);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     }
@@ -116,7 +116,7 @@ const TrainScheduleSearchScreen = () => {
 
   const fetchScheduleData = () => {
     console.log(
-      `${utils.lanip}/schedules/${startStation.stationID}/${
+      `${utils.api}/schedules/${startStation.stationID}/${
         endStation.stationID
       }/${format(date, "EEE")}/${timeX}`
     );
@@ -126,17 +126,17 @@ const TrainScheduleSearchScreen = () => {
     // meke date eka pass karanna onida nattan day eka witharak athida??????
     axios
       .get(
-        `${utils.lanip}/schedules/${startStation.stationID}/${
+        `${utils.api}/schedules/${startStation.stationID}/${
           endStation.stationID
         }/${format(date, "EEE")}/${timeX ?? "00:00"}`
       )
-      .then(res => {
+      .then((res) => {
         // console.log(res.data);
         // return res.data;
         navigate.navigate("TrainScheduleResultScreen", res.data);
         // setStations(res.data);
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
         return [];
       });
@@ -388,8 +388,8 @@ const TrainScheduleSearchScreen = () => {
                   time: timeString,
                 };
                 // console.log(json);
-                console.log(utils.lanip + "/schedules/1/3/a/b");
-                // fetch(utils.lanip + "/schedules/1/3/a/b").then((json) => {
+                console.log(utils.api + "/schedules/1/3/a/b");
+                // fetch(utils.api + "/schedules/1/3/a/b").then((json) => {
                 //   console.log(json);
                 // });
 

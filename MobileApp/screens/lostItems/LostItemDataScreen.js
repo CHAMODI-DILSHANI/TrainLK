@@ -63,7 +63,7 @@ const LostItemDataScreen = () => {
     <View>
       <TopBar title="New Lost Item Details" goBack={true} />
       <ScrollView>
-        <View style={[tw`my-2 px-5 mb-6`]}>
+        <View style={[tw`my-2 px-5 mb-6 pb-12`]}>
           <View style={tw` my-2`}>
             <Text style={tw`my-1.5 text-base font-semibold`}>Type</Text>
             <View style={tw`flex flex-row mt-1 mx-3`}>
@@ -159,10 +159,9 @@ const LostItemDataScreen = () => {
               Attach Image
             </Button>
             {image && (
-              <Image
-                source={{ uri: image }}
-                style={{ width: 200, height: 200 }}
-              />
+              <View style={tw`px-3 flex-row `}>
+                <Image source={{ uri: image }} style={tw`flex-1 h-50 w-100`} />
+              </View>
             )}
           </View>
           <View style={tw`flex-col my-2`}>
