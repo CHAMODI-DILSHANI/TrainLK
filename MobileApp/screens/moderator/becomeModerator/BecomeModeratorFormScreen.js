@@ -4,51 +4,26 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  TouchableHighlight,
-  To,
-  Button,
   Image,
+  ScrollView,
 } from "react-native";
 import React from "react";
 import tw from "twrnc";
-// import {Avatar,Button} from 'react-native-paper';
-// import { Image } from 'react-native';
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import { useEffect } from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
-  faArrowDownUpAcrossLine,
-  faArrowDownUpLock,
-  faCalendar,
-  faCalendarDay,
-  faCalendarPlus,
   faCaretDown,
-  faEdit,
   faMagnifyingGlass,
-  faMinus,
-  faMinusCircle,
-  faPeopleGroup,
-  faPeopleLine,
-  faPlus,
-  faPlusCircle,
-  faRightLeft,
-  faSync,
-  faTrainSubway,
 } from "@fortawesome/free-solid-svg-icons";
+<<<<<<< HEAD
 import TopBar from "../../../components/navigation/TopBar";
 // import Icon from "react-native-vector-icons/FontAwesome";
+=======
+>>>>>>> d9871fb (become moderator form data json format)
 
-// import {
-//  Dropdown }
-//  from 'react-native-material-dropdown';
-// const stations = [
-//   { id: 1, name: "Colombo Fort" },
-//   { id: 2, name: "Hikkaduwa" },
-//   { id: 3, name: "Australia" },
-//   { id: 4, name: "Ireland" },
-// ];
 const Lines = [
   "Main Line",
   "Matale Line",
@@ -63,7 +38,21 @@ const Lines = [
 
 const BecomeModeratorFormScreen = () => {
   const [image, setImage] = useState();
+
+  const [nicNo, setNic] = useState();
+  const [cNo, setContactNo] = useState();
   const [startStation, setStartStation] = useState();
+  const [freq, setFrequency] = useState();
+  const [discp, setDescription] = useState();
+
+  const modData = {
+    nic: nicNo,
+    data: "123",
+    contactno: cNo,
+    trainline: startStation,
+    frequency: freq,
+    description: discp,
+  };
 
   const [contactNo, setContactNo] = useState();
   const [NIC, setNIC] = useState();
@@ -101,7 +90,7 @@ const BecomeModeratorFormScreen = () => {
       setImage2(result.uri);
     }
   };
-  // const [Pic,SetPic]=React.useState('');
+
   return (
     <View>
       <TopBar title="Become Moderator Form" goBack={true} />
