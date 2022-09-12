@@ -18,11 +18,8 @@ import {
   faCaretDown,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
-<<<<<<< HEAD
 import TopBar from "../../../components/navigation/TopBar";
 // import Icon from "react-native-vector-icons/FontAwesome";
-=======
->>>>>>> d9871fb (become moderator form data json format)
 
 const Lines = [
   "Main Line",
@@ -61,10 +58,7 @@ const BecomeModeratorFormScreen = () => {
   const [frequency, setFrequency] = useState();
   const [railwayLine, setRailwayLine] = useState();
 
-  useEffect(() => {
-    // console.log("Hiii");
-    // console.log(image);
-  }, []);
+  useEffect(() => {}, []);
 
   const [image2, setImage2] = useState();
 
