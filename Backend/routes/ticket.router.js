@@ -12,4 +12,9 @@ Router.get("/:scheduleID/:startStation/:endStation", async (req, res) => {
   );
 });
 
+Router.post("/", (req, res) => {
+  console.log(req.body);
+  res.send(req.body);
+});
+
 module.exports = Router;
