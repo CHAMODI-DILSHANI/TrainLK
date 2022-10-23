@@ -7,8 +7,10 @@ import {
   ModalBody,
   Button,
   Textarea,
+  Image,
 } from "@material-tailwind/react";
 import { useState, Fragment } from "react";
+import UserPopUp from "components/UsersPopUp";
 
 export default function Dashboard() {
   // model function
@@ -75,19 +77,15 @@ export default function Dashboard() {
         </div>
       </div>
       <Button onClick={handleOpen}>asda</Button>
-      <Fragment>
-        <Modal active={open} hander={handleOpen}>
-          <ModalHeader>asd</ModalHeader>
-          <ModalBody>
-            <Textarea>fcvhbjnkl;</Textarea>
-          </ModalBody>
-          <ModalFooter>
-            <Button varient="gradient" color="green" onClick={handleOpen}>
-              <span>Confirm</span>
-            </Button>
-          </ModalFooter>
-        </Modal>
-      </Fragment>
+
+      <UserPopUp
+        open={open}
+        data={{
+          name: "Sandali Ranasinghe",
+          email: "sandaliranasinghe@gmail.com",
+        }}
+        handleOpen={handleOpen}
+      />
     </>
   );
 }
