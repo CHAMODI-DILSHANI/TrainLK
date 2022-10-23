@@ -11,4 +11,28 @@ async function getTicketPrice(scheduleID, startStation, endStation) {
   }
 }
 
-module.exports = { getTicketPrice };
+async function addTicketGroups(data) {
+  try {
+    query("begin");
+    const createGroup = await query(
+      "insert into ticketgroup(routeName) values (?)",
+      [data.routeName]
+    );
+    const groupID = createGroup.insertId;
+    // console.log(data.ticketPrices);
+    await data.ticketPrices.forEach(async (x) => {
+      // console.log(x);
+      await query(
+        "insert into ticketprices( groupID,station_1_ID,station_2_ID,class,price) values(?,?,?,?,?)",
+        [groupID, x.station_1_ID, x.station_2_ID, x.class, x.price]
+      );
+    });
+    query("commit");
+    return groupID;
+  } catch (e) {
+    query("rollback");
+    return false;
+  }
+}
+
+module.exports = { getTicketPrice, addTicketGroups };

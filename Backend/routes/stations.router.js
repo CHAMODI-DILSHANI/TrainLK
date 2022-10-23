@@ -1,6 +1,5 @@
 const express = require("express");
 const Router = express.Router();
-const { query } = require("../helpers/mysql.init");
 const stationsService = require("../services/stations.service");
 
 Router.get("/", async (req, resp) => {

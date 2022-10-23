@@ -12,4 +12,15 @@ Router.get("/:scheduleID/:startStation/:endStation", async (req, res) => {
   );
 });
 
+Router.post("/group", async (req, res) => {
+  // console.log(req.body);
+  // res.send(req.body);
+  const result = await ticketServices.addTicketGroups(req.body);
+  if (result) {
+    res.status(201).send({ groupID: result });
+  } else {
+    res.status(422).send();
+  }
+});
+
 module.exports = Router;
