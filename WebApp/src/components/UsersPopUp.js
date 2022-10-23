@@ -4,39 +4,58 @@ import {
   Modal,
   ModalBody,
   ModalFooter,
-  ModalHeader,
+  // ModalHeader,
 } from "@material-tailwind/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+
+// const data2 = {
+//   Name: "Sandali",
+//   Email: "sandaliranasinghe@gmail.com",
+//   Type: "administrator",
+//   Contact: "071-123456789",
+//   NIC: "991234567V",
+// };
 
 export default function UserPopUp({ data, open, handleOpen }) {
-  console.log(data);
+  //   console.log(Object.keys(data2));
   return (
     <>
-      <p>asd</p>
+      {/* <p>asd</p> */}
       <Fragment>
-        <Modal active={open} hander={handleOpen}>
-          <ModalHeader>asd</ModalHeader>
+        <Modal active={open} size="lg" toggler={handleOpen}>
+          {/* <ModalHeader>User Details</ModalHeader> */}
           <ModalBody>
             <div className="flex justify-center flex-none h-20">
               <Image
                 rounded
-                className="w-1/2 h-1/2"
+                className=""
                 src={
                   "/material-tailwind-dashboard-react/static/media/team-1-800x800.fa5a7ac2.jpg"
                 }
                 alt="..."
               />
             </div>
-            <div
-              style={{
-                display: "grid",
-                "grid-template-columns": "repeat(2, minmax(0, 1fr))",
-              }}
-            >
-              <h1>Name</h1>
-              <p>Sandali</p>
-              <h1>Email</h1>
-              <p>sandaliranasinghe@gmail</p>
+            <div className="">
+              <div
+                className="mt-4"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(10, minmax(0, 1fr))",
+                  // margi: "20 20 20 20",
+                }}
+              >
+                {Object.keys(data).map((i) => (
+                  <>
+                    <h1 style={{ gridColumn: "span 3" }}>{i}</h1>
+                    <div
+                      className="font-light"
+                      style={{ gridColumn: "span 7" }}
+                    >
+                      {data[i]}
+                    </div>
+                  </>
+                ))}
+              </div>
             </div>
 
             {/* <Textarea>fcvhbjnkl;</Textarea> */}

@@ -608,6 +608,9 @@ video {
 .-ml-4{
 	margin-left: -1rem;
 }
+.mt-4{
+	margin-top: 1rem;
+}
 .mb-14{
 	margin-bottom: 3.5rem;
 }
@@ -646,6 +649,9 @@ video {
 }
 .h-10{
 	height: 2.5rem;
+}
+.h-20{
+	height: 5rem;
 }
 .h-40{
 	height: 10rem;
@@ -691,6 +697,9 @@ video {
 }
 .flex-1{
 	flex: 1 1 0%;
+}
+.flex-none{
+	flex: none;
 }
 .border-collapse{
 	border-collapse: collapse;
