@@ -67,7 +67,7 @@ export default function UserPopUp({ data, open, handleOpen }) {
                   </>
                 ))}
 
-                {Object.keys(modReq).map((i) => console.log(i))}
+                {Object.keys(modReq).map((i) => console.log(modReq[i]))}
                 {Object.keys(modReq).map((i) => (
                   <>
                     <h1 key={modReq.contactNo} style={{ gridColumn: "span 3" }}>

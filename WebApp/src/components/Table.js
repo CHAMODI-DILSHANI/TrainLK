@@ -10,8 +10,8 @@ import {
   Icon,
   Dropdown,
   DropdownItem,
-  Select,
-  Option,
+  //   Select,
+  //   Option,
 } from "@material-tailwind/react";
 
 import { useState } from "react";
@@ -213,13 +213,13 @@ export default function CardTable(props) {
                   }}
                   {/* <DropdownItem color="lightBlue">Previous Month</DropdownItem> */}
                 </Dropdown>
-                <Select label="Select Version">
+                {/* <Select label="Select Version">
                   <Option>Material Tailwind HTML</Option>
                   <Option>Material Tailwind React</Option>
                   <Option>Material Tailwind Vue</Option>
                   <Option>Material Tailwind Angular</Option>
                   <Option>Material Tailwind Svelte</Option>
-                </Select>
+                </Select> */}
               </div>
               <div className="flex" style={{ margin: "0 0 10px 0" }}>
                 <Input
