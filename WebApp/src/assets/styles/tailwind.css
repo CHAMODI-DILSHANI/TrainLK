@@ -564,6 +564,15 @@ video {
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 }
+.mb-4{
+	margin-bottom: 1rem;
+}
+.mt-4{
+	margin-top: 1rem;
+}
+.mr-1{
+	margin-right: 0.25rem;
+}
 .mt-1{
 	margin-top: 0.25rem;
 }
@@ -606,9 +615,6 @@ video {
 .mt-2{
 	margin-top: 0.5rem;
 }
-.mb-4{
-	margin-bottom: 1rem;
-}
 .mb-0{
 	margin-bottom: 0px;
 }
@@ -617,9 +623,6 @@ video {
 }
 .-ml-4{
 	margin-left: -1rem;
-}
-.mt-4{
-	margin-top: 1rem;
 }
 .mb-14{
 	margin-bottom: 3.5rem;
@@ -632,6 +635,9 @@ video {
 }
 .mt-14{
 	margin-top: 3.5rem;
+}
+.ml-2{
+	margin-left: 0.5rem;
 }
 .block{
 	display: block;
@@ -674,6 +680,9 @@ video {
 }
 .min-h-full{
 	min-height: 100%;
+}
+.w-96{
+	width: 24rem;
 }
 .w-full{
 	width: 100%;
@@ -747,17 +756,20 @@ video {
 .justify-between{
 	justify-content: space-between;
 }
-.gap-2{
-	gap: 0.5rem;
-}
 .gap-4{
 	gap: 1rem;
+}
+.gap-2{
+	gap: 0.5rem;
 }
 .gap-10{
 	gap: 2.5rem;
 }
 .justify-self-end{
 	justify-self: end;
+}
+.overflow-auto{
+	overflow: auto;
 }
 .overflow-hidden{
 	overflow: hidden;
@@ -773,6 +785,9 @@ video {
 }
 .rounded{
 	border-radius: 0.25rem;
+}
+.rounded-3xl{
+	border-radius: 1.5rem;
 }
 .rounded-xl{
 	border-radius: 0.75rem;
@@ -843,13 +858,13 @@ video {
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
 }
-.py-3{
-	padding-top: 0.75rem;
-	padding-bottom: 0.75rem;
-}
 .py-4{
 	padding-top: 1rem;
 	padding-bottom: 1rem;
+}
+.py-3{
+	padding-top: 0.75rem;
+	padding-bottom: 0.75rem;
 }
 .px-4{
 	padding-left: 1rem;
@@ -862,6 +877,14 @@ video {
 .px-0{
 	padding-left: 0px;
 	padding-right: 0px;
+}
+.py-2\.5{
+	padding-top: 0.625rem;
+	padding-bottom: 0.625rem;
+}
+.py-2{
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
 }
 .pt-8{
 	padding-top: 2rem;
@@ -908,6 +931,15 @@ video {
 }
 .font-light{
 	font-weight: 300;
+}
+.font-bold{
+	font-weight: 700;
+}
+.font-black{
+	font-weight: 900;
+}
+.font-normal{
+	font-weight: 400;
 }
 .uppercase{
 	text-transform: uppercase;
@@ -2567,11 +2599,11 @@ video {
 	.xl\:col-end-7{
 		grid-column-end: 7;
 	}
-	.xl\:grid-cols-5{
-		grid-template-columns: repeat(5, minmax(0, 1fr));
-	}
 	.xl\:grid-cols-4{
 		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+	.xl\:grid-cols-5{
+		grid-template-columns: repeat(5, minmax(0, 1fr));
 	}
 	.xl\:grid-cols-6{
 		grid-template-columns: repeat(6, minmax(0, 1fr));

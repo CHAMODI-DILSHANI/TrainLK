@@ -23,7 +23,7 @@ export default function Sidebar({ setSearchValue }) {
             rel="noreferrer"
             className="mt-2 text-center w-full inline-block"
           >
-            <H6 color="gray">Material Tailwind</H6>
+            <H6 color="gray">Admin Dashboard</H6>
           </a>
           <div className="flex flex-col">
             <hr className="my-4 min-w-full" />
@@ -69,6 +69,16 @@ export default function Sidebar({ setSearchValue }) {
                 >
                   <Icon name="toc" size="2xl" />
                   Tables
+                </NavLink>
+              </li>
+              <li className="rounded-lg mb-2 ">
+                <NavLink
+                  to="/userupdates"
+                  className="flex items-center gap-4 text-sm text-gray-700 font-light px-4 py-3 rounded-lg"
+                  activeClassName="bg-gradient-to-tr from-light-blue-500 to-light-blue-700 text-white shadow-md"
+                >
+                  <Icon name="list_alt" size="2xl" />
+                  User Updates
                 </NavLink>
               </li>
               <li className="rounded-lg mb-2 text-gray-700">
