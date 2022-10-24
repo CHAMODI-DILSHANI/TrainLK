@@ -7,6 +7,11 @@ Router.get("/:type", async (req, resp) => {
   resp.send(result);
 });
 
+Router.get("/", async (req, resp) => {
+  const result = await itemsService.getAllItems();
+  resp.send(result);
+});
+
 Router.post("/", async (req, resp) => {
   const result = await itemsService.insertItems(req.body);
   resp.send(result);
