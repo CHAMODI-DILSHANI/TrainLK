@@ -58,7 +58,7 @@ export default function Dashboard({ searchValue }) {
   useEffect(() => {
     // console.log(dat == null);
     if (data.length == 0)
-      axios.get("http://10.22.160.160:8085/api/v1/users/all").then((res) => {
+      axios.get("http://10.22.160.163:8085/api/v1/users/all").then((res) => {
         // console.log("didn't change");
         // console.log(res.data);
         // data = [{ id: 1 }];
