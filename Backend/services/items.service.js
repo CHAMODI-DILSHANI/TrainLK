@@ -8,6 +8,13 @@ async function getItemsWithoutUser(type) {
   return result;
 }
 
+async function getAllItems() {
+  const result = await query(
+    "select itemID,userID,type,itemType,description,contactNo,timestamp,image,concat(firstName,' ',lastName) as user from lostandfound l join users u on l.userID=u.id order by timestamp desc"
+  );
+  return result;
+}
+
 async function insertItems(data) {
   try {
     const result = await query(
@@ -39,4 +46,4 @@ async function removeItem(itemID) {
   }
 }
 
-module.exports = { getItemsWithoutUser, insertItems, removeItem };
+module.exports = { getItemsWithoutUser, insertItems, removeItem, getAllItems };
