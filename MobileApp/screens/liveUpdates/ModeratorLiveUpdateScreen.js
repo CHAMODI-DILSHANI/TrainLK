@@ -22,6 +22,10 @@ import tw from "twrnc";
 import { useFonts } from "expo-font";
 import TopBar from "../../components/navigation/TopBar";
 
+import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+
 const ModeratorLiveUpdateScreen = () => {
   const [status, setStatus] = useState("");
   const [stations, setStations] = useState([]);
@@ -250,7 +254,7 @@ const ModeratorLiveUpdateScreen = () => {
                 passangerStatus == 1 ? "bg-green-200 border-green-500" : ""
               }`}
             >
-              <FontAwesomeIcon icon={faTrainSubway} />
+              <MaterialIcons name="event-seat" size={24} color="black" />
             </View>
           </TouchableOpacity>
 
@@ -268,7 +272,7 @@ const ModeratorLiveUpdateScreen = () => {
                 passangerStatus == 2 ? "bg-amber-200 border-yellow-500" : ""
               }`}
             >
-              <FontAwesomeIcon icon={faTrainSubway} />
+              <MaterialCommunityIcons name="seatbelt" size={24} color="black" />
             </View>
           </TouchableOpacity>
 
@@ -286,7 +290,7 @@ const ModeratorLiveUpdateScreen = () => {
                 passangerStatus == 3 ? "bg-orange-200 border-orange-400" : ""
               }`}
             >
-              <FontAwesomeIcon icon={faTrainSubway} />
+              <Ionicons name="md-man-sharp" size={24} color="black" />
             </View>
           </TouchableOpacity>
 
@@ -304,7 +308,11 @@ const ModeratorLiveUpdateScreen = () => {
                 passangerStatus == 4 ? "bg-red-200 border-red-500" : ""
               }`}
             >
-              <FontAwesomeIcon icon={faTrainSubway} />
+              <MaterialCommunityIcons
+                name="human-queue"
+                size={24}
+                color="black"
+              />
             </View>
           </TouchableOpacity>
         </View>

@@ -44,7 +44,8 @@ const LoginWithGoogle = () => {
       oAuthProvider,
       picture
     ) {
-      const endpoint = utils.api + "/auth/oauth";
+      const endpoint = `${utils.lanip}/auth/oAuth`;
+
       const data = {
         email,
         firstName,
@@ -54,8 +55,11 @@ const LoginWithGoogle = () => {
         picture,
       };
 
+      console.log(data);
+
       try {
         setIsLoading(true);
+        console.log("loading set to true");
         const rawResponse = await fetch(endpoint, {
           method: "POST",
           headers: {
@@ -69,6 +73,7 @@ const LoginWithGoogle = () => {
         console.log(content);
         login(content.accessToken, content.refreshToken);
       } catch (err) {
+        console.log("ERROR OCCURED");
         console.log(err);
       }
     }
@@ -86,6 +91,7 @@ const LoginWithGoogle = () => {
 
           const fetchedUserInfo = await responseData.json();
           setUserInfo(fetchedUserInfo);
+          console.log("hiiiiiiiiiiiiii");
           console.log(fetchedUserInfo);
 
           continueWithGoogle(

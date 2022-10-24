@@ -82,7 +82,7 @@ async function getAllUsers() {
       "select id,firstName,lastName,email,role,picture from users"
     );
     const resultWithMod = await Promise.all(
-      result.map(async (i) => {
+      result.map(async i => {
         const val = await getModeratorDetails(i.id);
         // console.log(val.length);
         if (val.length != 0) {
@@ -107,5 +107,37 @@ async function getModeratorDetails(userID) {
     return e;
   }
 }
+userRouter.get("/test", (req, res) => {
+  connection.beginTransaction(err => {
+    if (err) {
+      throw err;
+    }
+    connection.query("FIRST QUERY", (err, result) => {
+      if (err) {
+        connection.rollback(err => {
+          throw err;
+        });
+      }
+
+      connection.query("SECOND QUERY", (err, result) => {
+        if (err) {
+          connection.rollback(err => {
+            throw err;
+          });
+        }
+
+        connection.commit(err => {
+          if (err) {
+            connection.rollback(err => {
+              throw err;
+            });
+          }
+        });
+      });
+    });
+  });
+
+  //
+});
 
 module.exports = userRouter;
