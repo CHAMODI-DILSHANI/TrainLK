@@ -40,6 +40,11 @@ userRouter.get("/moderator", async (req, res) => {
   res.send(result);
 });
 
+userRouter.get("/all", async (req, res) => {
+  const result = await getAllUsers();
+  res.send(result);
+});
+
 async function moderatorRequests(data) {
   try {
     const result = await query(
@@ -64,6 +69,38 @@ async function getModeratorRequests() {
   try {
     const result = await query(
       "select u.id,firstName,lastName,email,picture,contactNo,nic,frontImage,backImage,travelFrequency,railwayLine from users u join moderatorrequest m on u.id = m.userID"
+    );
+    return result;
+  } catch (e) {
+    return e;
+  }
+}
+
+async function getAllUsers() {
+  try {
+    const result = await query(
+      "select id,firstName,lastName,email,role,picture from users"
+    );
+    const resultWithMod = await Promise.all(
+      result.map(async (i) => {
+        const val = await getModeratorDetails(i.id);
+        // console.log(val.length);
+        if (val.length != 0) {
+          i.modReq = val;
+        }
+      })
+    );
+    return result;
+  } catch (e) {
+    return e;
+  }
+}
+
+async function getModeratorDetails(userID) {
+  try {
+    const result = await query(
+      "select * from moderatorrequest where userID =?",
+      [userID]
     );
     return result;
   } catch (e) {
