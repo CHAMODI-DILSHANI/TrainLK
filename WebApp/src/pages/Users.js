@@ -9,50 +9,71 @@ import TableCard2 from "components/TableCard2";
 //   Textarea,
 //   Image,
 // } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserPopUp from "components/UsersPopUp";
-const data = [
-  {
-    id: 1,
-    Name: "Sandali Ranasinghe",
-    Email: "sandaliranasinghe@gmail.com",
-    status: "online",
-    railwayLine: "Main Line",
-    Accuracy: 80,
-    Role: "Admin",
-  },
-  {
-    id: 2,
-    Name: "Jithru Jayawantha",
-    Email: "jithrujayawantha@gmail.com",
-    status: "online",
-    railwayLine: "Main Line",
-    Accuracy: "80",
-    Role: "Moderator",
-  },
-  {
-    id: 3,
-    Name: "Ravindu Madubashana",
-    Email: "ravindumaddubashana@gmail.com",
-    status: "online",
-    railwayLine: "Main Line",
-    Accuracy: "80",
-    Role: "Normal",
-  },
-  {
-    id: 4,
-    Name: "Deenath Geeganage",
-    Email: "deenathgeeganage@gmail.com",
-    status: "online",
-    railwayLine: "Main Line",
-    Accuracy: "39",
-    Role: "Moderator",
-  },
-];
+import axios from "axios";
+
+import serializeUserData from "../helpers/UserSerializer";
+// const data = [
+//   {
+//     id: 1,
+//     Name: "Sandali Ranasinghe",
+//     Email: "sandaliranasinghe@gmail.com",
+//     status: "online",
+//     railwayLine: "Main Line",
+//     Accuracy: 80,
+//     Role: "Admin",
+//   },
+//   {
+//     id: 2,
+//     Name: "Jithru Jayawantha",
+//     Email: "jithrujayawantha@gmail.com",
+//     status: "online",
+//     railwayLine: "Main Line",
+//     Accuracy: "80",
+//     Role: "Moderator",
+//   },
+//   {
+//     id: 3,
+//     Name: "Ravindu Madubashana",
+//     Email: "ravindumaddubashana@gmail.com",
+//     status: "online",
+//     railwayLine: "Main Line",
+//     Accuracy: "80",
+//     Role: "Normal",
+//   },
+//   {
+//     id: 4,
+//     Name: "Deenath Geeganage",
+//     Email: "deenathgeeganage@gmail.com",
+//     status: "online",
+//     railwayLine: "Main Line",
+//     Accuracy: "39",
+//     Role: "Moderator",
+//   },
+// ];
+var data = [];
 
 export default function Dashboard({ searchValue }) {
+  useEffect(() => {
+    // console.log(dat == null);
+    if (data.length == 0)
+      axios.get("http://10.22.160.163:8085/api/v1/users/all").then((res) => {
+        // console.log("didn't change");
+        // console.log(res.data);
+        // data = [{ id: 1 }];
+        data = res.data.map((i) => {
+          var x = serializeUserData(i);
+          // console.log(x);
+          return x;
+        });
+        setModData(data);
+        // console.log(data);
+      });
+  }, []);
   // console.log("meka user");
-  console.log(searchValue);
+  // console.log(searchValue);
+  // console.log(dat);
   const [modData, setModData] = useState(data);
   // model function
   const [open, setOpen] = useState(false);

@@ -17,7 +17,15 @@ import { Fragment, useState } from "react";
 // };
 
 export default function UserPopUp({ data, open, handleOpen }) {
-  //   console.log(Object.keys(data2));
+  var modReq = [];
+  var tempData = data;
+  if (tempData.modReq != undefined) {
+    console.log("came here");
+    modReq = tempData.modReq[0];
+    console.log(modReq);
+  }
+  delete tempData.modReq;
+  //   console.log(Object.keys(tempData2));
   return (
     <>
       {/* <p>asd</p> */}
@@ -44,14 +52,33 @@ export default function UserPopUp({ data, open, handleOpen }) {
                   // margi: "20 20 20 20",
                 }}
               >
-                {Object.keys(data).map((i) => (
+                {Object.keys(tempData).map((i) => (
                   <>
-                    <h1 style={{ gridColumn: "span 3" }}>{i}</h1>
+                    <h1 key={tempData.id} style={{ gridColumn: "span 3" }}>
+                      {i}
+                    </h1>
                     <div
+                      key={tempData.Name}
                       className="font-light"
                       style={{ gridColumn: "span 7" }}
                     >
-                      {data[i]}
+                      {tempData[i]}
+                    </div>
+                  </>
+                ))}
+
+                {Object.keys(modReq).map((i) => console.log(i))}
+                {Object.keys(modReq).map((i) => (
+                  <>
+                    <h1 key={modReq.contactNo} style={{ gridColumn: "span 3" }}>
+                      {i}
+                    </h1>
+                    <div
+                      key={modReq.nic}
+                      className="font-light"
+                      style={{ gridColumn: "span 7" }}
+                    >
+                      {modReq[i]}
                     </div>
                   </>
                 ))}
