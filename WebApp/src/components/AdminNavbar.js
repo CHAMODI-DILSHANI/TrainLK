@@ -52,6 +52,8 @@ export default function AdminNavbar({
           <h4 className="uppercase text-white text-sm tracking-wider mt-1">
             {location === "/"
               ? "DASHBOARD"
+              : location === "/userupdates"
+              ? "USER UPDATES"
               : location.toUpperCase().replace("/", "")}
           </h4>
 

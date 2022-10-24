@@ -6,7 +6,8 @@ import Tables from "pages/Tables";
 import Maps from "pages/Maps";
 import Footer from "components/Footer";
 import Users from "pages/Users";
-
+import UserUpdates from "pages/UserUpdates";
+// import Test from "pages/Test";
 // Tailwind CSS Style Sheet
 import "assets/styles/tailwind.css";
 import { useState } from "react";
@@ -17,6 +18,7 @@ function App() {
   return (
     <>
       <Sidebar setSearchValue={setSearchValue} />
+
       <div className="md:ml-64">
         <Switch>
           <Route exact path="/" component={Dashboard} />
@@ -29,6 +31,7 @@ function App() {
             path="/users"
             component={() => <Users searchValue={searchValue} />}
           />
+          <Route exact path="/userupdates" component={UserUpdates} />
           <Redirect from="*" to="/" />
         </Switch>
         <Footer />
