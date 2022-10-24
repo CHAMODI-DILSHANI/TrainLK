@@ -10,8 +10,6 @@ import {
   Icon,
   Dropdown,
   DropdownItem,
-  //   Select,
-  //   Option,
 } from "@material-tailwind/react";
 
 import { useState } from "react";
@@ -213,13 +211,6 @@ export default function CardTable(props) {
                   }}
                   {/* <DropdownItem color="lightBlue">Previous Month</DropdownItem> */}
                 </Dropdown>
-                {/* <Select label="Select Version">
-                  <Option>Material Tailwind HTML</Option>
-                  <Option>Material Tailwind React</Option>
-                  <Option>Material Tailwind Vue</Option>
-                  <Option>Material Tailwind Angular</Option>
-                  <Option>Material Tailwind Svelte</Option>
-                </Select> */}
               </div>
               <div className="flex" style={{ margin: "0 0 10px 0" }}>
                 <Input
@@ -280,6 +271,13 @@ export default function CardTable(props) {
             cancelMethod={handleRemove}
             confirmMethod={handleRemove}
           />
+          <AddItemModal
+            type="lostAndFound"
+            active={addItem}
+            toggler={handleAddItem}
+            cancelMethod={handleAddItem}
+            confirmMethod={handleAddItemWithConfirm}
+          />
           <CardBody>
             <div className="overflow-x-auto">
               <table className="items-center w-full bg-transparent border-collapse">
@@ -293,6 +291,9 @@ export default function CardTable(props) {
                     </th>
                     <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
                       Description
+                    </th>
+                    <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
+                      Image
                     </th>
                     <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
                       User
@@ -329,7 +330,14 @@ export default function CardTable(props) {
         </Card>
         <div className="mt-5 flex flex-col w-full">
           <div className="mt-5 flex w-full justify-end">
-            <Button color="purple" size="md">
+            <Button
+              color="purple"
+              onClick={handleAddItem}
+              size="md"
+              disabled
+              hover="false"
+              className="cursor-not-allowed opacity-50 disabled:pointer-events-none"
+            >
               <Icon name="add" size="2xl" />
               <p className="text-sm">New Item</p>
             </Button>

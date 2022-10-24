@@ -15,6 +15,9 @@ export default function LostAndFoundRow(props) {
           : props.data.description}
       </th>
       <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+        {props.data.image}
+      </th>
+      <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
         {props.data.user}
       </th>
       <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
@@ -24,7 +27,7 @@ export default function LostAndFoundRow(props) {
         {props.data.contact}
       </th>
       <th className="flex gap-4 border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-        <Button
+        {/* <Button
           onClick={() => {
             props.handleOpen();
             props.setSelectedData(props.data);
@@ -37,7 +40,7 @@ export default function LostAndFoundRow(props) {
           variant="outlined"
         >
           <Icon name="edit" color="#424242" size="xl" />
-        </Button>
+        </Button> */}
         <Button
           onClick={props.handleRemove}
           className="border-b border-gray-200 bg-#424242 rounded-3xl text-gray"

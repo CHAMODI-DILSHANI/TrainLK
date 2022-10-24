@@ -64,6 +64,7 @@ const lostAndFoundData = [
     user: "Sandy Blaq",
     date: "2022-10-23",
     contact: "071 123 4567",
+    image: "",
   },
   {
     itemID: 4,
@@ -73,6 +74,7 @@ const lostAndFoundData = [
     user: "N Blaq",
     date: "2022-10-23",
     contact: "071 123 4567",
+    image: "",
   },
 ];
 
