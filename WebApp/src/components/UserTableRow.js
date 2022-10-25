@@ -9,9 +9,16 @@ export default function UserTableRow({ i, handleOpen, setPopData }) {
   return (
     <tr>
       <th className="w-10 h-10 rounded-full border-2 border-white">
-        <Image src={Team1} rounded alt="..." />
+        <Image
+          src={
+            i.image ??
+            "https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc="
+          }
+          rounded
+          alt="..."
+        />
       </th>
-      <th className="order-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+      <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
         {i.Name}
       </th>
       <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">

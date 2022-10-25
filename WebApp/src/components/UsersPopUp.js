@@ -16,21 +16,17 @@ import { Fragment, useState } from "react";
 //   NIC: "991234567V",
 // };
 
-export default function UserPopUp({ data, open, handleOpen }) {
-  var modReq = [];
-  var tempData = data;
-  if (tempData.modReq != undefined) {
-    console.log("came here");
-    modReq = tempData.modReq[0];
-    console.log(modReq);
-  }
-  delete tempData.modReq;
-  //   console.log(Object.keys(tempData2));
+export default function UserPopUp(props) {
+  const data = props.data;
+  const open = props.open;
+  const handleOpen = props.handleConfirm;
+  // delete data.modReq;
+  //   console.log(Object.keys(data2));
   return (
     <>
       {/* <p>asd</p> */}
       <Fragment>
-        <Modal active={open} size="lg" toggler={handleOpen}>
+        <Modal active={open} size="lg" toggler={props.toggler}>
           {/* <ModalHeader>User Details</ModalHeader> */}
           <ModalBody>
             <div className="flex justify-center flex-none h-20">
@@ -52,44 +48,46 @@ export default function UserPopUp({ data, open, handleOpen }) {
                   // margi: "20 20 20 20",
                 }}
               >
-                {Object.keys(tempData).map((i) => (
-                  <>
-                    <h1 key={tempData.id} style={{ gridColumn: "span 3" }}>
-                      {i}
-                    </h1>
-                    <div
-                      key={tempData.Name}
-                      className="font-light"
-                      style={{ gridColumn: "span 7" }}
-                    >
-                      {tempData[i]}
-                    </div>
-                  </>
-                ))}
-
-                {Object.keys(modReq).map((i) => console.log(modReq[i]))}
-                {Object.keys(modReq).map((i) => (
-                  <>
-                    <h1 key={modReq.contactNo} style={{ gridColumn: "span 3" }}>
-                      {i}
-                    </h1>
-                    <div
-                      key={modReq.nic}
-                      className="font-light"
-                      style={{ gridColumn: "span 7" }}
-                    >
-                      {modReq[i]}
-                    </div>
-                  </>
-                ))}
+                {/* {Object.keys(data).map((i) => {
+                  console.log(i != "modReq");
+                })} */}
+                {Object.keys(data).map((i) =>
+                  i != "modReq" ? (
+                    <>
+                      <h1 key={data.id} style={{ gridColumn: "span 3" }}>
+                        {i}
+                      </h1>
+                      <div
+                        key={data.Name}
+                        className="font-light"
+                        style={{ gridColumn: "span 7" }}
+                      >
+                        {data[i]}
+                      </div>
+                    </>
+                  ) : (
+                    Object.keys(data[i][0]).map((k) => (
+                      <>
+                        <h1 key={k.id} style={{ gridColumn: "span 3" }}>
+                          {k}
+                        </h1>
+                        <div
+                          key={data.Name}
+                          className="font-light"
+                          style={{ gridColumn: "span 7" }}
+                        >
+                          {data[i][0][k]}
+                        </div>
+                      </>
+                    ))
+                  )
+                )}
               </div>
             </div>
-
-            {/* <Textarea>fcvhbjnkl;</Textarea> */}
           </ModalBody>
           <ModalFooter>
             <Button varient="gradient" color="green" onClick={handleOpen}>
-              <span>Confirm</span>
+              <span>Approve</span>
             </Button>
           </ModalFooter>
         </Modal>

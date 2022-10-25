@@ -15,6 +15,8 @@ import axios from "axios";
 import utils from "./../utils";
 
 import serializeUserData from "../helpers/UserSerializer";
+import WarnModal from "components/WarnModal";
+import { Button } from "@material-tailwind/react";
 // const data = [
 //   {
 //     id: 1,
@@ -78,10 +80,29 @@ export default function Dashboard({ searchValue }) {
   const [modData, setModData] = useState(data);
   // model function
   const [open, setOpen] = useState(false);
+  const [openWarn, setWarn] = useState(false);
+  const handleWarn = () => {
+    setWarn(!openWarn);
+  };
   const [popData, setPopData] = useState({});
-  const handleOpen = () => {
+  const modelToggler = () => {
     setOpen(!open);
   };
+
+  const handleConfirm = () => {
+    setWarnMessage("Are you Sure");
+    setOpen(!open);
+    setWarn(!openWarn);
+  };
+
+  const handleNo = () => {
+    setOpen(!open);
+    setWarn(!openWarn);
+  };
+  const handleYes = () => {
+    setWarn(!openWarn);
+  };
+  const [warnMessage, setWarnMessage] = useState("");
   //
   // console.log("asdasd");
   // console.log(
@@ -155,7 +176,7 @@ export default function Dashboard({ searchValue }) {
         <div className="container mx-auto max-w-full">
           <div className="grid grid-cols-1 px-4 mb-16">
             <TableCard2
-              handleOpen={handleOpen}
+              handleOpen={modelToggler}
               setPopData={setPopData}
               data={modData.filter((i) => {
                 if (searchValue == "") {
@@ -179,7 +200,21 @@ export default function Dashboard({ searchValue }) {
       </div>
       {/* <Button onClick={handleOpen}>asda</Button> */}
 
-      <UserPopUp open={open} data={popData} handleOpen={handleOpen} />
+      <UserPopUp
+        open={open}
+        data={popData}
+        toggler={modelToggler}
+        handleConfirm={handleConfirm}
+      />
+      <WarnModal
+        active={openWarn}
+        toggler={handleWarn}
+        cancelMethod={handleNo}
+        confirmMethod={handleYes}
+        message={warnMessage}
+      />
+
+      {/* <Button onClick={handleWarn}></Button> */}
     </>
   );
 }

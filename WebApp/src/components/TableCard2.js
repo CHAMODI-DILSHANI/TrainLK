@@ -8,11 +8,11 @@ const tableHeader = ["", "Name", "Email", "status", "Railway Line", "Accuracy"];
 
 export default function CardTable2({ handleOpen, setPopData, data }) {
   // const ref = useRef(null);
-  console.log(data);
+  // console.log(data);
   useState(() => {
     // var tabs = require("tabs");
     var container = document.getElementById("tabular-container");
-    console.log(container);
+    // console.log(container);
     // tabs(container);
   });
 
@@ -76,7 +76,7 @@ export default function CardTable2({ handleOpen, setPopData, data }) {
                 ))}
               </tr>
             </thead>
-            {console.log(data.filter((i) => i.Role == "Moderator"))}
+            {/* {console.log(data.filter((i) => i.Role == "Moderator"))} */}
             <tbody>
               {data
                 .filter((i) => i.Role == selected || selected == "All")
