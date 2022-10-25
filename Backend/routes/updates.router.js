@@ -34,15 +34,25 @@ Router.get("/stations/:scheduleID", (req, res) => {
     });
 });
 
+// Status update
 Router.post("/status", (req, res) => {
-  const { dateNTime, selectedStation, moderatorID, status, passangerStatus } =
-    req.body;
+  const {
+    dateNTime,
+    selectedStation,
+    moderatorID,
+    status,
+    passangerStatus,
+    moderatorLocation,
+  } = req.body;
 
   console.log(dateNTime);
   console.log(selectedStation);
   console.log(moderatorID);
   console.log(status);
   console.log(passangerStatus);
+  console.log(moderatorLocation);
+
+  // 2022-10-12-{scheduleID}-{}
 
   return res.send(JSON.stringify({ hi: "data" }));
 });

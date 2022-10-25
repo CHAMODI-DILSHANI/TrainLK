@@ -65,7 +65,7 @@ function getAllStations(scheduleID) {
 
   return new Promise((reject, resolve) => {
     query(
-      `select a.trainID, a.scheduleID, a.type, b.arrivalTime, b.departureTime, c.stationID, c.stationName from
+      `select a.trainID, a.scheduleID, a.type, b.arrivalTime, b.departureTime, c.stationID, c.stationName,c.latitude, c.longitude from
         schedule a join schedule_has_station b on a.scheduleID = b.scheduleID
         join station c on b.stationID = c.stationID
         where a.scheduleID = ${scheduleID}

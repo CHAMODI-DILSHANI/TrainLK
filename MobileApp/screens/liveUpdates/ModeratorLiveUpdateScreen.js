@@ -30,12 +30,15 @@ import { Ionicons } from "@expo/vector-icons";
 import utils from "../../utils";
 import { AuthContext } from "../../context/AuthContext";
 
+import * as Location from "expo-location";
+
 const ModeratorLiveUpdateScreen = ({ route }) => {
   const [status, setStatus] = useState("");
   const [stations, setStations] = useState([]);
   const [selectedStation, setSelectedStation] = useState("");
   const [passangerStatus, setPassangerStatus] = useState("");
-
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
   const { accessToken, refreshToken } = useContext(AuthContext);
 
   const [fontsLoaded] = useFonts({
@@ -72,9 +75,38 @@ const ModeratorLiveUpdateScreen = ({ route }) => {
     }
   };
 
-  const updateStatus = () => {
+  function degreesToRadians(degrees) {
+    return (degrees * Math.PI) / 180;
+  }
+
+  function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
+    var earthRadiusKm = 6371;
+
+    var dLat = degreesToRadians(lat2 - lat1);
+    var dLon = degreesToRadians(lon2 - lon1);
+
+    lat1 = degreesToRadians(lat1);
+    lat2 = degreesToRadians(lat2);
+
+    var a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return earthRadiusKm * c;
+  }
+
+  const updateStatus = async () => {
     const date = new Date();
     var decoded = jwt_decode(accessToken);
+
+    // Get current location of the moderator
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      setErrorMsg("Permission to access location was denied");
+      return;
+    }
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
 
     const updateObj = {
       dateNTime: {
@@ -91,24 +123,57 @@ const ModeratorLiveUpdateScreen = ({ route }) => {
       moderatorID: decoded.id,
       status,
       passangerStatus,
+      moderatorLocation: {
+        longitude: location.coords.longitude,
+        latitude: location.coords.latitude,
+      },
     };
 
     // send updateObj to backend
-    const endpoint = `${utils.lanip}/update/status/`;
-    fetch(endpoint, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updateObj),
-    })
-      .then(response => response.json())
-      .then(json => {
-        console.log(json);
-      });
+    if (location) {
+      console.log("====== Location =======");
+      console.log(location.coords.longitude);
+      console.log(location.coords.latitude);
+      console.log("====== / Location =======");
 
-    console.log(updateObj);
+      // check moderator location is whihthin a radius
+      const stationCoordinates = {
+        latitude: stations[selectedStation].latitude,
+        longitude: stations[selectedStation].longitude,
+      };
+
+      // check distance between moderator location and station location
+      const distanceBetweenModeratorAndStation =
+        distanceInKmBetweenEarthCoordinates(
+          stationCoordinates.latitude,
+          stationCoordinates.longitude,
+          location.coords.latitude,
+          location.coords.longitude
+        );
+
+      console.log("Distance: ", distanceBetweenModeratorAndStation);
+
+      if (distanceBetweenModeratorAndStation < 0.5) {
+        // Update the status
+        const endpoint = `${utils.lanip}/update/status/`;
+        fetch(endpoint, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updateObj),
+        })
+          .then(response => response.json())
+          .then(json => {
+            console.log(json);
+          });
+      } else {
+        // Do not update
+      }
+    }
+
+    // console.log(updateObj);
   };
 
   return (
