@@ -1,5 +1,5 @@
 export default function serializeUserData(data) {
-  console.log(data);
+  // console.log(data);
   var x = {
     id: data.id,
     Name: data.firstName + " " + data.lastName,
@@ -12,6 +12,6 @@ export default function serializeUserData(data) {
   if (data.modReq) {
     x.modReq = data.modReq;
   }
-  console.log(data);
+  // console.log(data);
   return x;
 }
