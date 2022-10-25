@@ -4,7 +4,10 @@
   "private": true,
   "homepage": "https://demos.creative-tim.com/material-tailwind-dashboard-react/#/",
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@material-tailwind/react": "^0.3.4",
+    "@mui/material": "^5.10.10",
     "@react-google-maps/api": "^2.1.1",
     "@react-tabtab-next/tabtab": "^3.3.0",
     "@react-tabtab-next/themes": "^3.3.0",
