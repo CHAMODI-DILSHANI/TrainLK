@@ -12,6 +12,7 @@ import TableCard2 from "components/TableCard2";
 import { useEffect, useState } from "react";
 import UserPopUp from "components/UsersPopUp";
 import axios from "axios";
+import utils from "./../utils";
 
 import serializeUserData from "../helpers/UserSerializer";
 // const data = [
@@ -58,7 +59,7 @@ export default function Dashboard({ searchValue }) {
   useEffect(() => {
     // console.log(dat == null);
     if (data.length == 0)
-      axios.get("http://10.22.164.157:8085/api/v1/users/all").then((res) => {
+      axios.get(`${utils.api}/users/all`).then((res) => {
         // console.log("didn't change");
         // console.log(res.data);
         // data = [{ id: 1 }];
