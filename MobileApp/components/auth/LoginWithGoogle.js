@@ -92,7 +92,7 @@ const LoginWithGoogle = () => {
           const fetchedUserInfo = await responseData.json();
           setUserInfo(fetchedUserInfo);
           console.log("hiiiiiiiiiiiiii");
-          console.log(fetchedUserInfo);
+          // console.log(fetchedUserInfo);
 
           continueWithGoogle(
             fetchedUserInfo.email,
@@ -102,7 +102,10 @@ const LoginWithGoogle = () => {
             "google",
             fetchedUserInfo.picture
           );
-          // navigation.navigate("HomeScreen");
+
+          if (userInfo) {
+            navigation.navigate("HomeScreen");
+          }
         }
       } catch (e) {
         console.log(e);
