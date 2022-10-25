@@ -33,4 +33,15 @@ Router.put("/:news", async (req, resp) => {
   }
 });
 
+Router.put("/", async (req, resp) => {
+  const result = await itemsService.updateItems(req.body);
+  console.log(result);
+  if (result) {
+    console.log(true);
+    resp.status(204).send();
+  } else {
+    resp.status(400).send();
+  }
+});
+
 module.exports = Router;

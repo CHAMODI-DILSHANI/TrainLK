@@ -14,7 +14,7 @@ async function getAllNews() {
 async function updateNews(data) {
   try {
     const result = await query(
-      "update news set title = ?,description=? where newID = ? ",
+      "update news set title = ?,description=? where newsID = ? ",
       [data.title, data.description, data.newsID]
     );
     return true;
