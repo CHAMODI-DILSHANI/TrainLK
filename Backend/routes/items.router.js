@@ -1,3 +1,4 @@
+const e = require("express");
 const express = require("express");
 const Router = express.Router();
 const itemsService = require("../services/items.service");
@@ -22,6 +23,14 @@ Router.post("/", async (req, resp) => {
 Router.delete("/:id", async (req, resp) => {
   const result = await itemsService.removeItem(req.params.id);
   resp.send(result);
+});
+
+Router.put("/:news", async (req, resp) => {
+  if (await newsService.updateNews(req.body)) {
+    resp.status(204).send();
+  } else {
+    resp.status(400).send();
+  }
 });
 
 module.exports = Router;
