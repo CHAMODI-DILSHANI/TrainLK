@@ -15,6 +15,8 @@ import axios from "axios";
 import utils from "./../utils";
 
 import serializeUserData from "../helpers/UserSerializer";
+import WarnModal from "components/WarnModal";
+import { Button } from "@material-tailwind/react";
 // const data = [
 //   {
 //     id: 1,
@@ -78,6 +80,10 @@ export default function Dashboard({ searchValue }) {
   const [modData, setModData] = useState(data);
   // model function
   const [open, setOpen] = useState(false);
+  const [openWarn, setWarn] = useState(false);
+  const handleWarn = () => {
+    setWarn(!openWarn);
+  };
   const [popData, setPopData] = useState({});
   const handleOpen = () => {
     setOpen(!open);
@@ -180,6 +186,14 @@ export default function Dashboard({ searchValue }) {
       {/* <Button onClick={handleOpen}>asda</Button> */}
 
       <UserPopUp open={open} data={popData} handleOpen={handleOpen} />
+      <WarnModal
+        active={openWarn}
+        toggler={handleWarn}
+        cancelMethod={handleWarn}
+        confirmMethod={handleWarn}
+      />
+
+      <Button onClick={handleWarn}></Button>
     </>
   );
 }
