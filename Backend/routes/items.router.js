@@ -1,6 +1,7 @@
 const express = require("express");
 const Router = express.Router();
 const itemsService = require("../services/items.service");
+const newsService = require("../services/news.service");
 
 Router.get("/:type", async (req, resp) => {
   const result = await itemsService.getItemsWithoutUser(req.params.type);
@@ -8,8 +9,9 @@ Router.get("/:type", async (req, resp) => {
 });
 
 Router.get("/", async (req, resp) => {
-  const result = await itemsService.getAllItems();
-  resp.send(result);
+  const lfresult = await itemsService.getAllItems();
+  const newsresult = await newsService.getAllNews();
+  resp.send({ lostandFound: lfresult, news: newsresult });
 });
 
 Router.post("/", async (req, resp) => {
