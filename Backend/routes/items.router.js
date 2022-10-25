@@ -20,6 +20,14 @@ Router.post("/", async (req, resp) => {
   resp.send(result);
 });
 
+Router.delete("/news/:id", async (req, resp) => {
+  if (await newsService.delete(req.params.id)) {
+    resp.status(204).send();
+  } else {
+    resp.status(400).send();
+  }
+});
+
 Router.delete("/:id", async (req, resp) => {
   const result = await itemsService.removeItem(req.params.id);
   resp.send(result);

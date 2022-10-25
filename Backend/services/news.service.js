@@ -19,7 +19,17 @@ async function updateNews(data) {
     );
     return true;
   } catch (e) {
-    console.log("error : " + e);
+    console.error("error : " + e);
+    return false;
+  }
+}
+
+async function deleteNews(id) {
+  try {
+    const result = await query("delete from newsID where newsID = ?", [id]);
+    return true;
+  } catch (e) {
+    console.error(e);
     return false;
   }
 }
