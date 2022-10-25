@@ -1,18 +1,26 @@
 const { query } = require("../helpers/mysql.init");
 
 async function getItemsWithoutUser(type) {
-  const result = await query(
-    "select itemID,type,itemType,description,contactNo,timestamp,image from lostandfound where type = ? order by timestamp",
-    [type]
-  );
-  return result;
+  try {
+    const result = await query(
+      "select itemID,type,itemType,description,contactNo,timestamp,image from lostandfound where type = ? order by timestamp",
+      [type]
+    );
+    return result;
+  } catch (e) {
+    return e;
+  }
 }
 
 async function getAllItems() {
-  const result = await query(
-    "select itemID,userID,type,itemType,description,contactNo,timestamp,image,concat(firstName,' ',lastName) as user from lostandfound l join users u on l.userID=u.id order by timestamp desc"
-  );
-  return result;
+  try {
+    const result = await query(
+      "select itemID,userID,type,itemType,description,contactNo,timestamp,image,concat(firstName,' ',lastName) as user from lostandfound l join users u on l.userID=u.id order by timestamp desc"
+    );
+    return result;
+  } catch (e) {
+    return e;
+  }
 }
 
 async function insertItems(data) {
@@ -46,4 +54,23 @@ async function removeItem(itemID) {
   }
 }
 
-module.exports = { getItemsWithoutUser, insertItems, removeItem, getAllItems };
+async function updateItems(data) {
+  try {
+    const result = await query(
+      "update lostandfound set type=?, itemType=?,description=? where itemID = ?",
+      [data.type, data.itemType, data.description, data.itemID]
+    );
+    return true;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+}
+
+module.exports = {
+  getItemsWithoutUser,
+  insertItems,
+  removeItem,
+  getAllItems,
+  updateItems,
+};
