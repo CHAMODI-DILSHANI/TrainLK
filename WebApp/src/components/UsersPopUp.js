@@ -16,14 +16,17 @@ import { Fragment, useState } from "react";
 //   NIC: "991234567V",
 // };
 
-export default function UserPopUp({ data, open, handleOpen }) {
+export default function UserPopUp(props) {
+  const data = props.data;
+  const open = props.open;
+  const handleOpen = props.handleConfirm;
   // delete data.modReq;
   //   console.log(Object.keys(data2));
   return (
     <>
       {/* <p>asd</p> */}
       <Fragment>
-        <Modal active={open} size="lg" toggler={handleOpen}>
+        <Modal active={open} size="lg" toggler={props.toggler}>
           {/* <ModalHeader>User Details</ModalHeader> */}
           <ModalBody>
             <div className="flex justify-center flex-none h-20">
@@ -84,7 +87,7 @@ export default function UserPopUp({ data, open, handleOpen }) {
           </ModalBody>
           <ModalFooter>
             <Button varient="gradient" color="green" onClick={handleOpen}>
-              <span>Confirm</span>
+              <span>Approve</span>
             </Button>
           </ModalFooter>
         </Modal>
