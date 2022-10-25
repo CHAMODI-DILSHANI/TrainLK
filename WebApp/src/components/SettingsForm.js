@@ -1,17 +1,105 @@
-import Card from '@material-tailwind/react/Card';
-import CardHeader from '@material-tailwind/react/CardHeader';
-import CardBody from '@material-tailwind/react/CardBody';
-import Button from '@material-tailwind/react/Button';
-import Input from '@material-tailwind/react/Input';
-import Textarea from '@material-tailwind/react/Textarea';
+import Card from "@material-tailwind/react/Card";
+import CardHeader from "@material-tailwind/react/CardHeader";
+import CardBody from "@material-tailwind/react/CardBody";
+import Button from "@material-tailwind/react/Button";
+import Input from "@material-tailwind/react/Input";
+import Textarea from "@material-tailwind/react/Textarea";
+
+import { useState } from "react";
 
 export default function SettingsForm() {
-    return (
-        <Card>
-            <CardHeader color="purple" contentPosition="none">
-                <div className="w-full flex items-center justify-between">
-                    <h2 className="text-white text-2xl">Add Schedules</h2>
-                    {/* <Button
+  const [trainId, setTrainId] = useState("");
+  const [frequency, setFrequency] = useState("");
+  const [type, setType] = useState("");
+  const [stations, setStation] = useState([]);
+  //   const [stationIndex, setStationIndex] = useState(1);
+
+  const addNewStation = () => {
+    setStation((stations) => [
+      ...stations,
+      {
+        stationId: "",
+        in: "",
+        out: "",
+      },
+    ]);
+  };
+
+  const deleteStation = (index) => {
+    console.log(index);
+    setStation((currentStations) => {
+      const updatedStations = currentStations.filter((station, i) => {
+        console.log(index, i, index !== i);
+        return index !== i;
+      });
+
+      return updatedStations;
+    });
+  };
+
+  const updateStationId = (e, index) => {
+    setStation((currentStations) => {
+      const updatedStations = currentStations.map((station, i) => {
+        if (index === i) {
+          return {
+            ...station,
+            stationId: e.target.value,
+          };
+        } else {
+          return station;
+        }
+      });
+      return updatedStations;
+    });
+  };
+
+  const updateStationIn = (e, index) => {
+    setStation((currentStations) => {
+      const updatedStations = currentStations.map((station, i) => {
+        if (index === i) {
+          return {
+            ...station,
+            in: e.target.value,
+          };
+        } else {
+          return station;
+        }
+      });
+      return updatedStations;
+    });
+  };
+
+  const updateStationOut = (e, index) => {
+    setStation((currentStations) => {
+      const updatedStations = currentStations.map((station, i) => {
+        if (index === i) {
+          return {
+            ...station,
+            out: e.target.value,
+          };
+        } else {
+          return station;
+        }
+      });
+      return updatedStations;
+    });
+  };
+
+  const onSubmit = () => {
+    console.log({
+        trainId,
+        frequency,
+        type,
+        stations
+    })
+  }
+
+  return (
+    <Card>
+      <CardHeader color="purple" contentPosition="none">
+        <div className="w-full flex items-center justify-between">
+          <h2 className="text-white text-2xl">Add Schedules</h2>
+          {/* <Button
                         color="transparent"
                         buttonType="link"
                         size="lg"
@@ -19,86 +107,87 @@ export default function SettingsForm() {
                     >
                         Settings
                     </Button> */}
-                </div>
-            </CardHeader>
-            <CardBody>
-                <form>
-                    <h6 className="text-purple-500 text-sm mt-3 mb-6 font-light uppercase">
-                        User Information
-                    </h6>
-                    <div className="flex flex-wrap mt-10">
-                        <div className="w-full lg:w-6/12 pr-4 mb-10 font-light">
-                            <Input
-                                type="text"
-                                color="purple"
-                                placeholder="Username"
-                            />
-                        </div>
-                        <div className="w-full lg:w-6/12 pl-4 mb-10 font-light">
-                            <Input
-                                type="email"
-                                color="purple"
-                                placeholder="Email Address"
-                            />
-                        </div>
-                        <div className="w-full lg:w-6/12 pr-4 mb-10 font-light">
-                            <Input
-                                type="text"
-                                color="purple"
-                                placeholder="First Name"
-                            />
-                        </div>
-                        <div className="w-full lg:w-6/12 pl-4 mb-10 font-light">
-                            <Input
-                                type="email"
-                                color="purple"
-                                placeholder="Last Name"
-                            />
-                        </div>
-                    </div>
+        </div>
+      </CardHeader>
+      <CardBody>
+        <div>
+          <h6 className="text-purple-500 text-sm mt-3 mb-6 font-light uppercase">
+            Train Information
+          </h6>
+          <div className="flex flex-wrap mt-10">
+            <div className="w-full lg:w-6/12 pr-4 mb-10 font-light">
+              <Input
+                type="number"
+                color="purple"
+                placeholder="Train ID"
+                onChange={(e) => setTrainId(e.target.value)}
+              />
+            </div>
+            <div className="w-full lg:w-6/12 pl-4 mb-10 font-light">
+              <Input
+                type="number"
+                color="purple"
+                placeholder="Frequency"
+                onChange={(e) => setFrequency(e.target.value)}
+              />
+            </div>
+            <div className="w-full lg:w-6/12 pr-4 mb-10 font-light">
+              <Input
+                type="text"
+                color="purple"
+                placeholder="Type"
+                onChange={(e) => setType(e.target.value)}
+              />
+            </div>
+          </div>
 
-                    <h6 className="text-purple-500 text-sm my-6 font-light uppercase">
-                        Contact Information
-                    </h6>
-                    <div className="flex flex-wrap mt-10">
-                        <div className="w-full lg:w-12/12 mb-10 font-light">
-                            <Input
-                                type="text"
-                                color="purple"
-                                placeholder="Address"
-                            />
-                        </div>
-                        <div className="w-full lg:w-4/12 pr-4 mb-10 font-light">
-                            <Input
-                                type="text"
-                                color="purple"
-                                placeholder="City"
-                            />
-                        </div>
-                        <div className="w-full lg:w-4/12 px-4 mb-10 font-light">
-                            <Input
-                                type="text"
-                                color="purple"
-                                placeholder="Country"
-                            />
-                        </div>
-                        <div className="w-full lg:w-4/12 pl-4 mb-10 font-light">
-                            <Input
-                                type="text"
-                                color="purple"
-                                placeholder="Postal Code"
-                            />
-                        </div>
-                    </div>
-
-                    <h6 className="text-purple-500 text-sm my-6 font-light uppercase">
-                        About Me
-                    </h6>
-                    <div className="flex flex-wrap mt-10 font-light">
-                        <Textarea color="purple" placeholder="About Me" />
-                    </div>
-                </form>
-            </CardBody>
-        </Card>
-    );
+          <h6 className="text-purple-500 text-sm my-6 font-light uppercase">
+            Stations
+          </h6>
+          {stations.map((station, index) => (
+            <div className="flex flex-wrap mt-10">
+              <div className="w-full lg:w-12/12 mb-10 font-light">
+                <Input
+                  type="number"
+                  color="purple"
+                  placeholder="Station ID"
+                  value={station.stationId}
+                  onChange={(e) => updateStationId(e, index)}
+                />
+              </div>
+              <div className="w-full lg:w-4/12 pr-4 mb-10 font-light">
+                <Input
+                  type="text"
+                  color="purple"
+                  placeholder="Station IN"
+                  value={station.in}
+                  onChange={(e) => updateStationIn(e, index)}
+                />
+              </div>
+              <div className="w-full lg:w-4/12 px-4 mb-10 font-light">
+                <Input
+                  type="text"
+                  color="purple"
+                  placeholder="Station OUT"
+                  value={station.out}
+                  onChange={(e) => updateStationOut(e, index)}
+                />
+              </div>
+              <div className="flex">
+                <div><Button type="button" onClick={() => deleteStation(index)}>
+                  Delete
+                </Button></div>
+              </div>
+            </div>
+          ))}
+          <Button type="button" color ="green" onClick={addNewStation}>
+            Add +
+          </Button> <br></br>
+          <Button type="button " onClick={onSubmit}>
+            Submit
+          </Button>
+        </div>
+      </CardBody>
+    </Card>
+  );
 }
