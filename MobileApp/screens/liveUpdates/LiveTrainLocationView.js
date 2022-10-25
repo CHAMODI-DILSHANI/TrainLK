@@ -10,13 +10,14 @@ import TopBar from "../../components/navigation/TopBar";
 import tw from "twrnc";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faTrainSubway } from "@fortawesome/free-solid-svg-icons";
+import utils from "../../utils";
 
 const LiveTrainLocationView = props => {
   const [stationsList, setStationsList] = useState(null);
 
   useEffect(() => {
     const fetchStations = () => {
-      const endpoint = "http://192.168.1.100:8080/api/v1/schedules/1";
+      const endpoint = `${utils.lanip}/schedules/1`;
       fetch(endpoint)
         .then(response => response.json())
         .then(data => {

@@ -1,94 +1,50 @@
 const e = require("express");
 const express = require("express");
 const Router = express.Router();
-const { query } = require("../helpers/mysql.init");
+const { getAllStations } = require("../services/update.service");
+const {
+  getAvailableTrains,
+  getAvailableTrainInfo,
+} = require("../services/update.service");
 
-Router.get("/available-trains", (req, res) => {
-  const date = new Date();
-  let dateFilter = "";
-  for (let i = 1; i <= 7; i++) {
-    if (i == date.getDay()) {
-      dateFilter += "1";
-    } else {
-      dateFilter += "_";
+Router.get("/available-trains", async (req, res) => {
+  try {
+    const result = await getAvailableTrains();
+    const result2 = await Promise.all(
+      result.map(i => getAvailableTrainInfo(i.scheduleID))
+    );
+
+    for (let i = 0; i < result.length; i++) {
+      result[i].info = result2[i];
     }
-  }
 
-  query(
-    // select * from schedule a join train b on a.trainID = b.trainID where a.frequency like "${dateFilter}"
-    `
-    select * 
-    from schedule a 
-    join train b on a.trainID = b.trainID 
-    join schedule_has_station c on c.scheduleID = a.scheduleID 
-    where a.frequency like "${dateFilter}" and c.stationOrder = 1
-    ORDER By c.stationOrder, c.arrivalTime`,
-    (err, rows, fields) => {
-      if (err) {
-        return res.status(401).send("Not found");
-      } else {
-        let data = [];
-        rows.forEach(record => {
-          console.log(record.scheduleID);
-          let temp = { scheduleID: record.scheduleID, train: record.trainName };
-          let stationArr = [];
+    res.send(result);
+  } catch (err) {}
+});
 
-          query(
-            `
-            (select a.*, b.*, c.stationName from 
-            schedule a join schedule_has_station b on a.scheduleID = b.scheduleID 
-            join station c on b.stationID = c.stationID
-            where a.scheduleID = ${temp.scheduleID}
-            order by stationOrder ASC
-            LIMIT 1)
-            UNION
-            (select a.*, b.*, c.stationName from 
-            schedule a join schedule_has_station b on a.scheduleID = b.scheduleID 
-            join station c on b.stationID = c.stationID
-            where a.scheduleID = ${temp.scheduleID}
-            order by stationOrder DESC
-            LIMIT 1)
-                
-                `,
-            (err, rows, fields) => {
-              if (err) {
-                console.log(err);
-              } else {
-                if (rows.length == 2) {
-                  temp.startStationInfo = {
-                    stationName: rows[0].stationName,
-                    arrivalTime: rows[0].arrivalTime,
-                    departureTime: rows[0].departureTime,
-                  };
-                  temp.endStationInfo = {
-                    stationName: rows[1].stationName,
-                    arrivalTime: rows[1].arrivalTime,
-                    departureTime: rows[1].departureTime,
-                  };
+// Get all the stations of a schedule
+Router.get("/stations/:scheduleID", (req, res) => {
+  const scheduleID = req.params.scheduleID;
+  getAllStations(scheduleID)
+    .then(stations => {
+      return res.send(stations);
+    })
+    .catch(err => {
+      return res.status(401).send(err);
+    });
+});
 
-                  data.push(temp);
-                  console.log(temp);
-                }
-              }
-            }
-          );
-        });
-      }
-    }
-  );
+Router.post("/status", (req, res) => {
+  const { dateNTime, selectedStation, moderatorID, status, passangerStatus } =
+    req.body;
 
-  //   query(
-  //     `select * from schedule where frequency like "${dateFilter}"`,
-  //     (err, response) => {
-  //       if (err) {
-  //         return res.status(401).send("Not found");
-  //       } else {
-  //         return res.status(200).send(JSON.stringify(response));
-  //       }
-  //     }
-  //   );
+  console.log(dateNTime);
+  console.log(selectedStation);
+  console.log(moderatorID);
+  console.log(status);
+  console.log(passangerStatus);
 
-  //   return res.send(JSON.stringify({ Today: dateFilter }));
+  return res.send(JSON.stringify({ hi: "data" }));
 });
 
 module.exports = Router;

@@ -5,9 +5,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
+  faArrowRight,
   faBell,
   faCaretLeft,
   faCaretRight,
@@ -18,6 +19,7 @@ import {
   faWaveSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import tw from "twrnc";
+import jwt_decode from "jwt-decode";
 
 import { useFonts } from "expo-font";
 import TopBar from "../../components/navigation/TopBar";
@@ -25,12 +27,16 @@ import TopBar from "../../components/navigation/TopBar";
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import utils from "../../utils";
+import { AuthContext } from "../../context/AuthContext";
 
-const ModeratorLiveUpdateScreen = () => {
+const ModeratorLiveUpdateScreen = ({ route }) => {
   const [status, setStatus] = useState("");
   const [stations, setStations] = useState([]);
   const [selectedStation, setSelectedStation] = useState("");
   const [passangerStatus, setPassangerStatus] = useState("");
+
+  const { accessToken, refreshToken } = useContext(AuthContext);
 
   const [fontsLoaded] = useFonts({
     "Grotesk-Regular": require("./../../assets/fonts/FamiljenGrotesk-Regular.ttf"),
@@ -40,19 +46,17 @@ const ModeratorLiveUpdateScreen = () => {
   });
 
   useEffect(() => {
-    setStations([
-      "Colombo fort",
-      "Mount Lavinia",
-      "Moratuwa",
-      "Panadura",
-      "Kaluthara south",
-      "Aluthgama",
-      "Benthota",
-      "Ambalangoda",
-      "Hikkaduwa",
-      "Galle",
-    ]);
-
+    function fetchStations() {
+      const endpoint = `${utils.lanip}/update/stations/${route.params.data.scheduleID}`;
+      fetch(endpoint)
+        .then(response => response.json())
+        .then(json => {
+          console.log(json);
+          setStations(json);
+          // setAvailableTrains(json);
+        });
+    }
+    fetchStations();
     setSelectedStation(0);
   }, []);
 
@@ -68,6 +72,45 @@ const ModeratorLiveUpdateScreen = () => {
     }
   };
 
+  const updateStatus = () => {
+    const date = new Date();
+    var decoded = jwt_decode(accessToken);
+
+    const updateObj = {
+      dateNTime: {
+        year: date.getFullYear(),
+        month: date.getMonth(),
+        date: date.getDate(),
+        time: date.getTime(),
+      },
+      selectedStation: {
+        stationName: stations[selectedStation].stationName,
+        stationID: stations[selectedStation].stationID,
+        scheduleID: stations[selectedStation].scheduleID,
+      },
+      moderatorID: decoded.id,
+      status,
+      passangerStatus,
+    };
+
+    // send updateObj to backend
+    const endpoint = `${utils.lanip}/update/status/`;
+    fetch(endpoint, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updateObj),
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+      });
+
+    console.log(updateObj);
+  };
+
   return (
     <ScrollView>
       <TopBar title="Update" goBack={true} />
@@ -77,7 +120,17 @@ const ModeratorLiveUpdateScreen = () => {
         {/* TOP SECTION */}
         <View style={tw`flex-row items-center justify-between mb-2`}>
           {/* <View style={tw`w-10 h-0.3 bg-gray-400 mr-2`}></View> */}
-          <Text>Train Status</Text>
+
+          <View style={tw`flex-row items-center justify-between mb-2`}>
+            <Text style={tw`font-medium`}>
+              {route.params.data.info[0].stationName}
+            </Text>
+            <FontAwesomeIcon icon={faArrowRight} style={tw`ml-2 mr-2`} />
+            <Text style={tw`font-medium`}>
+              {route.params.data.info[1].stationName}
+            </Text>
+          </View>
+
           {/* <View style={tw`flex-1 h-0.3 bg-gray-400 ml-2 mr-2`}></View> */}
           <FontAwesomeIcon icon={faCircleInfo} style={tw`text-gray-500`} />
         </View>
@@ -100,7 +153,9 @@ const ModeratorLiveUpdateScreen = () => {
           </View>
 
           <View style={tw`flex-row justify-between`}>
-            <Text style={{ flex: 1 }}>Colombo Fort</Text>
+            <Text style={{ flex: 1 }}>
+              {route.params.data.info[0].stationName}
+            </Text>
             <FontAwesomeIcon icon={faCaretUp} style={tw`text-blue-800`} />
             <Text
               style={{
@@ -108,7 +163,7 @@ const ModeratorLiveUpdateScreen = () => {
                 textAlign: "right",
               }}
             >
-              Beliaththa
+              {route.params.data.info[1].stationName}
             </Text>
           </View>
 
@@ -131,7 +186,10 @@ const ModeratorLiveUpdateScreen = () => {
               style={tw`bg-gray-200 flex-1 mx-2 rounded-2 flex items-center py-1.5 border border-blue-800`}
             >
               <Text style={tw`text-lg font-bold text-blue-800`}>
-                {stations[selectedStation]}
+                {stations.length == 0
+                  ? "Empty"
+                  : stations[selectedStation].stationName}
+                {/* {stations && stations[selectedStation].stationName && "Hi"} */}
               </Text>
             </View>
             <TouchableOpacity onPress={selectNextStation}>
@@ -318,7 +376,11 @@ const ModeratorLiveUpdateScreen = () => {
         </View>
 
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              updateStatus();
+            }}
+          >
             <View style={tw`bg-green-600 p-2 rounded-2 mt-8 mb-4`}>
               <Text style={tw`text-white font-bold text-center`}>Update</Text>
             </View>
