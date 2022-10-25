@@ -50,13 +50,13 @@ const TrainLiveUpdatesScreen = () => {
   };
 
   const data2 = {
-    start: "Maradana",
-    end: "Beliattha",
+    start: "Colombo fort",
+    end: "Badulla",
     status: {
       stationId: "004",
-      station: "Moratuwa",
+      station: "Maradana",
       mode: "passing",
-      time: "11:45AM",
+      time: "11:42AM",
     },
     stations: [
       { id: "001", name: "colombo fort" },
@@ -75,13 +75,34 @@ const TrainLiveUpdatesScreen = () => {
   };
 
   const data3 = {
-    start: "Maradana",
-    end: "Beliattha",
+    start: "Avissawella",
+    end: "Colombo fort",
     status: {
       stationId: "004",
       station: "Moratuwa",
-      mode: "in",
-      time: "11:45AM",
+      mode: "OUT",
+      time: "11:50AM",
+    },
+    stations: [
+      { id: "001", name: "colombo fort" },
+      { id: "002", name: "colombo fort" },
+      { id: "003", name: "colombo fort" },
+      { id: "004", name: "colombo fort" },
+      { id: "005", name: "colombo fort" },
+      { id: "006", name: "colombo fort" },
+      { id: "007", name: "colombo fort" },
+    ],
+    lastUpdateTime: "11:12",
+  };
+
+  const data4 = {
+    start: "Chilaw",
+    end: "Puttalama",
+    status: {
+      stationId: "004",
+      station: "Katunayeka",
+      mode: "STOPPED",
+      time: "11:50AM",
     },
     stations: [
       { id: "001", name: "colombo fort" },
@@ -126,10 +147,16 @@ const TrainLiveUpdatesScreen = () => {
 
       <View style={tw`p-3`}>
         {/* CARD */}
-        <LiveUpdateCard data={data1} />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("LiveTrainLocationScreen");
+          }}
+        >
+          <LiveUpdateCard data={data1} />
+        </TouchableOpacity>
         <LiveUpdateCard data={data2} />
         <LiveUpdateCard data={data3} />
-        <LiveUpdateCard data={data1} />
+        <LiveUpdateCard data={data4} />
       </View>
     </ScrollView>
   );

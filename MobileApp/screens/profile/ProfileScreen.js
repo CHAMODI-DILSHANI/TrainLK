@@ -21,10 +21,10 @@ const ProfileScreen = () => {
     console.log(decoded);
 
     function fetchProfile() {
-      const endpoint = `${utils.api}/users/profile?id=${decoded.id}`;
+      const endpoint = `${utils.lanip}/users/profile?id=${decoded.id}`;
       fetch(endpoint)
-        .then((response) => response.json())
-        .then((json) => {
+        .then(response => response.json())
+        .then(json => {
           console.log(json);
           setUserInfo(json);
         });

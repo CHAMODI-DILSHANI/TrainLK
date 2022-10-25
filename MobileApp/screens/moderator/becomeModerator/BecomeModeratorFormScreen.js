@@ -8,6 +8,7 @@ import {
   To,
   Button,
   Image,
+  ScrollView,
 } from "react-native";
 import React from "react";
 import tw from "twrnc";
@@ -103,10 +104,8 @@ const BecomeModeratorFormScreen = () => {
   };
   // const [Pic,SetPic]=React.useState('');
   return (
-    <View>
-      <TopBar title="Become Moderator Form" goBack={true} />
-
-      <View style={tw`flex flex-col pl-6 pr-6 pb-10 bg-[#ffffff]`}>
+    <ScrollView>
+      <View style={tw`flex flex-col pl-6 pr-6 py-10 bg-[#ffffff]`}>
         <Text style={tw`ml-2 text-xl font-semibold text-center text-[#000000]`}>
           Provide Your Details
         </Text>
@@ -119,9 +118,6 @@ const BecomeModeratorFormScreen = () => {
             tw`bg-transparent my-3 border-[#A3A3A3] border h-9 ml-5 mr-5`,
           ]}
           autoCapitalize="none"
-          onChangeText={(text) => {
-            setNIC(text);
-          }}
         />
         <Text style={tw`mt-1 font-medium text-base ml-5 mb-3`}>
           Upload ID card Images
@@ -183,10 +179,18 @@ const BecomeModeratorFormScreen = () => {
             tw`bg-transparent my-3 border-[#A3A3A3] border h-9 ml-5 mr-5`,
           ]}
           autoCapitalize="none"
-          onChangeText={(text) => {
-            setContactNo(text);
-          }}
         />
+
+        <Text style={tw`mt-3 font-medium text-base ml-5`}>
+          Facebook profile URL
+        </Text>
+        <TextInput
+          style={[
+            tw`bg-transparent my-3 border-[#A3A3A3] border h-9 ml-5 mr-5`,
+          ]}
+          autoCapitalize="none"
+        />
+
         <Text style={tw`mt-1 font-medium text-base ml-5`}>Train Line</Text>
         <View style={tw`flex-row ml-5`}>
           <SelectDropdown
@@ -255,9 +259,6 @@ const BecomeModeratorFormScreen = () => {
             tw`bg-transparent my-3 border-[#A3A3A3] border h-9 ml-5 mr-5`,
           ]}
           autoCapitalize="none"
-          onChangeText={(text) => {
-            setFrequency(text);
-          }}
         />
         <Text style={tw`mt-1 font-medium text-base ml-5`}>Description</Text>
         <TextInput
@@ -285,12 +286,14 @@ const BecomeModeratorFormScreen = () => {
                 railwayLine: startStation,
               });
             }}
+            //   onPress={() => {
+            //   }}
           >
             <Text style={tw`font-medium text-white`}>Proceed</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
