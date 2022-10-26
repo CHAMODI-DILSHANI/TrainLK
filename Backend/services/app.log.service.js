@@ -13,4 +13,17 @@ async function insertAppLog(data) {
   }
 }
 
+async function getAllUserLogs(userID) {
+  try {
+    const result = await query(
+      "select sum(time),userID from userAppUsage uau group by userID where userID = ?",
+      [userID]
+    );
+    return result;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+}
+
 module.exports = { insertAppLog };
