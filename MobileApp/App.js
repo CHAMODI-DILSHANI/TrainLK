@@ -1,6 +1,10 @@
-import { StyleSheet } from "react-native";
-import { AuthProvider } from "./context/AuthContext";
+import { AppState, StyleSheet } from "react-native";
+import { AuthProvider, AuthContext } from "./context/AuthContext";
 import AppNav from "./AppNav";
+
+// import { AuthContext } from "./context/AuthContext";
+
+var openTime = "";
 
 export default function App() {
   return (

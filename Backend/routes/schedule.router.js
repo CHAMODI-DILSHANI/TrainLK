@@ -1,6 +1,7 @@
 const express = require("express");
 const Router = express.Router();
 const scheduleService = require("../services/schedule.service");
+const { query } = require("../helpers/mysql.init");
 
 Router.get("/", (req, resp) => {
   resp.send();
@@ -19,7 +20,7 @@ Router.get("/:inStation/:outStation/:date/:time", async (req, resp) => {
     req.params.time
   );
   const result2 = await Promise.all(
-    result.map(i =>
+    result.map((i) =>
       getSchedulesbyID(
         i.scheduleID,
         req.params.inStation,
@@ -95,7 +96,7 @@ async function getSchedulesbyID(scheduleID, inStation, outStation) {
   ]);
 
   await Promise.all(
-    result.map(async r => {
+    result.map(async (r) => {
       r.stations = await getStationNames(r.scheduleID);
       r.startStation = r.stations[0].stationName;
       r.endStation = r.stations[r.stations.length - 1].stationName;
@@ -106,7 +107,7 @@ async function getSchedulesbyID(scheduleID, inStation, outStation) {
   );
 
   await Promise.all(
-    result.map(async r => {
+    result.map(async (r) => {
       const data = await getStationNameNDistance(
         inStation,
         outStation,
@@ -192,7 +193,7 @@ async function getTrainInfo(trainID) {
 
 // sleep function
 function sleep(ms) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
 }

@@ -1,3 +1,3 @@
-const utils = { lanip: "http://192.168.137.98:8080/api/v1" };
+const utils = { lanip: "http://10.22.165.237:8080/api/v1" };
 
 export default utils;

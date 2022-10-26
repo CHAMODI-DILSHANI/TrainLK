@@ -55,11 +55,11 @@ import TopBar from "../../components/navigation/TopBar";
 
 const BookingSearch = () => {
   const [stations, setStations] = useState();
-  console.log(utils.api + "/stations");
+  console.log(utils.lanip + "/stations");
   useEffect(() => {
     if (stations == null) {
       axios
-        .get(utils.api + "/stations")
+        .get(utils.lanip + "/stations")
         .then((res) => {
           console.log(res.data);
           setStations(res.data);
@@ -367,7 +367,7 @@ const BookingSearch = () => {
               }
               onPress={() => {
                 // axios
-                //   .get(utils.api + "schedules")
+                //   .get(utils.lanip + "schedules")
                 //   .then((res) => {
                 //     console.log(res.data);
                 //   })
