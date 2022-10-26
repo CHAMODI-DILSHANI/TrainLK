@@ -68,6 +68,7 @@ const LoginWithGoogle = () => {
           },
           body: JSON.stringify(data),
         });
+
         const content = await rawResponse.json();
         console.log("--------- BACKEND RESPONSE --------");
         console.log(content);
