@@ -102,7 +102,7 @@ const LoginWithGoogle = () => {
             "google",
             fetchedUserInfo.picture
           );
-          // navigation.navigate("HomeScreen");
+          navigation.navigate("HomeScreen");
         }
       } catch (e) {
         console.log(e);
