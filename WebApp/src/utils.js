@@ -1,3 +1,3 @@
-const utils = { api: "http://192.168.122.1:8085/api/v1" };
+const utils = { api: "http://10.22.164.157:8080/api/v1" };
 
 export default utils;

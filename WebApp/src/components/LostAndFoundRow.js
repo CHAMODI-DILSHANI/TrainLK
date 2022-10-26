@@ -1,6 +1,10 @@
 import { Button, Icon } from "@material-tailwind/react";
 
 export default function LostAndFoundRow(props) {
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
   return (
     <tr>
       <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
@@ -15,16 +19,17 @@ export default function LostAndFoundRow(props) {
           : props.data.description}
       </th>
       <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-        {props.data.image}
+        <img src={props.data.image} height={30} width={30} />
+        {/* {props.data.image} */}
       </th>
       <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
         {props.data.user}
       </th>
       <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-        {props.data.date}
+        {formatDate(props.data.timestamp)}
       </th>
       <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-        {props.data.contact}
+        {props.data.contactNo}
       </th>
       <th className="flex gap-4 border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
         {/* <Button

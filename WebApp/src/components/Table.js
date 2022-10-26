@@ -16,12 +16,15 @@ import { useState } from "react";
 import WarnModal from "./WarnModal";
 import LostAndFoundRow from "./LostAndFoundRow";
 import AddItemModal from "./AddItemModal";
+import axios from "axios";
+import utils from "./../utils";
 
 export default function CardTable(props) {
   const [open, setOpen] = useState(false);
   const [warn, setWarn] = useState(false);
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
+  const [removeId, setRemoveId] = useState(null);
   const [addItem, setAddItem] = useState(false);
   const [selectedData, setSelectedData] = useState({});
 
@@ -38,13 +41,33 @@ export default function CardTable(props) {
   const handleAddWithConfirm = () => {
     setAdd(!add);
   };
-  const handleRemove = () => setRemove(!remove);
+  const handleRemove = () => {
+    setRemove(!remove);
+    setRemoveId(null);
+    // console.log(value);
+  };
+
+  const removeNews = () => {
+    if (removeId != null) {
+      console.log(removeId);
+      axios.delete(`${utils.api}/items/news/${removeId}`).then((res) => {
+        console.log(res);
+        props.reload([]);
+      });
+    }
+  };
+  const handleRemoveWithConfirm = () => {
+    setRemove(!remove);
+    removeNews();
+  };
   const handleAddItem = () => setAddItem(!addItem);
   const handleAddItemWithConfirm = () => {
     setAddItem(!addItem);
     setAdd(!add);
   };
   if (props.type === "news") {
+    // console.log(props);
+
     return (
       <>
         <Card>
@@ -106,7 +129,7 @@ export default function CardTable(props) {
             toggler={handleRemove}
             message="Are you sure you want to delete?"
             cancelMethod={handleRemove}
-            confirmMethod={handleRemove}
+            confirmMethod={handleRemoveWithConfirm}
           />
           <AddItemModal
             type="news"
@@ -126,9 +149,9 @@ export default function CardTable(props) {
                     <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
                       Description
                     </th>
-                    <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
+                    {/* <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
                       User
-                    </th>
+                    </th> */}
                     <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
                       Date
                     </th>
@@ -140,13 +163,14 @@ export default function CardTable(props) {
                 <tbody>
                   {props.data.map(
                     (i) => (
-                      // console.log(i)
+                      //   console.log(i);
                       <NewsRow
                         key={i.newsID}
                         handleOpen={handleOpen}
                         handleRemove={handleRemove}
                         setSelectedData={setSelectedData}
                         data={i}
+                        removeIdSet={setRemoveId}
                       />
                     )
                     // console.log(i);

@@ -5,7 +5,13 @@ export default function NewsRow({
   handleRemove,
   data,
   setSelectedData,
+  removeIdSet,
 }) {
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+  // console.log(data.newsID);
   return (
     <tr>
       <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
@@ -16,11 +22,11 @@ export default function NewsRow({
           ? data.description.slice(0, 90) + "..."
           : data.description}
       </th>
-      <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+      {/* <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
         {data.user}
-      </th>
+      </th> */}
       <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-        {data.date}
+        {formatDate(data.timestamp)}
       </th>
       <th className="flex gap-4 border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
         <Button
@@ -38,7 +44,10 @@ export default function NewsRow({
           <Icon name="edit" color="#424242" size="xl" />
         </Button>
         <Button
-          onClick={handleRemove}
+          onClick={() => {
+            handleRemove();
+            removeIdSet(data.newsID);
+          }}
           className="border-b border-gray-200 bg-#424242 rounded-3xl text-gray"
           color="red"
           buttonType="outline"

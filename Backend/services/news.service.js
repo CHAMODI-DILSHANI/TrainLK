@@ -26,7 +26,7 @@ async function updateNews(data) {
 
 async function deleteNews(id) {
   try {
-    const result = await query("delete from newsID where newsID = ?", [id]);
+    const result = await query("delete from news where newsID = ?", [id]);
     return true;
   } catch (e) {
     console.error(e);
@@ -34,4 +34,4 @@ async function deleteNews(id) {
   }
 }
 
-module.exports = { getAllNews, updateNews };
+module.exports = { getAllNews, updateNews, deleteNews };
