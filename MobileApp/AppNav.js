@@ -60,11 +60,7 @@ const AppNav = () => {
     decoded = jwt_decode(accessToken);
     console.log(decoded.id);
   } catch (e) {
-<<<<<<< HEAD
     console.log(e);
-=======
-    console.error(e);
->>>>>>> 96834300a03f807878a28c3ec56f9a98c597b74f
   }
 
   // stores the time app opens
