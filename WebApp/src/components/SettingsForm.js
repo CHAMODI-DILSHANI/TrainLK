@@ -4,6 +4,12 @@ import CardBody from "@material-tailwind/react/CardBody";
 import Button from "@material-tailwind/react/Button";
 import Input from "@material-tailwind/react/Input";
 import Textarea from "@material-tailwind/react/Textarea";
+// import { Select } from "@material-tailwind/react/Select";
+// import { Option } from "@material-tailwind/react/Option";
+
+
+
+
 
 import { useState } from "react";
 
@@ -116,12 +122,26 @@ export default function SettingsForm() {
           </h6>
           <div className="flex flex-wrap mt-10">
             <div className="w-full lg:w-6/12 pr-4 mb-10 font-light">
-              <Input
-                type="number"
-                color="purple"
-                placeholder="Train ID"
-                onChange={(e) => setTrainId(e.target.value)}
-              />
+              Train ID <br></br>
+              <select onChange={(e) => setTrainId(e.target.value)} title="Train ID">
+              <option> 5134743 </option>
+              <option> 4353435</option>
+              <option> 3334435 </option>
+              <option> 4534435 </option>
+              <option> 3335435 </option>
+              <option> 8866654 </option>
+              <option> 8443443 </option>
+              <option> 1954554 </option>
+              <option> 7955553 </option>
+              <option> 5959302 </option>
+              <option> 4949592 </option>
+              <option> 4959592 </option>
+              <option> 3495094 </option>
+              <option> 7455544 </option>
+              <option> 5940902 </option>
+
+
+              </select>
             </div>
             <div className="w-full lg:w-6/12 pl-4 mb-10 font-light">
               <Input
