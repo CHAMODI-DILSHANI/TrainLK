@@ -60,11 +60,15 @@ const BookingSearch = () => {
     if (stations == null) {
       axios
         .get(utils.lanip + "/stations")
+<<<<<<< HEAD
         .then((res) => {
+=======
+        .then(res => {
+>>>>>>> f03098b (utils.api changed to utils.lanip)
           console.log(res.data);
           setStations(res.data);
         })
-        .catch((e) => {
+        .catch(e => {
           console.log(e);
         });
     }
@@ -99,7 +103,7 @@ const BookingSearch = () => {
     // console.log(fdate);
   };
 
-  const showMode = (currentMode) => {
+  const showMode = currentMode => {
     DateTimePickerAndroid.open({
       value: date,
       onChange,

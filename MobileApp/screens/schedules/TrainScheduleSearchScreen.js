@@ -40,11 +40,15 @@ const TrainScheduleSearchScreen = () => {
     if (stations == null) {
       axios
         .get(utils.lanip + "/stations")
+<<<<<<< HEAD
         .then((res) => {
+=======
+        .then(res => {
+>>>>>>> f03098b (utils.api changed to utils.lanip)
           // console.log(res.data);
           setStations(res.data);
         })
-        .catch((e) => {
+        .catch(e => {
           console.log(e);
         });
     }
@@ -130,13 +134,13 @@ const TrainScheduleSearchScreen = () => {
           endStation.stationID
         }/${format(date, "EEE")}/${timeX ?? "00:00"}`
       )
-      .then((res) => {
+      .then(res => {
         // console.log(res.data);
         // return res.data;
         navigate.navigate("TrainScheduleResultScreen", res.data);
         // setStations(res.data);
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
         return [];
       });
