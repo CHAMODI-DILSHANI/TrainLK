@@ -101,7 +101,7 @@ export default function CardTable() {
               </tr>
               <tr>
                 <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  React Material Dashboard
+                  TrainLK
                 </th>
                 <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
                   $4,400 USD
@@ -132,7 +132,7 @@ export default function CardTable() {
               </tr>
               <tr>
                 <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  React Material Dashboard
+                  TrainLK
                 </th>
                 <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
                   $2,200 USD
