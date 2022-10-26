@@ -1,6 +1,5 @@
 import StatusCard from 'components/StatusCard';
 import SettingsForm from 'components/SettingsForm';
-import ProfileCard from 'components/ProfileCard';
 
 export default function Dashboard() {
     return (
@@ -18,36 +17,7 @@ export default function Dashboard() {
                             percentageColor="green"
                             date="Since last month"
                         />
-                        <StatusCard
-                            color="orange"
-                            icon="groups"
-                            title="New Users"
-                            amount="2,356"
-                            percentage="3.48"
-                            percentageIcon="arrow_downward"
-                            percentageColor="red"
-                            date="Since last week"
-                        />
-                        <StatusCard
-                            color="purple"
-                            icon="paid"
-                            title="Sales"
-                            amount="924"
-                            percentage="1.10"
-                            percentageIcon="arrow_downward"
-                            percentageColor="orange"
-                            date="Since yesterday"
-                        />
-                        <StatusCard
-                            color="blue"
-                            icon="poll"
-                            title="Performance"
-                            amount="49,65%"
-                            percentage="12"
-                            percentageIcon="arrow_upward"
-                            percentageColor="green"
-                            date="Since last month"
-                        />
+                        
                     </div>
                 </div>
             </div>
@@ -59,7 +29,6 @@ export default function Dashboard() {
                             <SettingsForm />
                         </div>
                         <div className="xl:col-start-5 xl:col-end-7 px-4 mb-16 mt-14">
-                            <ProfileCard />
                         </div>
                     </div>
                 </div>
