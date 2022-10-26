@@ -25,6 +25,8 @@ export default function CardTable(props) {
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
   const [removeId, setRemoveId] = useState(null);
+  const [changeId, setChangeId] = useState(null);
+  const [addNewsData, setAddNewsData] = useState([]);
   const [addItem, setAddItem] = useState(false);
   const [selectedData, setSelectedData] = useState({});
 
@@ -32,15 +34,15 @@ export default function CardTable(props) {
   const handleOpenWithConfirm = () => {
     setOpen(!open);
     setWarn(!warn);
+    console.log(changeId);
   };
   const handleWarn = () => setWarn(!warn);
   const handleWarnWithConfirm = () => {
     setWarn(!warn);
+    // console.log(changeId);
+    changeNews();
   };
-  const handleAdd = () => setAdd(!add);
-  const handleAddWithConfirm = () => {
-    setAdd(!add);
-  };
+
   const handleRemove = () => {
     setRemove(!remove);
     setRemoveId(null);
@@ -49,12 +51,42 @@ export default function CardTable(props) {
 
   const removeNews = () => {
     if (removeId != null) {
-      console.log(removeId);
+      //   console.log(removeId);
       axios.delete(`${utils.api}/items/news/${removeId}`).then((res) => {
-        console.log(res);
+        // console.log(res);
         props.reload([]);
       });
     }
+  };
+  const addNews = () => {
+    // console.log(addNewsData);
+    axios
+      .post(`${utils.api}/items/news`, {
+        userID: 11,
+        title: addNewsData[0],
+        description: addNewsData[1],
+      })
+      .then((res) => {
+        props.reload([]);
+        // console.log(res);
+      });
+  };
+  const changeNews = () => {
+    axios
+      .put(`${utils.api}/items/news`, {
+        newsID: changeId,
+        title: newsTitle,
+        description: newsDescription,
+      })
+      .then((res) => {
+        props.reload([]);
+        // console.log(res);
+      });
+  };
+  const handleAdd = () => setAdd(!add);
+  const handleAddWithConfirm = () => {
+    setAdd(!add);
+    addNews();
   };
   const handleRemoveWithConfirm = () => {
     setRemove(!remove);
@@ -64,6 +96,16 @@ export default function CardTable(props) {
   const handleAddItemWithConfirm = () => {
     setAddItem(!addItem);
     setAdd(!add);
+    console.log("clicked!");
+  };
+
+  const [newsTitle, setNewsTitle] = useState("");
+  const [newsDescription, setNewsDescription] = useState("");
+  const changeNewsTitle = (params) => {
+    if (params.target.value != "") setNewsTitle(params.target.value);
+  };
+  const changeNewsDescription = (params) => {
+    if (params.target.value != "") setNewsDescription(params.target.value);
   };
   if (props.type === "news") {
     // console.log(props);
@@ -79,6 +121,7 @@ export default function CardTable(props) {
                   color="purple"
                   placeholder="Title"
                   defaultValue={selectedData.title}
+                  onChange={changeNewsTitle}
                 />
               </div>
               <div className="w-96">
@@ -88,6 +131,7 @@ export default function CardTable(props) {
                   placeholder="Description"
                   className="overflow-auto w-100"
                   defaultValue={selectedData.description}
+                  onChange={changeNewsDescription}
                 ></Textarea>
               </div>
             </div>
@@ -137,6 +181,7 @@ export default function CardTable(props) {
             toggler={handleAddItem}
             cancelMethod={handleAddItem}
             confirmMethod={handleAddItemWithConfirm}
+            confirmData={setAddNewsData}
           />
           <CardBody>
             <div className="overflow-x-auto">
@@ -171,6 +216,7 @@ export default function CardTable(props) {
                         setSelectedData={setSelectedData}
                         data={i}
                         removeIdSet={setRemoveId}
+                        changeIdSet={setChangeId}
                       />
                     )
                     // console.log(i);

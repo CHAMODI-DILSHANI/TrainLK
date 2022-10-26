@@ -34,4 +34,17 @@ async function deleteNews(id) {
   }
 }
 
-module.exports = { getAllNews, updateNews, deleteNews };
+async function addNews(data) {
+  try {
+    await query("insert into news (userID,title,description) values (?,?,?)", [
+      data.userID,
+      data.title,
+      data.description,
+    ]);
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+}
+
+module.exports = { getAllNews, updateNews, deleteNews, addNews };

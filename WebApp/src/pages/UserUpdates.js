@@ -77,7 +77,7 @@ export default function Dashboard() {
   const arrowClosed = <span className="arrow-closed" />;
   const arrowOpen = <span className="arrow-open" />;
   const defaultOption = options[0];
-  console.log(lostAndFoundItems);
+  // console.log(lostAndFoundItems);
   return (
     <>
       <div className="bg-light-blue-500 pt-14 pb-28 px-3 md:px-8 h-auto">

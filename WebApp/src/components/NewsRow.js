@@ -6,6 +6,7 @@ export default function NewsRow({
   data,
   setSelectedData,
   removeIdSet,
+  changeIdSet,
 }) {
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -33,6 +34,7 @@ export default function NewsRow({
           onClick={() => {
             handleOpen();
             setSelectedData(data);
+            changeIdSet(data.newsID);
           }}
           className="border-b border-gray-200 bg-#424242 rounded-3xl text-gray"
           color="blue"
