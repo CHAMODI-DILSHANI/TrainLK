@@ -6,12 +6,37 @@ import Input from "@material-tailwind/react/Input";
 import Textarea from "@material-tailwind/react/Textarea";
 // import { Select } from "@material-tailwind/react/Select";
 // import { Option } from "@material-tailwind/react/Option";
-
-
-
-
-
 import { useState } from "react";
+import Dropdown from "@material-tailwind/react/Dropdown";
+import DropdownItem from "@material-tailwind/react/DropdownItem";
+import Table from "components/Table";
+import {
+  Tabs,
+  Panel,
+  Tab,
+  TabList,
+  PanelList,
+} from "@react-tabtab-next/tabtab";
+
+const newsData = [
+  {
+    newsID: 4,
+    title: "Some Title",
+    description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
+    user: "Sandy Blaq",
+    date: "2022-10-23",
+  },
+  {
+    newsID: 3,
+    title: "Some Other Title",
+    description: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus
+    ad reprehenderit omnis perspiciatis aut odit! Unde architecto
+    perspiciatis, dolorum dolorem iure quia saepe autem accusamus eum
+    praesentium magni corrupti explicabo!`,
+    user: "Sandy Blaq",
+    date: "2022-10-23",
+  },
+];
 
 export default function SettingsForm() {
   const [trainId, setTrainId] = useState("");
@@ -93,12 +118,12 @@ export default function SettingsForm() {
 
   const onSubmit = () => {
     console.log({
-        trainId,
-        frequency,
-        type,
-        stations
-    })
-  }
+      trainId,
+      frequency,
+      type,
+      stations,
+    });
+  };
 
   return (
     <Card>
@@ -123,25 +148,27 @@ export default function SettingsForm() {
           <div className="flex flex-wrap mt-10">
             <div className="w-full lg:w-6/12 pr-4 mb-10 font-light">
               Train ID <br></br>
-              <select onChange={(e) => setTrainId(e.target.value)} title="Train ID">
-              <option> 5134743 </option>
-              <option> 4353435</option>
-              <option> 3334435 </option>
-              <option> 4534435 </option>
-              <option> 3335435 </option>
-              <option> 8866654 </option>
-              <option> 8443443 </option>
-              <option> 1954554 </option>
-              <option> 7955553 </option>
-              <option> 5959302 </option>
-              <option> 4949592 </option>
-              <option> 4959592 </option>
-              <option> 3495094 </option>
-              <option> 7455544 </option>
-              <option> 5940902 </option>
-
-
-              </select>
+              <Dropdown
+                onChange={(e) => setTrainId(e.target.value)}
+                color="transparent"
+              size="sm"
+              buttonType="link"
+              buttonText={
+                <div className="py-2.5 font-medium flex items-center">
+                  <span className="ml-2">Select Train ID</span>
+                </div>
+              }
+              ripple="light"
+              >
+                <DropdownItem> 5134743 </DropdownItem>
+                <DropdownItem> 4353435</DropdownItem>
+                <DropdownItem> 3334435 </DropdownItem>
+                <DropdownItem> 4534435 </DropdownItem>
+                <DropdownItem> 3335435 </DropdownItem>
+                <DropdownItem> 8866654 </DropdownItem>
+                <DropdownItem> 8443443 </DropdownItem>
+                
+              </Dropdown>
             </div>
             <div className="w-full lg:w-6/12 pl-4 mb-10 font-light">
               <Input
@@ -160,7 +187,6 @@ export default function SettingsForm() {
               />
             </div>
           </div>
-
           <h6 className="text-purple-500 text-sm my-6 font-light uppercase">
             Stations
           </h6>
@@ -194,20 +220,29 @@ export default function SettingsForm() {
                 />
               </div>
               <div className="flex">
-                <div><Button type="button" onClick={() => deleteStation(index)}>
-                  Delete
-                </Button></div>
+                <div>
+                  <Button type="button" onClick={() => deleteStation(index)}>
+                    Delete
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
-          <Button type="button" color ="green" onClick={addNewStation}>
+          <Button type="button" color="green" onClick={addNewStation}>
             Add +
-          </Button> <br></br>
+          </Button>{" "}
+          <br></br>
           <Button type="button " onClick={onSubmit}>
             Submit
           </Button>
         </div>
       </CardBody>
+
+      <PanelList>
+        <Panel>
+          <Table type="news" data={newsData} />
+        </Panel>
+      </PanelList>
     </Card>
   );
 }
