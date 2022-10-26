@@ -61,7 +61,7 @@ export default function Dashboard({ searchValue }) {
   useEffect(() => {
     // console.log(dat == null);
     if (data.length == 0)
-      axios.get(`${utils.api}/users/all`).then((res) => {
+      axios.get(`${utils.lanip}/users/all`).then((res) => {
         // console.log("didn't change");
         // console.log(res.data);
         // data = [{ id: 1 }];
