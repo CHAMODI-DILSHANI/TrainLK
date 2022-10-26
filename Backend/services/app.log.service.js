@@ -13,6 +13,7 @@ async function insertAppLog(data) {
   }
 }
 
+<<<<<<< HEAD
 async function getAllUserLogs(userID) {
   try {
     const result = await query(
@@ -26,4 +27,6 @@ async function getAllUserLogs(userID) {
   }
 }
 
+=======
+>>>>>>> 96834300a03f807878a28c3ec56f9a98c597b74f
 module.exports = { insertAppLog };
