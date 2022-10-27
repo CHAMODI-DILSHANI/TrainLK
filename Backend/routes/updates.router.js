@@ -6,6 +6,7 @@ const {
   getAvailableTrains,
   getAvailableTrainInfo,
 } = require("../services/update.service");
+const redisClient = require("./../helpers/redis.init");
 
 Router.get("/available-trains", async (req, res) => {
   try {
@@ -35,26 +36,130 @@ Router.get("/stations/:scheduleID", (req, res) => {
 });
 
 // Status update
-Router.post("/status", (req, res) => {
+Router.post("/status", async (req, res) => {
   const {
     dateNTime,
     selectedStation,
     moderatorID,
-    status,
+    statusLocation,
     passangerStatus,
     moderatorLocation,
   } = req.body;
 
-  console.log(dateNTime);
-  console.log(selectedStation);
-  console.log(moderatorID);
-  console.log(status);
-  console.log(passangerStatus);
-  console.log(moderatorLocation);
+  // console.log(req.body);
 
-  // 2022-10-12-{scheduleID}-{}
+  // console.log(dateNTime);
+  // console.log(selectedStation);
+  // console.log(moderatorID);
+  // console.log(status);
+  // console.log(passangerStatus);
+  // console.log(moderatorLocation);
 
-  return res.send(JSON.stringify({ hi: "data" }));
+  try {
+    // key format --> 2022-10-12-{scheduleID}-{stationID}
+    const key = `${dateNTime.year}-${dateNTime.month}-${dateNTime.date}-${selectedStation.scheduleID}-${selectedStation.stationID}`;
+    console.log(`key    --> ${key}`);
+    record = await redisClient.get(`${key}`);
+
+    // await redisClient.del(key);
+
+    if (record == null) {
+      console.log("Setting timeout...");
+
+      setTimeout(async () => {
+        const keyVal = key;
+        let collectedData = await redisClient.get(`${key}`);
+        console.log("----- Collected Data ------");
+
+        // Process collected data
+
+        collectedData = await JSON.parse(collectedData);
+
+        let COUNT_PASSING = 0;
+        let COUNT_STOPPED = 0;
+        let COUNT_RTL = 0;
+        let COUNT_OUT = 0;
+
+        collectedData.forEach(datapoint => {
+          if (datapoint.statusLocation == "PASSING") COUNT_PASSING++;
+          else if (datapoint.statusLocation == "STOPPED") COUNT_STOPPED++;
+          else if (datapoint.statusLocation == "RTL") COUNT_RTL++;
+          else if (datapoint.statusLocation == "OUT") COUNT_OUT++;
+        });
+
+        console.log(`COUNT PASSING: ${COUNT_PASSING}`);
+        console.log(`COUNT STOPPED: ${COUNT_STOPPED}`);
+        console.log(`COUNT RTL: ${COUNT_RTL}`);
+        console.log(`COUNT OUT: ${COUNT_OUT}`);
+
+        let maxOption = Math.max(
+          COUNT_PASSING,
+          COUNT_STOPPED,
+          COUNT_RTL,
+          COUNT_OUT
+        );
+
+        let updateStatus = "";
+        if (maxOption == COUNT_PASSING) updateStatus = "PASSING";
+        else if (maxOption == COUNT_STOPPED) updateStatus = "STOPPED";
+        else if (maxOption == COUNT_RTL) updateStatus = "RTL";
+        else if (maxOption == COUNT_OUT) updateStatus = "OUT";
+
+        console.log(updateStatus);
+
+        let timeH = 0;
+        let timeM = 0;
+        let timeS = 0;
+        for (let i = 0; i < collectedData.length; i++) {
+          if (collectedData[i].statusLocation == updateStatus) {
+            timeH = collectedData[i].timeH;
+            timeM = collectedData[i].timeM;
+            timeS = collectedData[i].timeS;
+            break;
+          }
+        }
+
+        console.log(`Time --> ${timeH}:${timeM}:${timeS}`);
+        await redisClient.setEx(
+          `UPDATE-${key}`,
+          60000,
+          JSON.stringify({
+            time: `${timeH}:${timeM}:${timeS}`,
+            status: updateStatus,
+          })
+        );
+
+        await redisClient.del(keyVal);
+      }, 10000);
+
+      console.log("setting...");
+      let updates = [];
+      updates.push({
+        statusLocation,
+        passangerStatus,
+        timeH: dateNTime.timeH,
+        timeM: dateNTime.timeM,
+        timeS: dateNTime.timeS,
+      });
+      await redisClient.set(key, JSON.stringify(updates));
+    } else {
+      console.log("updating...");
+      record = JSON.parse(record);
+      record.push({
+        statusLocation,
+        passangerStatus,
+        timeH: dateNTime.timeH,
+        timeM: dateNTime.timeM,
+        timeS: dateNTime.timeS,
+      });
+      // console.log(record);
+      await redisClient.set(key, JSON.stringify(record));
+    }
+
+    return res.send(JSON.stringify({ success: "data" }));
+  } catch (err) {
+    return res.status(501).send(JSON.stringify({ error: "Error" }));
+  }
 });
 
 module.exports = Router;

@@ -40,11 +40,7 @@ const TrainScheduleSearchScreen = () => {
     if (stations == null) {
       axios
         .get(utils.lanip + "/stations")
-<<<<<<< HEAD
-        .then((res) => {
-=======
         .then(res => {
->>>>>>> f03098b (utils.api changed to utils.lanip)
           // console.log(res.data);
           setStations(res.data);
         })
