@@ -105,7 +105,7 @@ const LoginWithGoogle = () => {
           );
 
           if (userInfo) {
-            navigation.navigate("HomeScreen");
+            // navigation.navigate("HomeScreen");
           }
         }
       } catch (e) {
