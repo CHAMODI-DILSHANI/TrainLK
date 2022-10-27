@@ -1,7 +1,12 @@
 const e = require("express");
 const express = require("express");
 const Router = express.Router();
-const { getAllStations } = require("../services/update.service");
+const {
+  getAllStations,
+  getStationName,
+  getAllStationsAwait,
+  getArrivalTime,
+} = require("../services/update.service");
 const {
   getAvailableTrains,
   getAvailableTrainInfo,
@@ -13,6 +18,21 @@ Router.get("/available-trains", async (req, res) => {
     const result = await getAvailableTrains();
     const result2 = await Promise.all(
       result.map(i => getAvailableTrainInfo(i.scheduleID))
+    );
+
+    for (let i = 0; i < result.length; i++) {
+      result[i].info = result2[i];
+    }
+
+    res.send(result);
+  } catch (err) {}
+});
+
+Router.get("/available-trains-with-all-stations", async (req, res) => {
+  try {
+    const result = await getAvailableTrains();
+    const result2 = await Promise.all(
+      result.map(i => getAllStationsAwait(i.scheduleID))
     );
 
     for (let i = 0; i < result.length; i++) {
@@ -120,10 +140,15 @@ Router.post("/status", async (req, res) => {
         }
 
         console.log(`Time --> ${timeH}:${timeM}:${timeS}`);
+
+        const key2 = `${dateNTime.year}-${dateNTime.month}-${dateNTime.date}-${selectedStation.scheduleID}`;
+        let arrayOfKeyElements = key.split("-");
+
         await redisClient.setEx(
-          `UPDATE-${key}`,
+          `UPDATE-${key2}`,
           60000,
           JSON.stringify({
+            stationID: `${arrayOfKeyElements[arrayOfKeyElements.length - 1]}`,
             time: `${timeH}:${timeM}:${timeS}`,
             status: updateStatus,
           })
@@ -156,10 +181,49 @@ Router.post("/status", async (req, res) => {
       await redisClient.set(key, JSON.stringify(record));
     }
 
-    return res.send(JSON.stringify({ success: "data" }));
+    return res.send(JSON.stringify({ success: "true" }));
   } catch (err) {
     return res.status(501).send(JSON.stringify({ error: "Error" }));
   }
+});
+
+Router.get("/status/:scheduleID", async (req, res) => {
+  const scheduleID = req.params.scheduleID;
+  const stationID = req.params.stationID;
+
+  const date = new Date();
+  const key = `UPDATE-${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${scheduleID}`;
+  const record = await redisClient.get(key);
+
+  return res.send(record);
+});
+
+Router.get("/station/:stationID", async (req, res) => {
+  const stationID = req.params.stationID;
+  console.log(stationID);
+
+  getStationName(stationID)
+    .then(data => {
+      return res.status(200).send(data[0]);
+    })
+    .catch(err => {
+      return res.status(404).send(err);
+    });
+});
+
+Router.get("/get-station-arrival-time/:scheduleID/:stationID", (req, res) => {
+  const scheduleID = req.params.scheduleID;
+  const stationID = req.params.stationID;
+
+  getArrivalTime(scheduleID, stationID)
+    .then(data => {
+      console.log("------ Time ------");
+      console.log(data);
+      return res.send(JSON.stringify(data));
+    })
+    .catch(err => {
+      return res.send(err);
+    });
 });
 
 module.exports = Router;
