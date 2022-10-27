@@ -5,7 +5,7 @@ import tw from "twrnc";
 import { faClockRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import { Modal, Portal } from "react-native-paper";
 
-const NewsInfoCard = (props) => {
+const NewsInfoCard = props => {
   const [visible, setVisible] = React.useState(false);
 
   const showModal = () => setVisible(true);
@@ -32,7 +32,7 @@ const NewsInfoCard = (props) => {
         </Text>
         <View style={[tw`pt-3.5 flex-row px-4 flex-row-reverse`]}>
           <Text style={tw`pl-2 text-[#444444] font-semibold text-xs`}>
-            {props.time} ago
+            {props.time}
           </Text>
           <FontAwesomeIcon icon={faClockRotateLeft} color={"#444444"} />
         </View>

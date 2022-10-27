@@ -31,15 +31,21 @@ import utils from "../../utils";
 import { AuthContext } from "../../context/AuthContext";
 
 import * as Location from "expo-location";
+import Dialog, { DialogContent } from "react-native-popup-dialog";
 
 const ModeratorLiveUpdateScreen = ({ route }) => {
-  const [status, setStatus] = useState("");
+  const [statusLocation, setStatus] = useState("");
   const [stations, setStations] = useState([]);
   const [selectedStation, setSelectedStation] = useState("");
   const [passangerStatus, setPassangerStatus] = useState("");
-  const [location, setLocation] = useState(null);
+  // const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const { accessToken, refreshToken } = useContext(AuthContext);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [wrongInfo, setWrongInfo] = useState(false);
+  const [successInfo, setSuccessInfo] = useState(false);
 
   const [fontsLoaded] = useFonts({
     "Grotesk-Regular": require("./../../assets/fonts/FamiljenGrotesk-Regular.ttf"),
@@ -54,7 +60,7 @@ const ModeratorLiveUpdateScreen = ({ route }) => {
       fetch(endpoint)
         .then(response => response.json())
         .then(json => {
-          console.log(json);
+          // console.log(json);
           setStations(json);
           // setAvailableTrains(json);
         });
@@ -97,23 +103,32 @@ const ModeratorLiveUpdateScreen = ({ route }) => {
 
   const updateStatus = async () => {
     const date = new Date();
+    var times = new Date().toLocaleTimeString();
+
     var decoded = jwt_decode(accessToken);
 
     // Get current location of the moderator
+    setIsLoading(true);
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
       setErrorMsg("Permission to access location was denied");
       return;
     }
-    let location = await Location.getCurrentPositionAsync({});
-    setLocation(location);
+
+    let location = null;
+    location = await Location.getCurrentPositionAsync({});
+    setIsLoading(false);
+
+    // setLocation(location);
 
     const updateObj = {
       dateNTime: {
         year: date.getFullYear(),
         month: date.getMonth(),
         date: date.getDate(),
-        time: date.getTime(),
+        timeH: date.getHours(),
+        timeM: date.getMinutes(),
+        timeS: date.getSeconds(),
       },
       selectedStation: {
         stationName: stations[selectedStation].stationName,
@@ -121,7 +136,7 @@ const ModeratorLiveUpdateScreen = ({ route }) => {
         scheduleID: stations[selectedStation].scheduleID,
       },
       moderatorID: decoded.id,
-      status,
+      statusLocation,
       passangerStatus,
       moderatorLocation: {
         longitude: location.coords.longitude,
@@ -129,12 +144,12 @@ const ModeratorLiveUpdateScreen = ({ route }) => {
       },
     };
 
+    console.log(updateObj);
+
     // send updateObj to backend
     if (location) {
-      console.log("====== Location =======");
-      console.log(location.coords.longitude);
-      console.log(location.coords.latitude);
-      console.log("====== / Location =======");
+      console.log(`Moderator latitude  -> ${location.coords.longitude}`);
+      console.log(`Moderator longitude -> ${location.coords.latitude}`);
 
       // check moderator location is whihthin a radius
       const stationCoordinates = {
@@ -150,6 +165,8 @@ const ModeratorLiveUpdateScreen = ({ route }) => {
           location.coords.latitude,
           location.coords.longitude
         );
+
+      console.log(`Arrival Time: ${stations[selectedStation].arrivalTime}`);
 
       console.log("Distance: ", distanceBetweenModeratorAndStation);
 
@@ -167,9 +184,11 @@ const ModeratorLiveUpdateScreen = ({ route }) => {
           .then(response => response.json())
           .then(json => {
             console.log(json);
+            setSuccessInfo(true);
           });
       } else {
         // Do not update
+        setWrongInfo(true);
       }
     }
 
@@ -178,6 +197,63 @@ const ModeratorLiveUpdateScreen = ({ route }) => {
 
   return (
     <ScrollView>
+      <Dialog
+        visible={wrongInfo}
+        onTouchOutside={() => {
+          setWrongInfo(false);
+        }}
+      >
+        <DialogContent style={tw`ml-4 mr-4 mt-5`}>
+          {
+            <View>
+              <Text style={tw`font-medium`}>ERROR</Text>
+              <View style={tw`w-100% h-0.1 bg-gray-400 mb-2 mt-1`}></View>
+              <Text>
+                Sorry! You can't update this status. Because you are too far
+                away from the station.
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  setWrongInfo(false);
+                }}
+                style={tw`mt-4 border border-gray-50 text-center p-1 rounded`}
+              >
+                <Text style={tw`text-center text-blue-400 font-medium`}>
+                  OK
+                </Text>
+              </TouchableOpacity>
+            </View>
+          }
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        visible={successInfo}
+        onTouchOutside={() => {
+          setSuccessInfo(false);
+        }}
+      >
+        <DialogContent style={tw`ml-4 mr-4 mt-5`}>
+          {
+            <View>
+              <Text style={tw`font-medium`}>SUCCESS</Text>
+              <View style={tw`w-100% h-0.1 bg-gray-400 mb-2 mt-1`}></View>
+              <Text>Thank you for contributing.</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  setSuccessInfo(false);
+                }}
+                style={tw`mt-4 border border-gray-50 text-center p-1 rounded`}
+              >
+                <Text style={tw`text-center text-blue-400 font-medium`}>
+                  OK
+                </Text>
+              </TouchableOpacity>
+            </View>
+          }
+        </DialogContent>
+      </Dialog>
+
       <TopBar title="Update" goBack={true} />
       <View
         style={tw`bg-white px-3 py-3 mx-3 rounded-2 border border-1 border-gray-300`}
@@ -276,7 +352,7 @@ const ModeratorLiveUpdateScreen = ({ route }) => {
               <View>
                 <Text
                   style={tw`text-xs font-medium bg-gray-200 p-2 rounded-2 my-1 text-center border border-gray-400 ${
-                    status === "IN"
+                    statusLocation === "IN"
                       ? "bg-blue-200 border-blue-400 border-1"
                       : ""
                   }`}
@@ -293,7 +369,7 @@ const ModeratorLiveUpdateScreen = ({ route }) => {
               <View>
                 <Text
                   style={tw`text-xs font-medium bg-gray-200 p-2 rounded-2 my-1 text-center border border-gray-400 ${
-                    status === "PASSING"
+                    statusLocation === "PASSING"
                       ? "bg-green-200 border-green-400 border-1"
                       : ""
                   }`}
@@ -310,7 +386,7 @@ const ModeratorLiveUpdateScreen = ({ route }) => {
               <View>
                 <Text
                   style={tw`text-xs font-medium bg-gray-200 p-2 rounded-2 my-1 text-center border border-gray-400 ${
-                    status === "STOPPED"
+                    statusLocation === "STOPPED"
                       ? "bg-yellow-200 border-yellow-400 border-1"
                       : ""
                   }`}
@@ -327,7 +403,7 @@ const ModeratorLiveUpdateScreen = ({ route }) => {
               <View>
                 <Text
                   style={tw`text-xs font-medium bg-gray-200 p-2 rounded-2 my-1 text-center border border-gray-400 ${
-                    status === "RTL"
+                    statusLocation === "RTL"
                       ? "bg-amber-200 border-amber-400 border-1"
                       : ""
                   }`}
@@ -344,7 +420,9 @@ const ModeratorLiveUpdateScreen = ({ route }) => {
               <View>
                 <Text
                   style={tw`text-xs font-medium bg-gray-200 p-2 rounded-2 my-1 text-center border border-gray-400 ${
-                    status === "OUT" ? "bg-red-200 border-red-400 border-1" : ""
+                    statusLocation === "OUT"
+                      ? "bg-red-200 border-red-400 border-1"
+                      : ""
                   }`}
                 >
                   OUT
@@ -447,7 +525,9 @@ const ModeratorLiveUpdateScreen = ({ route }) => {
             }}
           >
             <View style={tw`bg-green-600 p-2 rounded-2 mt-8 mb-4`}>
-              <Text style={tw`text-white font-bold text-center`}>Update</Text>
+              <Text style={tw`text-white font-bold text-center`}>
+                {isLoading ? "waiting..." : "Update"}
+              </Text>
             </View>
           </TouchableOpacity>
         </View>

@@ -6,9 +6,23 @@ import { useNavigation } from "@react-navigation/native";
 import TopBar from "../../components/navigation/TopBar";
 import NewsInfoCard from "../../components/communityUpdates/NewsInfoCard";
 import NewsUpdateDataScreen from "./NewsUpdateDataScreen";
+import utils from "../../utils";
+import { format } from "date-fns";
 
 const NewsUpdatesScreen = () => {
   const navigation = useNavigation();
+
+  const [news, setNews] = React.useState([]);
+
+  React.useEffect(() => {
+    const endpoint = `${utils.lanip}/items`;
+    fetch(endpoint)
+      .then(response => response.json())
+      .then(data => {
+        setNews(data.news);
+      })
+      .catch(err => {});
+  }, []);
 
   return (
     <Provider>
@@ -18,11 +32,14 @@ const NewsUpdatesScreen = () => {
         </View>
         <ScrollView style={[tw`my-2 px-4`]}>
           <View style={tw`mb-6`}>
-            <NewsInfoCard
-              title="News Heading"
-              data="News Details and everything typed in news data is here......"
-              time="3 hrs"
-            />
+            {news.map(n => (
+              <NewsInfoCard
+                key={n.newsID}
+                title={n.title}
+                data={n.description}
+                time={format(new Date(n.timestamp), "dd-MM-yyyy hh-mm a")}
+              />
+            ))}
           </View>
         </ScrollView>
         <FAB

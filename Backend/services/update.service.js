@@ -60,6 +60,21 @@ async function getAvailableTrainInfo(scheduleID) {
   }
 }
 
+async function getAllStationsAwait(scheduleID) {
+  try {
+    const result = await query(
+      `select a.trainID, a.scheduleID, a.type, b.arrivalTime, b.departureTime, c.stationID, c.stationName,c.latitude, c.longitude from
+      schedule a join schedule_has_station b on a.scheduleID = b.scheduleID
+      join station c on b.stationID = c.stationID
+      where a.scheduleID = ${scheduleID}
+      order by stationOrder`
+    );
+    return result;
+  } catch (err) {
+    return err;
+  }
+}
+
 function getAllStations(scheduleID) {
   console.log(scheduleID);
 
@@ -82,4 +97,45 @@ function getAllStations(scheduleID) {
   });
 }
 
-module.exports = { getAvailableTrains, getAvailableTrainInfo, getAllStations };
+function getStationName(stationID) {
+  return new Promise((reject, resolve) => {
+    query(
+      `select stationName from station where stationID = ${stationID}`,
+      (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows[0]);
+        }
+      }
+    );
+  });
+}
+
+function getArrivalTime(scheduleID, stationID) {
+  return new Promise((reject, resolve) => {
+    query(
+      `select arrivalTime from schedule_has_station where scheduleID = ${scheduleID} and stationID = ${stationID}`,
+      (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          if (rows.length >= 1) {
+            resolve(rows[0]);
+          } else {
+            resolve({});
+          }
+        }
+      }
+    );
+  });
+}
+
+module.exports = {
+  getAvailableTrains,
+  getAvailableTrainInfo,
+  getAllStations,
+  getStationName,
+  getAllStationsAwait,
+  getArrivalTime,
+};

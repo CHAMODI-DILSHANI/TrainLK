@@ -21,12 +21,15 @@ import {
   faCaretUp,
 } from "@fortawesome/free-solid-svg-icons";
 import LiveUpdateCard from "../../components/liveUpdates/LiveUpdateCard";
+import utils from "../../utils";
 
 const TrainLiveUpdatesScreen = () => {
   const navigation = useNavigation();
 
   const { accessToken } = useContext(AuthContext);
   const [isModerator, setIsModerator] = useState(false);
+  const [availableTrains, setAvailableTrains] = useState([]);
+  const [dataOfTrains, setDataOfTrains] = useState(null);
 
   const data1 = {
     start: "Maradana",
@@ -121,7 +124,66 @@ const TrainLiveUpdatesScreen = () => {
     if (decoded.role == "moderator" || decoded.role == "admin") {
       setIsModerator(true);
     }
+
+    function fetchAvailableTrains() {
+      const endpoint = `${utils.lanip}/update/available-trains`;
+      fetch(endpoint)
+        .then(response => response.json())
+        .then(json => {
+          // console.log("====== Available Trains ======");
+          // console.log(json);
+          setAvailableTrains(json);
+        })
+        .catch(err => {});
+    }
+
+    function fetchAvailableTrainsWithInfo() {
+      const endpoint = `${utils.lanip}/update/available-trains-with-all-stations`;
+      fetch(endpoint)
+        .then(response => response.json())
+        .then(json => {
+          // console.log("====== Available Trains with info ======");
+          // console.log(json);
+          setDataOfTrains(json);
+        })
+        .catch(err => {});
+    }
+
+    fetchAvailableTrains();
+    fetchAvailableTrainsWithInfo();
   }, []);
+
+  useEffect(() => {
+    if (dataOfTrains) {
+      console.log(dataOfTrains[0].info);
+    }
+  }, [dataOfTrains]);
+
+  // useEffect(() => {
+  //   function fetchAvailableTrainsInfo(scheduleID) {
+  //     const endpoint = `${utils.lanip}/update/stations/${scheduleID}`;
+  //     fetch(endpoint)
+  //       .then(response => response.json())
+  //       .then(json => {
+  //         // console.log("====== info Trains ======");
+  //         // console.log(json);
+  //         setDataOfTrains([...dataOfTrains, json]);
+  //       })
+  //       .catch(err => {});
+  //   }
+
+  //   if (availableTrains.length != 0) {
+  //     availableTrains.forEach(train => {
+  //       console.log(`fetching... ${train.scheduleID}`);
+  //       fetchAvailableTrainsInfo(train.scheduleID);
+  //     });
+  //   }
+  // }, [availableTrains]);
+
+  // useEffect(() => {
+  //   console.log("*********** Info **********");
+  //   console.log(dataOfTrains);
+  // }, [dataOfTrains]);
 
   return (
     <ScrollView>
@@ -145,19 +207,45 @@ const TrainLiveUpdatesScreen = () => {
         )}
       </View>
 
-      <View style={tw`p-3`}>
-        {/* CARD */}
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("LiveTrainLocationScreen");
-          }}
-        >
-          <LiveUpdateCard data={data1} />
-        </TouchableOpacity>
-        <LiveUpdateCard data={data2} />
-        <LiveUpdateCard data={data3} />
-        <LiveUpdateCard data={data4} />
-      </View>
+      {dataOfTrains &&
+        availableTrains.map((trainData, index) => (
+          <View style={tw`p-3`} key={trainData.scheduleID}>
+            {/* CARD */}
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("LiveTrainLocationScreen");
+              }}
+            >
+              <LiveUpdateCard
+                data={{
+                  start: trainData.info[0].stationName,
+                  end: trainData.info[1].stationName,
+                  scheduleID: trainData.scheduleID,
+                  status: {
+                    stationId: "004",
+                    station: "Moratuwa",
+                    mode: "stopped",
+                    time: "11:45AM",
+                  },
+                  stations: [
+                    { id: "001", name: "colombo fort" },
+                    { id: "002", name: "colombo fort" },
+                    { id: "003", name: "colombo fort" },
+                    { id: "004", name: "colombo fort" },
+                    { id: "005", name: "colombo fort" },
+                    { id: "006", name: "colombo fort" },
+                    { id: "007", name: "colombo fort" },
+                  ],
+                  lastUpdateTime: "11:12",
+                  stations: dataOfTrains[index].info,
+                }}
+              />
+            </TouchableOpacity>
+            {/* <LiveUpdateCard data={data2} />
+          <LiveUpdateCard data={data3} />
+          <LiveUpdateCard data={data4} /> */}
+          </View>
+        ))}
     </ScrollView>
   );
 };

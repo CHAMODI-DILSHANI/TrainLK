@@ -49,7 +49,7 @@ authRouter.post("/oAuth", async (req, res) => {
       { expiresIn: "365d" }
     );
 
-    return res.status(200).send({ accessToken, refreshToken });
+    return res.status(200).send(JSON.stringify({ accessToken, refreshToken }));
   } catch (err) {
     console.log("<<<<<<  ERROR  >>>>>>");
     console.log(err);
