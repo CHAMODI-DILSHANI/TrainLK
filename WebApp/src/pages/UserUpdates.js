@@ -30,20 +30,18 @@ var newsData = [
 const otherData = [
   {
     dataID: 4,
-    title: "Some Title",
-    description: "Lorem, ipsum dolor sit amet consectetur adipisicing",
-    user: "Sandy Blaq",
-    date: "2022-10-23",
+    title: "Another Accident!",
+    description:
+      "A second accident at the train station and all trains are delayed from this!",
+    user: "Sandali Ranasinghe",
+    date: "October 26, 2022",
   },
   {
     dataID: 3,
-    title: "Some Other Title",
-    description: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-    ad reprehenderit omnis perspiciatis aut odit! Unde architecto
-    perspiciatis, dolorum dolorem iure quia saepe autem accusamus eum
-    praesentium magni corrupti explicabo!`,
-    user: "Sandy Blaq",
-    date: "2022-10-23",
+    title: "Accident!",
+    description: `Accident at the train station and all trains are delayed from this!`,
+    user: "Sandali Ranasinghe",
+    date: "October 26, 2022",
   },
 ];
 
@@ -61,7 +59,7 @@ const lostAndFoundData = [
 
 export default function Dashboard() {
   useEffect(() => {
-    if (news.length === 0) {
+    if (news.length === 0 || lostAndFoundItems.length === 0) {
       axios.get(`${utils.api}/items`).then((res) => {
         // console.log(res.data.news);
         setNews(res.data.news);
@@ -70,7 +68,7 @@ export default function Dashboard() {
     }
   }); //dependency is an empty array since happens at load time
   const [news, setNews] = useState([]);
-  const [lostAndFoundItems, setLostAndFoundItems] = useState(lostAndFoundData);
+  const [lostAndFoundItems, setLostAndFoundItems] = useState([]);
 
   const options = ["This Month", "Previous Month", "Earlier"];
 

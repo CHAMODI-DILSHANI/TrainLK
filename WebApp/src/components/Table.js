@@ -1,5 +1,6 @@
 import Card from "@material-tailwind/react/Card";
 import NewsRow from "./NewsRow";
+import OtherRow from "./OtherRow";
 import CardBody from "@material-tailwind/react/CardBody";
 import {
   Modal,
@@ -25,6 +26,7 @@ export default function CardTable(props) {
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
   const [removeId, setRemoveId] = useState(null);
+  const [removeItemId, setRemoveItemId] = useState(null);
   const [changeId, setChangeId] = useState(null);
   const [addNewsData, setAddNewsData] = useState([]);
   const [addItem, setAddItem] = useState(false);
@@ -34,7 +36,7 @@ export default function CardTable(props) {
   const handleOpenWithConfirm = () => {
     setOpen(!open);
     setWarn(!warn);
-    console.log(changeId);
+    // console.log(changeId);
   };
   const handleWarn = () => setWarn(!warn);
   const handleWarnWithConfirm = () => {
@@ -46,6 +48,7 @@ export default function CardTable(props) {
   const handleRemove = () => {
     setRemove(!remove);
     setRemoveId(null);
+    setRemoveItemId(null);
     // console.log(value);
   };
 
@@ -55,6 +58,19 @@ export default function CardTable(props) {
       axios.delete(`${utils.api}/items/news/${removeId}`).then((res) => {
         // console.log(res);
         props.reload([]);
+        setRemoveId(null);
+      });
+    }
+  };
+  const removeItems = () => {
+    console.log(removeId);
+
+    if (removeItemId != null) {
+      // console.log(removeId);
+      axios.delete(`${utils.api}/items/${removeItemId}`).then((res) => {
+        // console.log(res);
+        // props.reload([]);
+        setRemoveItemId(null);
       });
     }
   };
@@ -91,6 +107,7 @@ export default function CardTable(props) {
   const handleRemoveWithConfirm = () => {
     setRemove(!remove);
     removeNews();
+    removeItems();
   };
   const handleAddItem = () => setAddItem(!addItem);
   const handleAddItemWithConfirm = () => {
@@ -261,7 +278,7 @@ export default function CardTable(props) {
                   placeholder="Type"
                   defaultValue={selectedData.type}
                 /> */}
-                <Dropdown
+                {/* <Dropdown
                   //   color="black"
                   size="sm"
                   placeholder="Item Type"
@@ -278,9 +295,9 @@ export default function CardTable(props) {
                         Found
                       </DropdownItem>;
                     else <DropdownItem color="lightBlue">Lost</DropdownItem>;
-                  }}
-                  {/* <DropdownItem color="lightBlue">Previous Month</DropdownItem> */}
-                </Dropdown>
+                  }} */}
+                {/* <DropdownItem color="lightBlue">Previous Month</DropdownItem> */}
+                {/* </Dropdown> */}
               </div>
               <div className="flex" style={{ margin: "0 0 10px 0" }}>
                 <Input
@@ -328,18 +345,11 @@ export default function CardTable(props) {
             </ModalFooter>
           </Modal>
           <WarnModal
-            active={warn}
-            toggler={handleWarn}
-            message="Are you sure you want to edit data?"
-            cancelMethod={handleWarn}
-            confirmMethod={handleWarnWithConfirm}
-          />
-          <WarnModal
             active={remove}
             toggler={handleRemove}
             message="Are you sure you want to delete?"
             cancelMethod={handleRemove}
-            confirmMethod={handleRemove}
+            confirmMethod={handleRemoveWithConfirm}
           />
           <AddItemModal
             type="lostAndFound"
@@ -389,6 +399,7 @@ export default function CardTable(props) {
                         handleRemove={handleRemove}
                         setSelectedData={setSelectedData}
                         data={i}
+                        removeIdSet={setRemoveItemId}
                       />
                     )
                     // console.log(i);
@@ -520,7 +531,7 @@ export default function CardTable(props) {
                   {props.data.map(
                     (i) => (
                       // console.log(i)
-                      <NewsRow
+                      <OtherRow
                         key={i.dataID}
                         handleOpen={handleOpen}
                         handleRemove={handleRemove}
