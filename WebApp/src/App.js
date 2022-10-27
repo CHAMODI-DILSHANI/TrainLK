@@ -11,6 +11,7 @@ import UserUpdates from "pages/UserUpdates";
 // Tailwind CSS Style Sheet
 import "assets/styles/tailwind.css";
 import { useState } from "react";
+import Login from "pages/Login";
 
 function App() {
   const [searchValue, setSearchValue] = useState("");
@@ -22,7 +23,8 @@ function App() {
       <div className="md:ml-64">
         <Switch>
           <Route exact path="/" component={Dashboard} />
-          <Route exact path="/settings" component={Schedules} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/schedules" component={Schedules} />
           <Route exact path="/tables" component={Tables} />
           <Route exact path="/maps" component={Maps} />
           <Route

@@ -1,5 +1,6 @@
 import Card from "@material-tailwind/react/Card";
 import NewsRow from "./NewsRow";
+import OtherRow from "./OtherRow";
 import CardBody from "@material-tailwind/react/CardBody";
 import {
   Modal,
@@ -10,20 +11,24 @@ import {
   Icon,
   Dropdown,
   DropdownItem,
-  //   Select,
-  //   Option,
 } from "@material-tailwind/react";
 
 import { useState } from "react";
 import WarnModal from "./WarnModal";
 import LostAndFoundRow from "./LostAndFoundRow";
 import AddItemModal from "./AddItemModal";
+import axios from "axios";
+import utils from "./../utils";
 
 export default function CardTable(props) {
   const [open, setOpen] = useState(false);
   const [warn, setWarn] = useState(false);
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
+  const [removeId, setRemoveId] = useState(null);
+  const [removeItemId, setRemoveItemId] = useState(null);
+  const [changeId, setChangeId] = useState(null);
+  const [addNewsData, setAddNewsData] = useState([]);
   const [addItem, setAddItem] = useState(false);
   const [selectedData, setSelectedData] = useState({});
 
@@ -31,22 +36,97 @@ export default function CardTable(props) {
   const handleOpenWithConfirm = () => {
     setOpen(!open);
     setWarn(!warn);
+    // console.log(changeId);
   };
   const handleWarn = () => setWarn(!warn);
   const handleWarnWithConfirm = () => {
     setWarn(!warn);
+    // console.log(changeId);
+    changeNews();
+  };
+
+  const handleRemove = () => {
+    setRemove(!remove);
+    setRemoveId(null);
+    setRemoveItemId(null);
+    // console.log(value);
+  };
+
+  const removeNews = () => {
+    if (removeId != null) {
+      //   console.log(removeId);
+      axios.delete(`${utils.api}/items/news/${removeId}`).then((res) => {
+        // console.log(res);
+        props.reload([]);
+        setRemoveId(null);
+      });
+    }
+  };
+  const removeItems = () => {
+    console.log(removeId);
+
+    if (removeItemId != null) {
+      // console.log(removeId);
+      axios.delete(`${utils.api}/items/${removeItemId}`).then((res) => {
+        // console.log(res);
+        // props.reload([]);
+        setRemoveItemId(null);
+      });
+    }
+  };
+  const addNews = () => {
+    // console.log(addNewsData);
+    axios
+      .post(`${utils.api}/items/news`, {
+        userID: 11,
+        title: addNewsData[0],
+        description: addNewsData[1],
+      })
+      .then((res) => {
+        props.reload([]);
+        // console.log(res);
+      });
+  };
+  const changeNews = () => {
+    axios
+      .put(`${utils.api}/items/news`, {
+        newsID: changeId,
+        title: newsTitle,
+        description: newsDescription,
+      })
+      .then((res) => {
+        props.reload([]);
+        // console.log(res);
+      });
   };
   const handleAdd = () => setAdd(!add);
   const handleAddWithConfirm = () => {
     setAdd(!add);
+    addNews();
   };
-  const handleRemove = () => setRemove(!remove);
+  const handleRemoveWithConfirm = () => {
+    setRemove(!remove);
+    removeNews();
+    removeItems();
+  };
   const handleAddItem = () => setAddItem(!addItem);
   const handleAddItemWithConfirm = () => {
     setAddItem(!addItem);
     setAdd(!add);
+    console.log("clicked!");
+  };
+
+  const [newsTitle, setNewsTitle] = useState("");
+  const [newsDescription, setNewsDescription] = useState("");
+  const changeNewsTitle = (params) => {
+    if (params.target.value != "") setNewsTitle(params.target.value);
+  };
+  const changeNewsDescription = (params) => {
+    if (params.target.value != "") setNewsDescription(params.target.value);
   };
   if (props.type === "news") {
+    // console.log(props);
+
     return (
       <>
         <Card>
@@ -58,6 +138,7 @@ export default function CardTable(props) {
                   color="purple"
                   placeholder="Title"
                   defaultValue={selectedData.title}
+                  onChange={changeNewsTitle}
                 />
               </div>
               <div className="w-96">
@@ -67,6 +148,7 @@ export default function CardTable(props) {
                   placeholder="Description"
                   className="overflow-auto w-100"
                   defaultValue={selectedData.description}
+                  onChange={changeNewsDescription}
                 ></Textarea>
               </div>
             </div>
@@ -108,7 +190,7 @@ export default function CardTable(props) {
             toggler={handleRemove}
             message="Are you sure you want to delete?"
             cancelMethod={handleRemove}
-            confirmMethod={handleRemove}
+            confirmMethod={handleRemoveWithConfirm}
           />
           <AddItemModal
             type="news"
@@ -116,6 +198,7 @@ export default function CardTable(props) {
             toggler={handleAddItem}
             cancelMethod={handleAddItem}
             confirmMethod={handleAddItemWithConfirm}
+            confirmData={setAddNewsData}
           />
           <CardBody>
             <div className="overflow-x-auto">
@@ -128,9 +211,9 @@ export default function CardTable(props) {
                     <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
                       Description
                     </th>
-                    <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
+                    {/* <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
                       User
-                    </th>
+                    </th> */}
                     <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
                       Date
                     </th>
@@ -142,13 +225,15 @@ export default function CardTable(props) {
                 <tbody>
                   {props.data.map(
                     (i) => (
-                      // console.log(i)
+                      //   console.log(i);
                       <NewsRow
                         key={i.newsID}
                         handleOpen={handleOpen}
                         handleRemove={handleRemove}
                         setSelectedData={setSelectedData}
                         data={i}
+                        removeIdSet={setRemoveId}
+                        changeIdSet={setChangeId}
                       />
                     )
                     // console.log(i);
@@ -193,7 +278,7 @@ export default function CardTable(props) {
                   placeholder="Type"
                   defaultValue={selectedData.type}
                 /> */}
-                <Dropdown
+                {/* <Dropdown
                   //   color="black"
                   size="sm"
                   placeholder="Item Type"
@@ -210,16 +295,9 @@ export default function CardTable(props) {
                         Found
                       </DropdownItem>;
                     else <DropdownItem color="lightBlue">Lost</DropdownItem>;
-                  }}
-                  {/* <DropdownItem color="lightBlue">Previous Month</DropdownItem> */}
-                </Dropdown>
-                {/* <Select label="Select Version">
-                  <Option>Material Tailwind HTML</Option>
-                  <Option>Material Tailwind React</Option>
-                  <Option>Material Tailwind Vue</Option>
-                  <Option>Material Tailwind Angular</Option>
-                  <Option>Material Tailwind Svelte</Option>
-                </Select> */}
+                  }} */}
+                {/* <DropdownItem color="lightBlue">Previous Month</DropdownItem> */}
+                {/* </Dropdown> */}
               </div>
               <div className="flex" style={{ margin: "0 0 10px 0" }}>
                 <Input
@@ -267,18 +345,18 @@ export default function CardTable(props) {
             </ModalFooter>
           </Modal>
           <WarnModal
-            active={warn}
-            toggler={handleWarn}
-            message="Are you sure you want to edit data?"
-            cancelMethod={handleWarn}
-            confirmMethod={handleWarnWithConfirm}
-          />
-          <WarnModal
             active={remove}
             toggler={handleRemove}
             message="Are you sure you want to delete?"
             cancelMethod={handleRemove}
-            confirmMethod={handleRemove}
+            confirmMethod={handleRemoveWithConfirm}
+          />
+          <AddItemModal
+            type="lostAndFound"
+            active={addItem}
+            toggler={handleAddItem}
+            cancelMethod={handleAddItem}
+            confirmMethod={handleAddItemWithConfirm}
           />
           <CardBody>
             <div className="overflow-x-auto">
@@ -293,6 +371,9 @@ export default function CardTable(props) {
                     </th>
                     <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
                       Description
+                    </th>
+                    <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
+                      Image
                     </th>
                     <th className="px-2 text-purple-500 align-middle border-b border-solid border-gray-200 py-3 text-sm whitespace-nowrap font-light text-left">
                       User
@@ -318,6 +399,7 @@ export default function CardTable(props) {
                         handleRemove={handleRemove}
                         setSelectedData={setSelectedData}
                         data={i}
+                        removeIdSet={setRemoveItemId}
                       />
                     )
                     // console.log(i);
@@ -329,7 +411,14 @@ export default function CardTable(props) {
         </Card>
         <div className="mt-5 flex flex-col w-full">
           <div className="mt-5 flex w-full justify-end">
-            <Button color="purple" size="md">
+            <Button
+              color="purple"
+              onClick={handleAddItem}
+              size="md"
+              disabled
+              hover="false"
+              className="cursor-not-allowed opacity-50 disabled:pointer-events-none"
+            >
               <Icon name="add" size="2xl" />
               <p className="text-sm">New Item</p>
             </Button>
@@ -442,7 +531,7 @@ export default function CardTable(props) {
                   {props.data.map(
                     (i) => (
                       // console.log(i)
-                      <NewsRow
+                      <OtherRow
                         key={i.dataID}
                         handleOpen={handleOpen}
                         handleRemove={handleRemove}
