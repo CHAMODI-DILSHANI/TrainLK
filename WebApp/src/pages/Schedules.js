@@ -8,7 +8,7 @@ export default function Dashboard() {
                 <div className="container mx-auto max-w-full">
                     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
                         <StatusCard
-                            color="pink"
+                            color="orange"
                             icon="trending_up"
                             title="Schedules"
                             amount="35"

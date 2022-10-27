@@ -177,6 +177,7 @@ async function createNewSchedule(data) {
     return true;
   } catch (e) {
     await query("rollback");
+    console.error(e)
     return false;
   }
 }

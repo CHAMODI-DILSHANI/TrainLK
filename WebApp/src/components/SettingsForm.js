@@ -7,11 +7,10 @@ import Textarea from "@material-tailwind/react/Textarea";
 // import { Select } from "@material-tailwind/react/Select";
 // import { Option } from "@material-tailwind/react/Option";
 
-
-
-
+import utils from "./../utils";
 
 import { useState } from "react";
+import axios from "axios";
 
 export default function SettingsForm() {
   const [trainId, setTrainId] = useState("");
@@ -24,11 +23,29 @@ export default function SettingsForm() {
     setStation((stations) => [
       ...stations,
       {
-        stationId: "",
+        stationID: "",
         in: "",
         out: "",
       },
     ]);
+  };
+
+  const createSchedule = () => {
+    try {
+      axios
+        .post(`${utils.api}/schedules`, {
+          trainID:trainId,
+          frequency,
+          type,
+          stations,
+        })
+        .then((res) => {
+          console.log(res);
+          alert("created record successfully");
+        });
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const deleteStation = (index) => {
@@ -43,13 +60,13 @@ export default function SettingsForm() {
     });
   };
 
-  const updateStationId = (e, index) => {
+  const updateStationID = (e, index) => {
     setStation((currentStations) => {
       const updatedStations = currentStations.map((station, i) => {
         if (index === i) {
           return {
             ...station,
-            stationId: e.target.value,
+            stationID: e.target.value,
           };
         } else {
           return station;
@@ -93,12 +110,13 @@ export default function SettingsForm() {
 
   const onSubmit = () => {
     console.log({
-        trainId,
-        frequency,
-        type,
-        stations
-    })
-  }
+      trainID : trainId,
+      frequency,
+      type,
+      stations,
+    });
+    createSchedule();
+  };
 
   return (
     <Card>
@@ -123,24 +141,25 @@ export default function SettingsForm() {
           <div className="flex flex-wrap mt-10">
             <div className="w-full lg:w-6/12 pr-4 mb-10 font-light">
               Train ID <br></br>
-              <select onChange={(e) => setTrainId(e.target.value)} title="Train ID">
-              <option> 5134743 </option>
-              <option> 4353435</option>
-              <option> 3334435 </option>
-              <option> 4534435 </option>
-              <option> 3335435 </option>
-              <option> 8866654 </option>
-              <option> 8443443 </option>
-              <option> 1954554 </option>
-              <option> 7955553 </option>
-              <option> 5959302 </option>
-              <option> 4949592 </option>
-              <option> 4959592 </option>
-              <option> 3495094 </option>
-              <option> 7455544 </option>
-              <option> 5940902 </option>
-
-
+              <select
+                onChange={(e) => setTrainId(e.target.value.split(" ")[0])}
+                title="Train ID"
+              >
+                <option> 1 - Colombo Fort </option>
+                <option> 2 - Hikkaduwa</option>
+                <option> 3 - Kandy </option>
+                <option> 4 - Galle </option>
+                <option> 5 - Matale </option>
+                <option> 6 - Trincomalee </option>
+                <option> 7 - </option>
+                <option> 8 - </option>
+                <option> 9 - </option>
+                <option> 10 - </option>
+                <option> 11 - </option>
+                <option> 12 - </option>
+                <option> 13 - </option>
+                <option> 14 - </option>
+                <option> 15 - </option>
               </select>
             </div>
             <div className="w-full lg:w-6/12 pl-4 mb-10 font-light">
@@ -160,7 +179,6 @@ export default function SettingsForm() {
               />
             </div>
           </div>
-
           <h6 className="text-purple-500 text-sm my-6 font-light uppercase">
             Stations
           </h6>
@@ -171,8 +189,8 @@ export default function SettingsForm() {
                   type="number"
                   color="purple"
                   placeholder="Station ID"
-                  value={station.stationId}
-                  onChange={(e) => updateStationId(e, index)}
+                  value={station.stationID}
+                  onChange={(e) => updateStationID(e, index)}
                 />
               </div>
               <div className="w-full lg:w-4/12 pr-4 mb-10 font-light">
@@ -194,15 +212,18 @@ export default function SettingsForm() {
                 />
               </div>
               <div className="flex">
-                <div><Button type="button" onClick={() => deleteStation(index)}>
-                  Delete
-                </Button></div>
+                <div>
+                  <Button type="button" onClick={() => deleteStation(index)}>
+                    Delete
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
-          <Button type="button" color ="green" onClick={addNewStation}>
+          <Button type="button" color="green" onClick={addNewStation}>
             Add +
-          </Button> <br></br>
+          </Button>{" "}
+          <br></br>
           <Button type="button " onClick={onSubmit}>
             Submit
           </Button>
